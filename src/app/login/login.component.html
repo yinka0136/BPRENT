@@ -1,0 +1,100 @@
+<app-nav></app-nav>
+<section class="login-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="login-box">
+          <div class="login-top">
+            <h3>Welcome Back.</h3>
+          </div>
+          <form class="login-form" action="#" [formGroup]="loginForm">
+            <div class="col-md-12 email">
+              <label>Email</label>
+              <input
+                type="text"
+                name="email"
+                placeholder="Enter your email here"
+                formControlName="email"
+                [ngClass]="{
+                  'is-invalid':
+                    loginForm.get('email').errors &&
+                    loginForm.get('email').touched
+                }"
+              />
+              <div
+                class="invalid-feedback mt-0 p-0"
+                *ngIf="
+                  loginForm.get('email').errors &&
+                  loginForm.get('email').touched
+                "
+              >
+                Please enter a valid email
+              </div>
+            </div>
+
+            <div class="col-md-12 password input-group">
+              <label>Password</label>
+              <input
+                [type]="fieldTextType ? 'text' : 'password'"
+                name="email"
+                placeholder="Enter password"
+                formControlName="password"
+                [ngClass]="{
+                  'is-invalid':
+                    loginForm.get('password').errors &&
+                    loginForm.get('password').touched
+                }"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text" (click)="toggleFieldTextType()">
+                  <i
+                    class="fa"
+                    [ngClass]="{
+                      'fa-eye-slash': !fieldTextType,
+                      'fa-eye': fieldTextType
+                    }"
+                  ></i>
+                </span>
+              </div>
+              <div
+                class="invalid-feedback mt-0 p-0"
+                *ngIf="
+                  loginForm.get('password').errors &&
+                  loginForm.get('password').touched
+                "
+              >
+                Password is required
+              </div>
+            </div>
+            <div class="col-md-12 d-flex justify-content-between">
+              <div class="chqbox">
+                <input type="checkbox" name="rememberme" id="rmme" />
+                <label for="rmme">Remember Me</label>
+              </div>
+              <div class="forget-btn">
+                <a href="#">Forget Password?</a>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <button type="submit" name="button" (click)="login()">
+                Sign In
+              </button>
+            </div>
+          </form>
+          <div class="login-btm text-center">
+            <p>or sign in with</p>
+            <ul class="list-unstyled list-inline">
+              <li class="list-inline-item">
+                <a (click)="signInWithGoogle()"><i class="fa fa-google"></i></a>
+              </li>
+              <li class="list-inline-item">
+                <a (click)="signInWithFB()"><i class="fa fa-facebook"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<app-footer></app-footer>
