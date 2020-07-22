@@ -1,171 +1,107 @@
 <app-nav></app-nav>
-<section class="registration">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="registration-box">
-          <div class="reg-top">
-            <h3>Sign Up.</h3>
-            <p>Fill the form below to create an account.</p>
+<section class="section-content padding-y">
+  <!-- ============================ COMPONENT REGISTER   ================================= -->
+  <div class="card mx-auto" style="max-width: 520px; margin-top: 40px;">
+    <article class="card-body">
+      <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
+      <form>
+        <div class="form-row">
+          <div class="col form-group">
+            <label>First name</label>
+            <input type="text" class="form-control" placeholder="" />
           </div>
-          <form class="reg-form" action="#" [formGroup]="registrationForm">
-            <div class="row">
-              <div class="col-md-6 name">
-                <label>First Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Enter first name"
-                  formControlName="first_name"
-                  [ngClass]="{
-                    'is-invalid':
-                      registrationForm.get('first_name').errors &&
-                      registrationForm.get('first_name').touched
-                  }"
-                />
-              </div>
-              <div class="col-md-6 srname">
-                <label>Last Name</label>
-                <input
-                  type="text"
-                  name="srname"
-                  placeholder="Enter last name"
-                  formControlName="last_name"
-                  [ngClass]="{
-                    'is-invalid':
-                      registrationForm.get('last_name').errors &&
-                      registrationForm.get('last_name').touched
-                  }"
-                />
-              </div>
-              <div class="col-md-6 name">
-                <label>Referrer</label>
-                <input
-                  type="number"
-                  name="referrer"
-                  placeholder="enter referrer code"
-                  formControlName="referrer"
-                />
-              </div>
-              <div class="col-md-6 email">
-                <label>Email</label>
-                <input
-                  type="text"
-                  name="email"
-                  placeholder="Enter Email here"
-                  formControlName="email"
-                  [ngClass]="{
-                    'is-invalid':
-                      registrationForm.get('email').errors &&
-                      registrationForm.get('email').touched
-                  }"
-                />
-                <div
-                  class="invalid-feedback mt-0 p-0"
-                  *ngIf="
-                    registrationForm.get('email').touched &&
-                    registrationForm.get('email').errors
-                  "
-                >
-                  Please enter a valid email
-                </div>
-                <div class="invalid-feedback mt-0 p-0" *ngIf="emailExists">
-                  Email is invalid or already exists
-                </div>
-              </div>
-              <div class="col-md-12 password">
-                <label>Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  autocomplete="new-password"
-                  placeholder="Enter your password here"
-                  formControlName="password"
-                  [ngClass]="{
-                    'is-invalid':
-                      registrationForm.get('password').errors &&
-                      registrationForm.get('password').touched
-                  }"
-                />
-                <div
-                  class="invalid-feedback p-0 mt-0"
-                  *ngIf="
-                    registrationForm.get('password').hasError('required') &&
-                    registrationForm.get('password').touched
-                  "
-                >
-                  Password is required
-                </div>
-                <div
-                  class="invalid-feedback mt-0 p-0"
-                  *ngIf="
-                    registrationForm.get('password').hasError('minlength') &&
-                    registrationForm.get('password').touched
-                  "
-                >
-                  Password must be at least 8 characters
-                </div>
-              </div>
-              <div class="col-md-12 password">
-                <label>Confirm Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  autocomplete="new-password"
-                  placeholder="Confirm your password"
-                  formControlName="confirmPassword"
-                  [ngClass]="{
-                    'is-invalid':
-                      (registrationForm.get('confirmPassword').errors &&
-                        registrationForm.get('confirmPassword').touched) ||
-                      (registrationForm.get('confirmPassword').touched &&
-                        registrationForm.hasError('passwordmismatch'))
-                  }"
-                />
-                <div
-                  class="invalid-feedback mt-0 p-0"
-                  *ngIf="
-                    (registrationForm
-                      .get('confirmPassword')
-                      .hasError('required') &&
-                      registrationForm.get('confirmPassword').touched) ||
-                    (registrationForm.hasError('passwordmismatch') &&
-                      registrationForm.get('confirmPassword').touched)
-                  "
-                >
-                  Please type in a matching password
-                </div>
-              </div>
-              <div class="col-md-12">
-                <button type="submit" name="button" (click)="register()">
-                  Create Account
-                </button>
-              </div>
-            </div>
-          </form>
-          <div class="login-btm text-center">
-            <p>Already have an account ?<a routerLink="../login">Sign in</a></p>
+          <!-- form-group end.// -->
+          <div class="col form-group">
+            <label>Last name</label>
+            <input type="text" class="form-control" placeholder="" />
           </div>
-          <div>
-            <p class="hrh">or</p>
-          </div>
-          <div>
-            <ul class="footer-social d-flex justify-content-center">
-              <li>
-                <a class="facebook" (click)="signInWithFB()"
-                  ><i class="fa fa-facebook"></i
-                ></a>
-              </li>
-              <li>
-                <a class="google-plus" (click)="signInWithGoogle()"
-                  ><i class="fa fa-google"></i
-                ></a>
-              </li>
-            </ul>
-          </div>
+          <!-- form-group end.// -->
         </div>
-      </div>
-    </div>
+        <!-- form-row end.// -->
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" placeholder="" />
+          <small class="form-text text-muted"
+            >We'll never share your email with anyone else.</small
+          >
+        </div>
+        <!-- form-group end.// -->
+        <div class="form-group">
+          <label class="custom-control custom-radio custom-control-inline">
+            <input
+              class="custom-control-input"
+              checked=""
+              type="radio"
+              name="gender"
+              value="option1"
+            />
+            <span class="custom-control-label"> Male </span>
+          </label>
+          <label class="custom-control custom-radio custom-control-inline">
+            <input
+              class="custom-control-input"
+              type="radio"
+              name="gender"
+              value="option2"
+            />
+            <span class="custom-control-label"> Female </span>
+          </label>
+        </div>
+        <!-- form-group end.// -->
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>City</label>
+            <input type="text" class="form-control" />
+          </div>
+          <!-- form-group end.// -->
+          <div class="form-group col-md-6">
+            <label>Country</label>
+            <select id="inputState" class="form-control">
+              <option> Choose...</option>
+              <option>Uzbekistan</option>
+              <option>Russia</option>
+              <option selected="">United States</option>
+              <option>India</option>
+              <option>Afganistan</option>
+            </select>
+          </div>
+          <!-- form-group end.// -->
+        </div>
+        <!-- form-row.// -->
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Create password</label>
+            <input class="form-control" type="password" />
+          </div>
+          <!-- form-group end.// -->
+          <div class="form-group col-md-6">
+            <label>Repeat password</label>
+            <input class="form-control" type="password" />
+          </div>
+          <!-- form-group end.// -->
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block">
+            Register
+          </button>
+        </div>
+        <!-- form-group// -->
+        <div class="form-group">
+          <label class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" checked="" />
+            <div class="custom-control-label">
+              I am agree with <a href="#">terms and contitions</a>
+            </div>
+          </label>
+        </div>
+        <!-- form-group end.// -->
+      </form>
+    </article>
+    <!-- card-body.// -->
   </div>
+  <!-- card .// -->
+  <p class="text-center mt-4">Have an account? <a href="">Log In</a></p>
+  <br /><br />
+  <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
 </section>
 <app-footer></app-footer>

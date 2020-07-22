@@ -19,6 +19,9 @@ import {
   GoogleLoginProvider,
   FacebookLoginProvider,
 } from 'angularx-social-login';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductGridComponent } from './product-grid/product-grid.component';
 let config = new AuthServiceConfig([
   {
     id: GoogleLoginProvider.PROVIDER_ID,
@@ -47,6 +50,9 @@ export function provideConfig() {
     ProfileComponent,
     PostAdComponent,
     ViewAdComponent,
+    ShoppingCartComponent,
+    ProductListComponent,
+    ProductGridComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,156 +1,178 @@
-<header id="header-wrap" class="page-header">
-  <nav class="navbar navbar-expand-lg fixed-top scrolling-navbar">
+<header class="section-header">
+  <section class="header-main border-bottom">
     <div class="container">
-      <div class="navbar-header">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#main-navbar"
-          aria-controls="main-navbar"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-          <span class="fa fa-bars"></span>
-          <span class="fa fa-bars"></span>
-          <span class="fa fa-bars"></span>
-        </button>
-        <a href="index-2.html" class="navbar-brand"
-          ><img src="assets/img/logo.png" alt=""
-        /></a>
-      </div>
-      <div class="collapse navbar-collapse" id="main-navbar">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item dropdown active">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Home
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item active" href="index-2.html">Home 1</a>
-              <a class="dropdown-item" href="index-3.html">Home 2</a>
-              <a class="dropdown-item" href="index-4.html">Home 3</a>
+      <div class="row align-items-center">
+        <div class="col-xl-2 col-lg-12 col-md-12">
+          <a href="page-index.html" class="brand-wrap">
+            <img class="logo" src="../../assets/images/logo.png" />
+          </a>
+          <!-- brand-wrap.// -->
+        </div>
+        <div class="col-xl-6 col-lg-7 col-md-6">
+          <form action="#" class="search-header">
+            <div class="input-group w-100">
+              <select class="custom-select border-right" name="category_name">
+                <option value="">All type</option
+                ><option value="codex">Special</option>
+                <option value="comments">Only best</option>
+                <option value="content">Latest</option>
+              </select>
+              <input type="text" class="form-control" placeholder="Search" />
+
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                  <i class="fa fa-search"></i> Search
+                </button>
+              </div>
             </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="category.html">
-              Categories
-            </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Listings
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="adlistinggrid.html">Ad Grid</a>
-              <a class="dropdown-item" href="adlistinglist.html">Ad Listing</a>
-              <a class="dropdown-item" href="ads-details.html"
-                >Listing Detail</a
-              >
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Pages
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="about.html">About Us</a>
-              <a class="dropdown-item" href="services.html">Services</a>
-              <a class="dropdown-item" href="ads-details.html">Ads Details</a>
-              <a class="dropdown-item" href="post-ads.html">Ads Post</a>
-              <a class="dropdown-item" href="pricing.html">Packages</a>
-              <a class="dropdown-item" href="testimonial.html">Testimonial</a>
-              <a class="dropdown-item" href="faq.html">FAQ</a>
-              <a class="dropdown-item" href="404.html">404</a>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Blog
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="blog.html">Blog - Right Sidebar</a>
-              <a class="dropdown-item" href="blog-left-sidebar.html"
-                >Blog - Left Sidebar</a
-              >
-              <a class="dropdown-item" href="blog-grid-full-width.html">
-                Blog full width
+          </form>
+          <!-- search-wrap .end// -->
+        </div>
+        <!-- col.// -->
+        <div class="col-xl-4 col-lg-5 col-md-6">
+          <div class="widgets-wrap float-md-right">
+            <div class="widget-header mr-3">
+              <a href="#" class="widget-view">
+                <div class="icon-area">
+                  <i class="fa fa-user"></i>
+                  <span class="notify">3</span>
+                </div>
+                <small class="text"> My profile </small>
               </a>
-              <a class="dropdown-item" href="single-post.html">Blog Details</a>
+            </div>
+            <div class="widget-header mr-3">
+              <a href="#" class="widget-view">
+                <div class="icon-area">
+                  <i class="fa fa-commenting"></i>
+                  <span class="notify">1</span>
+                </div>
+                <small class="text"> Message </small>
+              </a>
+            </div>
+            <div class="widget-header mr-3">
+              <a href="#" class="widget-view">
+                <div class="icon-area">
+                  <i class="fa fa-archive"></i>
+                </div>
+                <small class="text"> Orders </small>
+              </a>
+            </div>
+            <div class="widget-header">
+              <a href="#" class="widget-view">
+                <div class="icon-area">
+                  <i class="fa fa-shopping-cart"></i>
+                </div>
+                <small class="text"> Cart </small>
+              </a>
+            </div>
+          </div>
+          <!-- widgets-wrap.// -->
+        </div>
+        <!-- col.// -->
+      </div>
+      <!-- row.// -->
+    </div>
+    <!-- container.// -->
+  </section>
+  <nav class="navbar navbar-main navbar-expand-lg border-bottom">
+    <div class="container">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#main_nav"
+        aria-controls="main_nav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="main_nav">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-bars text-muted mr-2"></i> Categories
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Machinery</a>
+              <a class="dropdown-item" href="#">Electronics</a>
+              <a class="dropdown-item" href="#">Home textile</a>
+              <a class="dropdown-item" href="#">Home and kitchen</a>
+              <a class="dropdown-item" href="#">Service and equipment</a>
+              <a class="dropdown-item" href="#">Healthcare items</a>
+              <a class="dropdown-item" href="#">Toys and Hobbies</a>
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">
-              Contact
-            </a>
+            <a class="nav-link" href="#">Ready to ship</a>
           </li>
-        </ul>
-        <ul class="sign-in">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Trade shows</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Sell with us</a>
+          </li>
           <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-              ><i class="fa fa-user-o"></i> My Account</a
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+              >Demo pages</a
             >
             <div class="dropdown-menu">
-              <a class="dropdown-item" routerLink="profile"
-                ><i class="lni-home"></i> Account Home</a
+              <a class="dropdown-item" href="page-index.html">Main</a>
+              <a class="dropdown-item" href="page-category.html"
+                >All category</a
               >
-              <a class="dropdown-item" href="account-myads.html"
-                ><i class="lni-wallet"></i> My Ads</a
+              <a class="dropdown-item" href="page-listing-large.html"
+                >Listing list</a
               >
-              <a class="dropdown-item" href="account-favourite-ads.html"
-                ><i class="lni-heart"></i> Favourite ads</a
+              <a class="dropdown-item" href="page-listing-grid.html"
+                >Listing grid</a
               >
-              <a class="dropdown-item" href="account-archived-ads.html"
-                ><i class="lni-folder"></i> Archived</a
+              <a class="dropdown-item" href="page-shopping-cart.html"
+                >Shopping cart</a
               >
-              <a class="dropdown-item click" routerLink="../login"
-                ><i class="fa fa-lock"></i> Log In</a
+              <a class="dropdown-item" href="page-detail-product.html"
+                >Item detail</a
               >
-              <a class="dropdown-item click" routerLink="../register"
-                ><i class="fa fa-user"></i> Signup</a
+              <a class="dropdown-item" href="page-content.html">Info content</a>
+              <a class="dropdown-item" href="page-user-login.html"
+                >Page login</a
               >
-              <a class="dropdown-item" href="forgot-password.html"
-                ><i class="lni-reload"></i> Forgot Password</a
+              <a class="dropdown-item" href="page-user-register.html"
+                >Page register</a
               >
-              <a class="dropdown-item" href="account-close.html"
-                ><i class="lni-close"></i>Account close</a
+              <a class="dropdown-item disabled text-muted" href="#"
+                >More components</a
               >
             </div>
           </li>
         </ul>
-        <a class="tg-btn" href="post-ads.html">
-          <i class="fa fa-pencil-square-o"></i> Post An Ad
-        </a>
+        <ul class="navbar-nav ml-md-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Get the app</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="http://example.com"
+              data-toggle="dropdown"
+              >English</a
+            >
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="#">Russian</a>
+              <a class="dropdown-item" href="#">French</a>
+              <a class="dropdown-item" href="#">Spanish</a>
+              <a class="dropdown-item" href="#">Chinese</a>
+            </div>
+          </li>
+        </ul>
       </div>
+      <!-- collapse .// -->
     </div>
+    <!-- container .// -->
   </nav>
+  <!-- header-main .// -->
 </header>

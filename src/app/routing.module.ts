@@ -7,6 +7,9 @@ import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ViewAdComponent } from './view-ad/view-ad.component';
 import { PostAdComponent } from './post-ad/post-ad.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductGridComponent } from './product-grid/product-grid.component';
 
 const routes: Routes = [
   {
@@ -25,12 +28,9 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'ad/view', component: ViewAdComponent },
   { path: 'ad/post', component: PostAdComponent },
-  // { path: 'add-quiz/:id/:code', component: AddQuizComponent },
-  // { path: 'add-course-module-five', component: AddCourseModuleFiveComponent },
-  // { path: 'upload-certificate', component: UploadCertificateComponent },
-  // { path: 'course-details/:code', component: CourseDetailsComponent },
-  // { path: 'edit-video', component: EditVideoComponent },
-  // { path: 'edit-quiz', component: EditQuizComponent },
+  { path: 'shopping-cart', component: ShoppingCartComponent },
+  { path: 'products', component: ProductListComponent },
+  { path: 'products/grid', component: ProductGridComponent },
 ];
 
 @NgModule({
