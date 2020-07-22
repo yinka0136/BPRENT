@@ -13,6 +13,7 @@ import { PostAdComponent } from './post-ad/post-ad.component';
 import { ViewAdComponent } from './view-ad/view-ad.component';
 import { RoutingModule } from './routing.module';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
+import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {
   GoogleLoginProvider,
@@ -55,6 +56,7 @@ export function provideConfig() {
     ReactiveFormsModule,
     HttpClientModule,
     NgxSpinnerModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     {

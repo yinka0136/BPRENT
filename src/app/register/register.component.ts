@@ -8,6 +8,7 @@ import {
   GoogleLoginProvider,
 } from 'angularx-social-login';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -25,7 +26,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private auth: AuthenticationService,
     private socialAuth: AuthService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -60,8 +62,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.auth.register(payload).subscribe({
         next: (res) => {
           this.spinner.hide();
+          this.toastr.info('User created successfully', 'Success');
           console.log(res);
         },
+        error: (error) => {},
       })
     );
   }

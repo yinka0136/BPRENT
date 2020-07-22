@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://social-auth-dev.herokuapp.com',
+  API_URL: 'https://bprents-dev-api.herokuapp.com',
 };
 
 /*
