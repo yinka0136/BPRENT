@@ -1,0 +1,155 @@
+<app-nav></app-nav>
+<!-- <section class="section-content padding-y">
+  <div c>
+  </div>
+</section> -->
+<section class="my-5 d-body">
+  <div class="container">
+    <div class="my-3 d-flex justify-content-between">
+      <div class="font20">Manage Categories</div>
+      <div>
+        <button class="btn btn-secondary btn-sm" (click)="manage()" id="manage">
+          Manage
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-sm-12 col-md-6">
+        <div class="category-card">
+          <div class="card-header font18 d-flex justify-content-between">
+            <div>Categories</div>
+            <div [hidden]="IsHidden">
+              <button class="btn btn-outline-secondary btn-sm" (click)="add()">
+                Add
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div
+              [ngClass]="{ isActive: catSlug == category.slug }"
+              class="each-category d-flex justify-content-between ho"
+              *ngFor="let category of categories"
+            >
+              <div
+                class="flex-grow-1"
+                (click)="getAllSubCategories(category.slug, category.name)"
+              >
+                <span>{{ category.name }}</span>
+              </div>
+              <img
+                class="icon-img"
+                src="assets/images/close.png"
+                alt=""
+                (click)="deleteCategory(category.slug)"
+                [hidden]="IsHidden"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-sm-12 col-md-6 sm-mt">
+        <div class="category-card">
+          <div class="card-header font18 d-flex justify-content-between">
+            <div>Subcategories</div>
+            <div [hidden]="IsHidden">
+              <button
+                class="btn btn-outline-secondary btn-sm"
+                modal-trigger="sub"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div
+              class="each-category d-flex justify-content-between ho"
+              *ngFor="let subCategory of subCategories"
+            >
+              <div class="flex-grow-1">
+                <span>{{ subCategory.name }}</span>
+              </div>
+              <img
+                class="icon-img"
+                src="assets/images/close.png"
+                alt=""
+                (click)="deleteCategory(subCategory.slug)"
+                [hidden]="IsHidden"
+              />
+            </div>
+            <div class="each-category" *ngIf="subCategories.length === 0">
+              No subcategories yet
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="padding-y-lg bg-light border-top">
+  <!-- ========================= SECTION SUBSCRIBE END// ========================= -->
+  <app-footer></app-footer>
+</section>
+<app-modal
+  elementId="sub"
+  headerTitle="Add Subcategory"
+  centered="true"
+  [styles]="{
+    modalBodyHeight: '220px',
+    modalContentWidth: '421px'
+  }"
+>
+  <div class="content">
+    <hr class="hline" />
+    <form action="" class="" [formGroup]="subCategoryForm">
+      <div class="form-row">
+        <div
+          *ngIf="catName"
+          class="d-flex justify-content-center mt-5 mb-3 form-group"
+        >
+          <input type="text" class="asd" value="{{ catName }}" disabled />
+          <span class="text-danger">*</span>
+        </div>
+        <div
+          *ngIf="!catName"
+          class="d-flex justify-content-center mt-5 mb-3 form-group"
+        >
+          <input
+            type="text"
+            class="asd"
+            value="Please select a category first"
+            disabled
+          />
+          <span class="text-danger">*</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="d-flex justify-content-center mb-4 form-group">
+          <input
+            type="text"
+            class="text-start form-control"
+            placeholder="Enter Subcategory Name"
+            formControlName="name"
+            [ngClass]="{
+              'is-invalid':
+                subCategoryForm.get('name').errors &&
+                subCategoryForm.get('name').touched
+            }"
+          />
+          <span class="text-danger">*</span>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center mt-3">
+        <button
+          data-dismiss="modal"
+          (click)="addSubCategory()"
+          class="modalBtn btn-primary"
+          type="button"
+          [disabled]="subCategoryForm.invalid"
+        >
+          Add
+        </button>
+      </div>
+    </form>
+  </div>
+</app-modal>
