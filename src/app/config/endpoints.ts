@@ -1,24 +1,24 @@
 export const endpoints = {
   //Auth
-  register: 'users/',
+  register: 'users/register',
   googleLogin: 'social/google-oauth2',
   facebookLogin: 'social/facebook',
 
   //Email Confirmation
-  sendEmailConfirmation: 'email_confirmation/send',
-  readEmailConfirmationToken: 'email_confirmation',
+  resendEmailConfirmation: 'users/send_email_confirmation',
+  confirmEmail: 'users/confirm_email',
 
   //Password Reset
-  sendPasswordReset: 'password_reset/send',
-  password_reset: 'password_reset',
+  sendPasswordReset: 'users/send_password_reset',
+  password_reset: 'users/password_reset',
 
   //Login
-  token: 'token',
-  refreshToken: 'token/referesh',
+  login: 'login',
+  refreshToken: 'token/referesh/',
 
   //States
-  stateList: 'states',
-  stateRegions: 'states',
+  fetchAllStates: 'states/all',
+  fetchRegions: 'states',
 
   //Users
   usersList: 'users',
@@ -32,8 +32,31 @@ export const endpoints = {
   passwordUpdate: 'users/password_update',
 
   //Categories
-  getAllCategories: 'categories',
-  createCategories: 'categories',
-  getAllSubcategories: 'categories',
-  createSubCategories: 'categories',
+  getAllCategories: 'category/all',
+  createCategory: 'category/create',
+  getAllSubcategories: 'category',
+  createSubCategory: 'category',
+  getCategory: 'category/find',
+  updateCategory: 'category',
+  deleteCategory: 'category',
+
+  //Ads
+  createAd: 'ads/create',
+  findAllAds: 'ads/all',
+  myAds: 'ads/my_ads',
+  savedAds: 'ads/saved',
+  findOneAd: 'ads',
+  findAllActiveAds: 'ads/all_active',
+  findAllPendingAds: 'ads/all_pending',
+  updateAd: 'ads',
+  approveAd: 'ads',
+  boostAd: 'ads',
+  toggleSaveAd: 'ads',
+  toggleDisabledAd: 'ads',
+  repostAd: 'ads',
+  declineAd: 'ads',
+  cancelAd: 'ads',
+  deleteAd: 'ads',
+  newAds: 'ads/new',
+  trendingAds: 'ads/trending',
 };

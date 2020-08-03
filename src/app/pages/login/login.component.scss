@@ -1,0 +1,18 @@
+@import "../../../styles/variables-custom";
+.btn-facebook {
+  background-color: #405d9d;
+  color: #fff !important;
+  &:hover {
+    color: #fff;
+  }
+}
+.btn-google {
+  background-color: #af0000;
+  color: #fff !important;
+  &:hover {
+    color: #fff;
+  }
+}
+a {
+  text-decoration: none;
+}
