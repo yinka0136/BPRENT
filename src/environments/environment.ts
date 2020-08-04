@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // API_URL: 'https://bprents-dev-api.herokuapp.com',
   API_URL: 'https://bprents-api.herokuapp.com',
+  // API_URL: 'http://localhost:9000',
 };
 
 /*

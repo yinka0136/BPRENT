@@ -236,7 +236,7 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">#{{ trending?.price }}.00</div>
+            <div class="price mt-1">{{ trending?.price | currency : "₦" }}</div>
             <!-- price-wrap.// -->
           </figcaption>
         </div>
@@ -282,7 +282,7 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">${{ newAd?.price }}.00</div>
+            <div class="price mt-1">{{ newAd?.price | currency : "₦" }}</div>
             <!-- price-wrap.// -->
           </figcaption>
         </div>
