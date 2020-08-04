@@ -81,7 +81,7 @@ export class GlobalService {
       toast: true,
       position: 'top-end',
       showConfirmButton: false,
-      timer: 5000,
+      timer: 7000,
       timerProgressBar: true,
       onOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer);

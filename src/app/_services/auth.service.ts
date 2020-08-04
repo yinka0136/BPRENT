@@ -48,7 +48,7 @@ export class AuthenticationService {
 
   passwordassordReset(payload) {
     return this.http.post(
-      `${environment.API_URL}/${endpoints.password_reset}/${payload.token}`,
+      `${environment.API_URL}/${endpoints.password_reset}`,
       payload
     );
   }

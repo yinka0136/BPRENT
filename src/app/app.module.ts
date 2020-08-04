@@ -35,6 +35,7 @@ import { JQ_TOKEN } from './shared-services/jQuery/jQuery.service';
 import { UploadComponent } from './fileupload/upload/upload.component';
 import { BarRatingModule } from 'ngx-bar-rating';
 import { AuthGuardService } from './_guards/auth-guard.service';
+import { PasswordConfirmComponent } from './password-confirm/password-confirm.component';
 const jQuery = window['$'];
 let config = new AuthServiceConfig([
   {
@@ -73,6 +74,7 @@ export function provideConfig() {
     EmailConfirmationComponent,
     CategoryComponent,
     ModalTriggerDirective,
+    PasswordConfirmComponent,
   ],
   imports: [
     BrowserModule,

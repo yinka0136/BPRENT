@@ -17,6 +17,7 @@ import { CreateAdResolver } from '../_resolvers/create-ad.resolver';
 import { DashboardResolver } from '../_resolvers/dashboard.resolver';
 import { AdDetailResolver } from '../_resolvers/ad-detail.resolver';
 import { AuthGuardService } from '../_guards/auth-guard.service';
+import { PasswordConfirmComponent } from '../password-confirm/password-confirm.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
   {
     path: 'confirm/:token',
     component: EmailConfirmationComponent,
+  },
+  {
+    path: 'reset/:token',
+    component: PasswordConfirmComponent,
   },
   {
     path: 'create-category',
