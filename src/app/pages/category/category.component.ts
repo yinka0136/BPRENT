@@ -46,6 +46,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   initAddSubcategory() {
     this.subCategoryForm = this.fb.group({
       name: ['', Validators.required],
+      coins: ['', Validators.required],
     });
   }
 

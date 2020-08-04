@@ -7,16 +7,16 @@
       <div class="card-body">
         <div class="row">
           <aside class="col-md-3 flex-lg-grow-0">
-            <h6>MY MARKETS</h6>
+            <h6>CATEGORIES</h6>
             <nav class="nav-home-aside">
               <ul class="menu-category">
-                <li><a href="#">Fashion and clothes</a></li>
-                <li><a href="#">Automobile and motors</a></li>
-                <li><a href="#">Gardening and agriculture</a></li>
-                <li><a href="#">Electronics and tech</a></li>
-                <li><a href="#">Packaginf and printing</a></li>
-                <li><a href="#">Home and kitchen</a></li>
-                <li><a href="#">Digital goods</a></li>
+                <li>
+                  <a routerLink="/products">All</a>
+                </li>
+                <li *ngFor="let category of categories">
+                  <a href="#">{{ category?.name }}</a>
+                </li>
+
                 <li class="has-submenu">
                   <a href="#">More items</a>
                   <ul class="submenu">
@@ -210,13 +210,17 @@
 
     <div class="row row-sm">
       <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/2.jpg" />
+      <div
+        class="col-xl-3 col-lg-3 col-md-4 col-6 click"
+        [routerLink]="['/ad/view', trending?.slug]"
+        *ngFor="let trending of trendingAds"
+      >
+        <div class="card card-sm card-product-grid focus">
+          <a class="img-wrap">
+            <img src="{{ (trending?.adImages)[0].imageUrl }}" />
           </a>
           <figcaption class="info-wrap">
-            <a href="#" class="title">Some item name here</a>
+            <a href="#" class="title">{{ trending?.title }}</a>
             <div class="rating-wrap">
               <ul class="rating-stars">
                 <li style="width: 80%;" class="stars-active">
@@ -232,7 +236,7 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">$179.00</div>
+            <div class="price mt-1">#{{ trending?.price }}.00</div>
             <!-- price-wrap.// -->
           </figcaption>
         </div>
@@ -241,204 +245,6 @@
 
       <!-- col.// -->
 
-      <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/5.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Just another product name</a>
-            <div class="rating-wrap">
-              <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-                <li>
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-              </ul>
-              <span class="label-rating text-muted"> 34 reviws</span>
-            </div>
-            <div class="price mt-1">$179.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-
-      <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/7.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Great product name here</a>
-            <div class="rating-wrap">
-              <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-                <li>
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-              </ul>
-              <span class="label-rating text-muted"> 34 reviws</span>
-            </div>
-            <div class="price mt-1">$56.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/9.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Just another product name</a>
-            <div class="rating-wrap">
-              <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-                <li>
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-              </ul>
-              <span class="label-rating text-muted"> 34 reviws</span>
-            </div>
-            <div class="price mt-1">$179.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/4.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Just another product name</a>
-            <div class="rating-wrap">
-              <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-                <li>
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-              </ul>
-              <span class="label-rating text-muted"> 34 reviws</span>
-            </div>
-            <div class="price mt-1">$179.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/5.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Just another product name</a>
-            <div class="rating-wrap">
-              <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-                <li>
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-              </ul>
-              <span class="label-rating text-muted"> 34 reviws</span>
-            </div>
-            <div class="price mt-1">$179.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/6.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Some item name here</a>
-            <div class="rating-wrap">
-              <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-                <li>
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-              </ul>
-              <span class="label-rating text-muted"> 34 reviws</span>
-            </div>
-            <div class="price mt-1">$280.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/7.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Great product name here</a>
-            <div class="rating-wrap">
-              <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-                <li>
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-              </ul>
-              <span class="label-rating text-muted"> 34 reviws</span>
-            </div>
-            <div class="price mt-1">$56.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
       <!-- col.// -->
     </div>
     <!-- row.// -->
@@ -450,14 +256,17 @@
     </header>
 
     <div class="row row-sm">
-      <!-- col.// -->
       <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/2.jpg" />
+        <div
+          [routerLink]="['/ad/view', newAd?.slug]"
+          class="card card-sm card-product-grid click"
+          *ngFor="let newAd of newAds"
+        >
+          <a class="img-wrap">
+            <img src="{{ (newAd?.adImages)[0].imageUrl }}" />
           </a>
           <figcaption class="info-wrap">
-            <a href="#" class="title">Some item name here</a>
+            <a href="#" class="title">{{ newAd?.title }}</a>
             <div class="rating-wrap">
               <ul class="rating-stars">
                 <li style="width: 80%;" class="stars-active">
@@ -473,209 +282,7 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">$179.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-
-      <!-- col.// -->
-
-      <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/5.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Just another product name</a>
-            <div class="rating-wrap">
-              <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-                <li>
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-              </ul>
-              <span class="label-rating text-muted"> 34 reviws</span>
-            </div>
-            <div class="price mt-1">$179.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-
-      <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/7.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Great product name here</a>
-            <div class="rating-wrap">
-              <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-                <li>
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-              </ul>
-              <span class="label-rating text-muted"> 34 reviws</span>
-            </div>
-            <div class="price mt-1">$56.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/9.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Just another product name</a>
-            <div class="rating-wrap">
-              <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-                <li>
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-              </ul>
-              <span class="label-rating text-muted"> 34 reviws</span>
-            </div>
-            <div class="price mt-1">$179.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/4.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Just another product name</a>
-            <div class="rating-wrap">
-              <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-                <li>
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-              </ul>
-              <span class="label-rating text-muted"> 34 reviws</span>
-            </div>
-            <div class="price mt-1">$179.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/5.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Just another product name</a>
-            <div class="rating-wrap">
-              <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-                <li>
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-              </ul>
-              <span class="label-rating text-muted"> 34 reviws</span>
-            </div>
-            <div class="price mt-1">$179.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/6.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Some item name here</a>
-            <div class="rating-wrap">
-              <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-                <li>
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-              </ul>
-              <span class="label-rating text-muted"> 34 reviws</span>
-            </div>
-            <div class="price mt-1">$280.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div href="#" class="card card-sm card-product-grid">
-          <a href="#" class="img-wrap">
-            <img src="../../assets/images/items/7.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">Great product name here</a>
-            <div class="rating-wrap">
-              <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-                <li>
-                  <i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
-                  ><i class="fa fa-star"></i>
-                </li>
-              </ul>
-              <span class="label-rating text-muted"> 34 reviws</span>
-            </div>
-            <div class="price mt-1">$56.00</div>
+            <div class="price mt-1">${{ newAd?.price }}.00</div>
             <!-- price-wrap.// -->
           </figcaption>
         </div>

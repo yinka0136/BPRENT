@@ -34,12 +34,16 @@ export const endpoints = {
   //Categories
   getAllCategories: 'category/all',
   createCategory: 'category/create',
-  getAllSubcategories: 'category',
-  createSubCategory: 'category',
+
   getCategory: 'category/find',
   updateCategory: 'category',
   deleteCategory: 'category',
-
+  //Subcategories
+  getAllSubcategories: 'sub_category',
+  createSubCategory: 'sub_category',
+  deleteSubcategory: 'sub_category',
+  updateSubcategory: 'sub_category',
+  getOneSubcategory: 'sub_category',
   //Ads
   createAd: 'ads/create',
   findAllAds: 'ads/all',
@@ -59,4 +63,8 @@ export const endpoints = {
   deleteAd: 'ads',
   newAds: 'ads/new',
   trendingAds: 'ads/trending',
+  //Coins
+  buyCoins: 'coins/buy',
+  allTransactios: 'coins/transactions',
+  myTransactions: 'coins/my_transactions',
 };

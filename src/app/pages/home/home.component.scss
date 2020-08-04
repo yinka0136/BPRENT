@@ -8,3 +8,6 @@
 a {
   text-decoration: none;
 }
+.focus:focus {
+  border: none !important;
+}

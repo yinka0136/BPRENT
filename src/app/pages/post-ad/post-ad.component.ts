@@ -61,6 +61,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initAdForm();
+    console.log(this.adForm.value);
     this.route.data.subscribe((res) => {
       this.categories = res['resolvedData'].categories['responseResult'];
       this.states = res['resolvedData'].states['responseResult'];

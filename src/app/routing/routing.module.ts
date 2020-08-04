@@ -15,6 +15,8 @@ import { EmailConfirmationComponent } from '../email-confirmation/email-confirma
 import { CategoryComponent } from '../pages/category/category.component';
 import { CreateAdResolver } from '../_resolvers/create-ad.resolver';
 import { DashboardResolver } from '../_resolvers/dashboard.resolver';
+import { AdDetailResolver } from '../_resolvers/ad-detail.resolver';
+import { AuthGuardService } from '../_guards/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -46,10 +48,15 @@ const routes: Routes = [
 
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'ad/view', component: ViewAdComponent },
+  {
+    path: 'ad/view/:slug',
+    component: ViewAdComponent,
+    resolve: { resolvedData: AdDetailResolver },
+  },
   {
     path: 'ad/post',
     component: PostAdComponent,
+    canActivate: [AuthGuardService],
     resolve: { resolvedData: CreateAdResolver },
   },
   { path: 'shopping-cart', component: ShoppingCartComponent },

@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ResponseStructure } from 'src/app/_models/respose';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,16 +11,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   categories: any[] = [];
   newAds: any[] = [];
   sub: Subscription = new Subscription();
-  trendigAds: any[] = [];
+  trendingAds: any[] = [];
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.data.subscribe((res) => {
       console.log(res);
       const result = res['resolvedData'];
-      this.categories = result['categories'];
-      this.newAds = result['newAds'];
-      this.trendigAds = result['trendigAds'];
+      this.categories = result['categories'].responseResult;
+      this.newAds = result['newAds'].responseResult;
+      this.trendingAds = result['trendingAds'].responseResult;
     });
   }
   ngOnDestroy(): void {}
