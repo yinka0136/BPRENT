@@ -77,7 +77,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           console.log(res);
         },
         error: (e) => {
-          this._global.globalAuthErrorHandler(e);
+          this._global.hideSpinnerWithErrorMessage(e);
           console.log(e);
         },
       })

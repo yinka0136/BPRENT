@@ -53,13 +53,24 @@
                 <i class="fa fa-bars"></i>
               </button>
             </div>
+            <!-- <paystack-pay-button
+        class="yellow"
+        text="<small><b>Pay</b> Me Now!</small>"
+        email="$scope.email"
+        amount="$scope.amount"
+        reference="$scope.reference"
+        beforepopup="$scope.beforePopUp"
+        metadata="$scope.metadata"
+        callback="$scope.callback"
+        close="$scope.close">
+</paystack-pay-button> -->
             <a
               href="#"
               class="widget-header mr-3"
               *ngIf="loggedIn()"
-              (click)="buyCoin('hjk')"
+              (click)="buyCoin()"
             >
-              <div class="icon">
+              <div class="ico">
                 <span class="mr-1" style="color: black;"> buy coins</span>
                 <i class="icon-sm rounded-circle border fa fa-credit-card"></i>
               </div>
