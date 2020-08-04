@@ -138,6 +138,22 @@
           <span class="text-danger">*</span>
         </div>
       </div>
+      <div class="form-row">
+        <div class="d-flex justify-content-center mb-4 form-group">
+          <input
+            type="text"
+            class="text-start form-control"
+            placeholder="Enter coin amount"
+            formControlName="coins"
+            [ngClass]="{
+              'is-invalid':
+                subCategoryForm.get('coins').errors &&
+                subCategoryForm.get('coins').touched
+            }"
+          />
+          <span class="text-danger">*</span>
+        </div>
+      </div>
 
       <div class="d-flex justify-content-center mt-3">
         <button

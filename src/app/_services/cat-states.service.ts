@@ -26,7 +26,7 @@ export class CatStatesService {
 
   getAllSubCategories(slug) {
     return this.http.get(
-      `${environment.API_URL}/${endpoints.getAllSubcategories}/${slug}/sub_categories`
+      `${environment.API_URL}/${endpoints.getAllSubcategories}/${slug}/all`
     );
   }
 
@@ -56,7 +56,7 @@ export class CatStatesService {
   }
   createSubCategory(payload, slug) {
     return this.http.post(
-      `${environment.API_URL}/${endpoints.createSubCategory}/${slug}/sub_category`,
+      `${environment.API_URL}/${endpoints.createSubCategory}/${slug}/create`,
       payload
     );
   }

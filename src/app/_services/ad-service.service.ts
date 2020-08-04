@@ -75,7 +75,7 @@ export class AdServiceService {
   }
   getAd(slug) {
     return this.http.get(
-      `${environment.API_URL}/${endpoints.findOneAd}/${slug}find`
+      `${environment.API_URL}/${endpoints.findOneAd}/${slug}/find`
     );
   }
   deleteAd(slug) {

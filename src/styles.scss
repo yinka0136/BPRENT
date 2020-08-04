@@ -1,3 +1,4 @@
+@import "~ngx-bar-rating/themes/br-fontawesome-theme";
 @import "./styles/bootstrap.scss";
 
 @import "./styles/responsive.scss";
@@ -88,4 +89,9 @@
 .my-button-gr {
   background-color: green !important;
   color: white !important;
+}
+
+.btn-margin {
+  padding: 0 23px;
+  margin: 10px 0 20px;
 }

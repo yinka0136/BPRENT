@@ -201,7 +201,7 @@
             class="btn my-button-gr ml-4"
             (click)="boostAd()"
             *ngIf="adForm.get('boosted').value == false"
-            disabled="adForm.get('subCategoryId').value == null"
+            [disabled]="adForm.get('subCategoryId').value == ''"
           >
             Boost Ad
           </button>

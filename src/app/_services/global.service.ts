@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ResponseCode, ResponseStructure } from '../_models/respose';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -74,5 +75,22 @@ export class GlobalService {
     this._toastr.error(
       'An unexpected error occurred, Please ensure that you are connected to the internet!'
     );
+  }
+  toast(icon, title) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 7000,
+      timerProgressBar: true,
+      onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      },
+    });
+    Toast.fire({
+      icon: icon,
+      title: title,
+    });
   }
 }

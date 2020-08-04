@@ -12,13 +12,19 @@
           <form action="#" class="search">
             <div class="input-group w-100">
               <input
-                type="text"
+                #query
+                type="search"
                 class="form-control"
                 style="width: 55%;"
                 placeholder="Search"
+                (keyup)="getInput(query.value)"
               />
               <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">
+                <button
+                  class="btn btn-primary"
+                  type="submit"
+                  (click)="search()"
+                >
                   <i class="fa fa-search"></i>
                 </button>
               </div>
@@ -47,6 +53,17 @@
                 <i class="fa fa-bars"></i>
               </button>
             </div>
+            <a
+              href="#"
+              class="widget-header mr-3"
+              *ngIf="loggedIn()"
+              (click)="buyCoin('hjk')"
+            >
+              <div class="icon">
+                <span class="mr-1" style="color: black;"> buy coins</span>
+                <i class="icon-sm rounded-circle border fa fa-credit-card"></i>
+              </div>
+            </a>
 
             <a href="#" class="widget-header mr-3" *ngIf="loggedIn()">
               <div class="icon">
@@ -68,8 +85,8 @@
               </a>
 
               <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">Profile setting</a>
-                <a class="dropdown-item" href="#">My orders</a>
+                <a class="dropdown-item" href="#">Profile</a>
+                <a class="dropdown-item" href="#">My Ads</a>
                 <hr class="dropdown-divider" />
                 <a class="dropdown-item click" (click)="logOut()">Log out</a>
               </div>
@@ -113,25 +130,11 @@
               <i class="fa fa-bars text-muted mr-2"></i> All categories</a
             >
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="page-category.html"
-                >Foods and Drink</a
-              >
-              <a class="dropdown-item" href="page-category.html"
-                >Home interior</a
-              >
-              <a class="dropdown-item" href="page-category.html"
-                >Computer electronics</a
-              >
-              <a class="dropdown-item" href="page-category.html">Clothing</a>
-              <a class="dropdown-item" href="page-category.html"
-                >Gardening and flowers</a
-              >
-              <a class="dropdown-item" href="page-category.html"
-                >Hand made items</a
-              >
-              <a class="dropdown-item" href="page-category.html">Smartphones</a>
-              <a class="dropdown-item" href="page-category.html"
-                >Digital products</a
+              <a
+                class="dropdown-item"
+                href="page-category.html"
+                *ngFor="let category of categories"
+                >{{ category?.name }}</a
               >
             </div>
           </li>
@@ -156,7 +159,7 @@
               Manage category
             </a>
           </li>
-          <li class="nav-item" *ngIf="loggedIn()">
+          <li class="nav-item">
             <a
               (click)="postAdd()"
               style="color: white;"

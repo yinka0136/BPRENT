@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AuthenticationService } from 'src/app/_services/auth.service';
 import { Router } from '@angular/router';
+import { CoinService } from 'src/app/_services/coin.service';
+import { ResponseStructure } from 'src/app/_models/respose';
+import { CatStatesService } from 'src/app/_services/cat-states.service';
 
 @Component({
   selector: 'app-nav',
@@ -8,9 +11,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit {
-  constructor(private auth: AuthenticationService, private router: Router) {}
+  categories: any[] = [];
+  // @ViewChild('query', { static: false }) query: ElementRef<HTMLInputElement>;
+  keyword;
+  constructor(
+    private auth: AuthenticationService,
+    private router: Router,
+    private coinService: CoinService,
+    private category: CatStatesService
+  ) {}
 
   ngOnInit(): void {
+    this.getAllCategories();
     console.log(this.loggedIn());
   }
 
@@ -36,5 +48,26 @@ export class NavComponent implements OnInit {
   logOut() {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
+  }
+  getInput(keyword) {
+    this.keyword = keyword;
+  }
+  search() {
+    this.router.navigate(['products']);
+    console.log(this.keyword);
+  }
+
+  buyCoin(payload) {
+    this.coinService.buyCoins(payload).subscribe((res: ResponseStructure) => {
+      console.log(res);
+    });
+  }
+
+  getAllCategories() {
+    this.category.getAllCategories().subscribe({
+      next: (res: ResponseStructure) => {
+        this.categories = res.responseResult;
+      },
+    });
   }
 }
