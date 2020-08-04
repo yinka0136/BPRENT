@@ -4,9 +4,9 @@
   <div class="container">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">Category name</a></li>
-      <li class="breadcrumb-item"><a href="#">Sub category</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Items</li>
+      <li class="breadcrumb-item"><a href="#">{{ad.subCategory.category.name}}</a></li>
+      <li class="breadcrumb-item" aria-current="page"><a href="#">{{ad.subCategory.name}}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ad.title}}</li>
     </ol>
   </div>
 </section>
@@ -241,7 +241,7 @@
         <article class="product-info-aside bg-white">
           <div class="btn-p">
             <button class="btn btn-price">
-              <h2>N{{ ad?.price }}</h2>
+              <h2>{{ ad?.price | currency: "₦" }}</h2>
             </button>
           </div>
           <div class="my-4 d-flex justify-content-center">
@@ -386,7 +386,7 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">${{ relatedAd?.price }}.00</div>
+            <div class="price mt-1">{{ relatedAd?.price | currency : "₦" }}</div>
             <!-- price-wrap.// -->
           </figcaption>
         </div>
