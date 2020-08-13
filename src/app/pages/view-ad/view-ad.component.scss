@@ -98,7 +98,6 @@ a {
   box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.17);
 }
 .btn-price {
-  height: 80px !important;
   background-color: #2196f3;
   border-color: #2196f3;
   color: #fff;
@@ -146,10 +145,10 @@ a {
     padding-left: 6px;
   }
   &:hover {
-    border: 2px solid #1cb4ae;
+    border: 2px solid #2196f3;
   }
   &:focus {
-    border: 2px solid #1cb4ae;
+    border: 2px solid #2196f3;
   }
 }
 .btn-rating {
@@ -157,7 +156,7 @@ a {
   height: 48px;
   left: 228px;
   top: 550px;
-  background: #277db1 !important;
+  background: #78797a !important;
   border-radius: 6px;
   color: white;
 }
@@ -178,7 +177,7 @@ a {
   display: -ms-flexbox;
 }
 .nav-item a {
-  color: #277db1;
+  color: #2196f3;
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {

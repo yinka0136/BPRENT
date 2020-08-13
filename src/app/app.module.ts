@@ -19,7 +19,6 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { PostAdComponent } from './pages/post-ad/post-ad.component';
 import { ViewAdComponent } from './pages/view-ad/view-ad.component';
-import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
 import { ProductListComponent } from './pages/product-list/product-list.component';
 import { ProductGridComponent } from './pages/product-grid/product-grid.component';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
@@ -35,7 +34,10 @@ import { JQ_TOKEN } from './shared-services/jQuery/jQuery.service';
 import { UploadComponent } from './fileupload/upload/upload.component';
 import { BarRatingModule } from 'ngx-bar-rating';
 import { AuthGuardService } from './_guards/auth-guard.service';
+import { Angular4PaystackModule } from 'angular4-paystack';
 import { PasswordConfirmComponent } from './password-confirm/password-confirm.component';
+import { EditAdComponent } from './pages/edit-ad/edit-ad.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 const jQuery = window['$'];
 let config = new AuthServiceConfig([
   {
@@ -67,7 +69,6 @@ export function provideConfig() {
     ViewAdComponent,
     UploadComponent,
     ModalComponent,
-    ShoppingCartComponent,
     ProductListComponent,
     ProductGridComponent,
     PasswordResetComponent,
@@ -75,14 +76,19 @@ export function provideConfig() {
     CategoryComponent,
     ModalTriggerDirective,
     PasswordConfirmComponent,
+    EditAdComponent,
   ],
   imports: [
     BrowserModule,
     RoutingModule,
     FormsModule,
     BrowserAnimationsModule,
+    NgxPaginationModule,
     BarRatingModule,
     AngularEditorModule,
+    Angular4PaystackModule.forRoot(
+      'pk_test_e746e7f11bfcb5735e098b0ca21fca212afb77fc'
+    ),
     JwtModule.forRoot({
       config: {},
     }),

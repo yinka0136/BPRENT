@@ -1,29 +1,29 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Subscription } from 'rxjs';
-import Swal from 'sweetalert2';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { GlobalService } from 'src/app/_services/global.service';
 import { AdServiceService } from 'src/app/_services/ad-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { CatStatesService } from 'src/app/_services/cat-states.service';
+import Swal from 'sweetalert2';
 import { ResponseStructure } from 'src/app/_models/respose';
 
 @Component({
-  selector: 'app-post-ad',
-  templateUrl: './post-ad.component.html',
-  styleUrls: ['./post-ad.component.scss'],
+  selector: 'app-edit-ad',
+  templateUrl: './edit-ad.component.html',
+  styleUrls: ['./edit-ad.component.scss'],
 })
-export class PostAdComponent implements OnInit, OnDestroy {
+export class EditAdComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
   adForm: FormGroup;
   images: any[] = [];
+  ad;
   image: any;
   categories: any[] = [];
   subCategories: any[] = [];
   states: any[] = [];
   regions: any[] = [];
-
   config: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -50,7 +50,6 @@ export class PostAdComponent implements OnInit, OnDestroy {
       },
     ],
   };
-
   constructor(
     private fb: FormBuilder,
     private _global: GlobalService,
@@ -60,24 +59,23 @@ export class PostAdComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.initAdForm();
-    console.log(this.adForm.value);
     this.route.data.subscribe((res) => {
+      console.log(res);
       this.categories = res['resolvedData'].categories['responseResult'];
       this.states = res['resolvedData'].states['responseResult'];
-      console.log(res);
+      this.ad = res['resolvedData'].ad['responseResult'].ad;
     });
+    this.initAdForm();
   }
   initAdForm() {
     this.adForm = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
+      title: [this.ad.title, Validators.required],
+      description: [this.ad.description, Validators.required],
       subCategoryId: ['', Validators.required],
       regionId: [''],
-      dailyPrice: ['', Validators.required],
-      weeklyPrice: ['', Validators.required],
-      boosted: [false],
-      negotiable: [''],
+      price: [this.ad.price, Validators.required],
+      boosted: [this.ad.boosted],
+      negotiable: [this.ad.negotiable],
     });
   }
 
@@ -123,6 +121,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
   }
   postAd() {
     this._global.showSpinner();
+
     const payload = this.adForm.value;
     const adJson = JSON.stringify(payload);
     const formData = new FormData();

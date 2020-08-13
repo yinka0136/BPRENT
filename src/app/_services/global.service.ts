@@ -30,6 +30,11 @@ export class GlobalService {
     this._toastr.error(response.responseMessage);
   }
 
+  hideSpinnerWithError(error) {
+    this._spinner.hide();
+    this._toastr.error(error);
+  }
+
   globalAuthErrorHandler(error: ResponseStructure) {
     this.hideSpinner();
     if (error) {

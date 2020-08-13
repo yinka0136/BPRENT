@@ -5,31 +5,33 @@ import { CatStatesService } from '../_services/cat-states.service';
 import { map, catchError } from 'rxjs/operators';
 import { GlobalService } from '../_services/global.service';
 import { AdServiceService } from '../_services/ad-service.service';
-import { FeedbackService } from '../_services/feedback.service';
+import { MessageService } from '../_services/message.service';
 
 @Injectable({ providedIn: 'root' })
-export class AdDetailResolver implements Resolve<any> {
+export class ProfileResolver implements Resolve<any> {
   constructor(
-    private _adService: AdServiceService,
     private _global: GlobalService,
-    private _feedBack: FeedbackService
+    private _adService: AdServiceService,
+    private _messageService: MessageService
   ) {}
   resolve(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
-    const slug = route.paramMap.get('slug');
-    const userSlug = route.paramMap.get('userSlug');
     this._global.showSpinner();
-    const ad = this._adService.getAd(slug);
-    const feedbacks = this._feedBack.findUserFeedback(0, 4, userSlug);
-    return forkJoin([ad, feedbacks]).pipe(
+    const favorites = this._adService.savedAds(0, 5);
+    const myAds = this._adService.myAds(0, 5);
+    const recievedMessages = this._messageService.findAllRecievedMessages(0, 5);
+    const sentMessages = this._messageService.findAllSentMessages(0, 5);
+    return forkJoin([favorites, myAds, recievedMessages, sentMessages]).pipe(
       map((res) => {
         this._global.hideSpinner();
         return {
-          ad: res[0],
-          feedbacks: res[1],
+          favorites: res[0],
+          myAds: res[1],
+          recievedMessages: res[2],
+          sentMessages: res[3],
         };
       }),
       catchError((error) => {
-        this._global.hideSpinnerWithErrorMessage(error.error);
+        this._global.hideSpinnerWithErrorMessage(error.error.error);
         return of(error);
       })
     );

@@ -7,7 +7,6 @@ import { RegisterComponent } from '../pages/register/register.component';
 import { ProfileComponent } from '../pages/profile/profile.component';
 import { ViewAdComponent } from '../pages/view-ad/view-ad.component';
 import { PostAdComponent } from '../pages/post-ad/post-ad.component';
-import { ShoppingCartComponent } from '../pages/shopping-cart/shopping-cart.component';
 import { ProductListComponent } from '../pages/product-list/product-list.component';
 import { ProductGridComponent } from '../pages/product-grid/product-grid.component';
 import { PasswordResetComponent } from '../pages/password-reset/password-reset.component';
@@ -18,6 +17,9 @@ import { DashboardResolver } from '../_resolvers/dashboard.resolver';
 import { AdDetailResolver } from '../_resolvers/ad-detail.resolver';
 import { AuthGuardService } from '../_guards/auth-guard.service';
 import { PasswordConfirmComponent } from '../password-confirm/password-confirm.component';
+import { EditAdComponent } from '../pages/edit-ad/edit-ad.component';
+import { AdEditResolver } from '../_resolvers/ad-edit.resolver';
+import { ProfileResolver } from '../_resolvers/profile.resolver';
 
 const routes: Routes = [
   {
@@ -52,9 +54,13 @@ const routes: Routes = [
   },
 
   { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfileComponent },
   {
-    path: 'ad/view/:slug',
+    path: 'profile',
+    component: ProfileComponent,
+    resolve: { resolvedData: ProfileResolver },
+  },
+  {
+    path: 'ad/view/:slug/:userSlug',
     component: ViewAdComponent,
     resolve: { resolvedData: AdDetailResolver },
   },
@@ -64,7 +70,12 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
     resolve: { resolvedData: CreateAdResolver },
   },
-  { path: 'shopping-cart', component: ShoppingCartComponent },
+  {
+    path: 'ad/edit/:slug',
+    component: EditAdComponent,
+    canActivate: [AuthGuardService],
+    resolve: { resolvedData: AdEditResolver },
+  },
   { path: 'products', component: ProductListComponent },
   { path: 'products/grid', component: ProductGridComponent },
 ];

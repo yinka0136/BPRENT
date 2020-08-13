@@ -203,25 +203,24 @@
   <!-- =============== SECTION REQUEST .//END =============== -->
 
   <!-- =============== SECTION ITEMS =============== -->
-  <section class="padding-bottom-sm">
+  <section class="padding-bottom-sm featured">
     <header class="section-heading heading-line">
       <h4 class="title-section text-uppercase">Trending Ads</h4>
     </header>
 
     <div class="row row-sm">
-      <!-- col.// -->
       <div
         class="col-xl-3 col-lg-3 col-md-4 col-6 click"
-        [routerLink]="['/ad/view', trending?.slug]"
+        [routerLink]="['/ad/view', trending?.slug, trending?.user?.slug]"
         *ngFor="let trending of trendingAds"
       >
-        <div class="card card-sm card-product-grid focus">
+        <div class="card card-sm card-product-grid focus featured-box">
           <a class="img-wrap">
             <img src="{{ (trending?.adImages)[0].imageUrl }}" />
           </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">{{ trending?.title }}</a>
-            <div class="rating-wrap">
+          <figcaption class="info-wrap feature-content">
+            <h4>{{ trending?.title }}</h4>
+            <div class="rating-wrap d-flex">
               <ul class="rating-stars">
                 <li style="width: 80%;" class="stars-active">
                   <i class="fa fa-star"></i><i class="fa fa-star"></i
@@ -236,38 +235,38 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">{{ trending?.price | currency : "₦" }}</div>
-            <!-- price-wrap.// -->
+            <div class="listing-bottom">
+              <h3 class="price">
+                {{ trending?.price | currency: "₦" }}
+              </h3>
+              <a class="btn-verified" *ngIf="trending?.boosted"
+                ><i class="fa fa-check-square-o"></i> Boosted Ad</a
+              >
+            </div>
           </figcaption>
         </div>
       </div>
-      <!-- col.// -->
-
-      <!-- col.// -->
-
-      <!-- col.// -->
     </div>
-    <!-- row.// -->
   </section>
   <!-- =============== SECTION ITEMS .//END =============== -->
-  <section class="padding-bottom-sm">
+  <section class="padding-bottom-sm featured">
     <header class="section-heading heading-line">
       <h4 class="title-section text-uppercase">New Ads</h4>
     </header>
 
     <div class="row row-sm">
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div
-          [routerLink]="['/ad/view', newAd?.slug]"
-          class="card card-sm card-product-grid click"
-          *ngFor="let newAd of newAds"
-        >
+      <div
+        class="col-xl-3 col-lg-3 col-md-4 col-6 click"
+        [routerLink]="['/ad/view', newAd?.slug, newAd?.user?.slug]"
+        *ngFor="let newAd of newAds"
+      >
+        <div class="card card-sm card-product-grid focus featured-box">
           <a class="img-wrap">
             <img src="{{ (newAd?.adImages)[0].imageUrl }}" />
           </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">{{ newAd?.title }}</a>
-            <div class="rating-wrap">
+          <figcaption class="info-wrap feature-content">
+            <h4>{{ newAd?.title }}</h4>
+            <div class="rating-wrap d-flex">
               <ul class="rating-stars">
                 <li style="width: 80%;" class="stars-active">
                   <i class="fa fa-star"></i><i class="fa fa-star"></i
@@ -282,19 +281,18 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">{{ newAd?.price | currency : "₦" }}</div>
-            <!-- price-wrap.// -->
+            <div class="listing-bottom">
+              <h3 class="price">
+                {{ newAd?.price | currency: "₦" }}
+              </h3>
+              <a class="btn-verified" *ngIf="newAd?.boosted"
+                ><i class="fa fa-check-square-o"></i> Boosted Ad</a
+              >
+            </div>
           </figcaption>
         </div>
       </div>
-      <!-- col.// -->
     </div>
-    <!-- row.// -->
   </section>
-  <!-- =============== SECTION SERVICES .//END =============== -->
-
-  <!-- =============== SECTION REGION =============== -->
-
-  <!-- =============== SECTION REGION .//END =============== -->
 </div>
 <app-footer></app-footer>

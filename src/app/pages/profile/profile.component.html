@@ -15,52 +15,51 @@
               </div>
             </div>
             <nav class="navdashboard">
-              <ul>
+              <ul class="nav">
                 <li>
-                  <a class="active" href="dashboard.html">
-                    <i class="lni-dashboard"></i>
+                  <a
+                    class="active"
+                    href="#v-pills-dashboard"
+                    data-toggle="pill"
+                  >
+                    <i class="fa fa-dashboard"></i>
                     <span>Dashboard</span>
                   </a>
                 </li>
                 <li>
-                  <a href="account-profile-setting.html">
-                    <i class="lni-cog"></i>
+                  <a class="click" (click)="manageCat()">
+                    <i class="fa fa-wrench"></i>
+                    Manage category
+                  </a>
+                </li>
+                <li>
+                  <a href="#v-pills-profile" data-toggle="pill">
+                    <i class="fa fa-cog"></i>
                     <span>Profile Settings</span>
                   </a>
                 </li>
                 <li>
-                  <a href="account-myads.html">
-                    <i class="lni-layers"></i>
+                  <a href="#v-pills-my-ads" data-toggle="pill">
+                    <i class="fa fa-stack-overflow"></i>
                     <span>My Ads</span>
                   </a>
                 </li>
                 <li>
-                  <a href="offermessages.html">
-                    <i class="lni-envelope"></i>
-                    <span>Offers/Messages</span>
+                  <a href="#v-pills-messages" data-toggle="pill">
+                    <i class="fa fa-envelope"></i>
+                    <span>Messages</span>
                   </a>
                 </li>
+
                 <li>
-                  <a href="payments.html">
-                    <i class="lni-wallet"></i>
-                    <span>Payments</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="account-favourite-ads.html">
-                    <i class="lni-heart"></i>
+                  <a href="#v-pills-favorites" data-toggle="pill">
+                    <i class="fa fa-heart"></i>
                     <span>My Favourites</span>
                   </a>
                 </li>
                 <li>
-                  <a href="privacy-setting.html">
-                    <i class="lni-star"></i>
-                    <span>Privacy Settings</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i class="lni-enter"></i>
+                  <a (click)="logout()">
+                    <i class="fa fa-sign-out"></i>
                     <span>Logout</span>
                   </a>
                 </li>
@@ -70,14 +69,19 @@
           <div class="widget">
             <h4 class="widget-title">Advertisement</h4>
             <div class="add-box">
-              <img class="img-fluid" src="assets/img/img1.jpg" alt="" />
+              <!-- Advert goes here -->
             </div>
           </div>
         </aside>
       </div>
       <div class="col-sm-12 col-md-8 col-lg-9">
-        <div class="page-content">
-          <div class="inner-box">
+        <div class="page-content tab-content">
+          <div
+            class="inner-box tab-pane fade show active"
+            id="v-pills-dashboard"
+            role="tabpanel"
+            aria-labelledby="v-pills-dashboard-tab"
+          >
             <div class="dashboard-box">
               <h2 class="dashbord-title">Dashboard</h2>
             </div>
@@ -86,27 +90,29 @@
                 <div class="row">
                   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
                     <div class="dashboardbox">
-                      <div class="icon"><i class="lni-write"></i></div>
+                      <div class="icon">
+                        <i class="fa fa-file-archive-o"></i>
+                      </div>
                       <div class="contentbox">
-                        <h2><a href="#">Total Ad Posted</a></h2>
+                        <h2>Total Ad Posted</h2>
                         <h3>480 Add Posted</h3>
                       </div>
                     </div>
                   </div>
                   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
                     <div class="dashboardbox">
-                      <div class="icon"><i class="lni-add-files"></i></div>
+                      <div class="icon"><i class="fa fa-file-o"></i></div>
                       <div class="contentbox">
-                        <h2><a href="#">Featured Ads</a></h2>
-                        <h3>80 Add Posted</h3>
+                        <h2>Saved Ads</h2>
+                        <h3>80 Ads Saved</h3>
                       </div>
                     </div>
                   </div>
                   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
                     <div class="dashboardbox">
-                      <div class="icon"><i class="lni-support"></i></div>
+                      <div class="icon"><i class="fa fa-commenting-o"></i></div>
                       <div class="contentbox">
-                        <h2><a href="#">Offers / Messages</a></h2>
+                        <h2>Offers / Messages</h2>
                         <h3>2040 Messages</h3>
                       </div>
                     </div>
@@ -138,140 +144,6 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr data-category="active">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adone"
-                        />
-                        <label class="custom-control-label" for="adone"></label>
-                      </div>
-                    </td>
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="assets/img/product/img1.jpg"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3>HP Laptop 6560b core i3 3nd generation</h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
-                    </td>
-                    <td data-title="Category">
-                      <span class="adcategories">Laptops & PCs</span>
-                    </td>
-                    <td data-title="Ad Status">
-                      <span class="adstatus adstatusactive">active</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>139$</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
-                        ></a>
-                        <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
-                        ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="active">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adtwo"
-                        />
-                        <label class="custom-control-label" for="adtwo"></label>
-                      </div>
-                    </td>
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="assets/img/product/img2.jpg"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3>Jvc Haebr80b In-ear Sports Headphones</h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
-                    </td>
-                    <td data-title="Category">Electronics</td>
-                    <td data-title="Ad Status">
-                      <span class="adstatus adstatusactive">Active</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>$189</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
-                        ></a>
-                        <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
-                        ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="inactive">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adthree"
-                        />
-                        <label
-                          class="custom-control-label"
-                          for="adthree"
-                        ></label>
-                      </div>
-                    </td>
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="assets/img/product/img3.jpg"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3>Furniture Straps 4-Pack, TV Anti-Tip Metal Wall</h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
-                    </td>
-                    <td data-title="Category">Real Estate</td>
-                    <td>
-                      <span class="adstatus adstatusinactive">Inactive</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>$69</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
-                        ></a>
-                        <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
-                        ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
                   <tr data-category="sold">
                     <td>
                       <div class="custom-control custom-checkbox">
@@ -309,10 +181,10 @@
                     <td data-title="Action">
                       <div class="btns-actions">
                         <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
+                          ><i class="fa fa-eye"></i
                         ></a>
                         <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
+                          ><i class="fa fa-trash"></i
                         ></a>
                       </div>
                     </td>
@@ -352,53 +224,13 @@
                     <td data-title="Action">
                       <div class="btns-actions">
                         <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
+                          ><i class="fa fa-eye"></i
                         ></a>
                         <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
+                          ><i class="fa fa-pencil"></i
                         ></a>
                         <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="sold">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adsix"
-                        />
-                        <label class="custom-control-label" for="adsix"></label>
-                      </div>
-                    </td>
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="assets/img/product/img6.jpg"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3>Apple MQDT2CL/A 10.5-Inch 64GB Wi-Fi iPad Pro</h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
-                    </td>
-                    <td data-title="Category">Apple iPad</td>
-                    <td data-title="Ad Status">
-                      <span class="adstatus adstatussold">Sold</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>$159</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
-                        ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
+                          ><i class="fa fa-trash"></i
                         ></a>
                       </div>
                     </td>
@@ -438,13 +270,13 @@
                     <td data-title="Action">
                       <div class="btns-actions">
                         <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
+                          ><i class="fa fa-eye"></i
                         ></a>
                         <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
+                          ><i class="fa fa-pencil"></i
                         ></a>
                         <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
+                          ><i class="fa fa-trash"></i
                         ></a>
                       </div>
                     </td>
@@ -484,59 +316,13 @@
                     <td data-title="Action">
                       <div class="btns-actions">
                         <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
+                          ><i class="fa fa-eye"></i
                         ></a>
                         <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
+                          ><i class="fa fa-pencil"></i
                         ></a>
                         <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="expired">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adnine"
-                        />
-                        <label
-                          class="custom-control-label"
-                          for="adnine"
-                        ></label>
-                      </div>
-                    </td>
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="assets/img/product/img9.jpg"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3>Samsung Galaxy G550T On5 GSM Unlocked Smartphone</h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
-                    </td>
-                    <td data-title="Category">Mobile</td>
-                    <td data-title="Ad Status">
-                      <span class="adstatus adstatusexpired">Expired</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>$129</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
-                        ></a>
-                        <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
-                        ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
+                          ><i class="fa fa-trash"></i
                         ></a>
                       </div>
                     </td>
@@ -573,19 +359,382 @@
                     <td data-title="Action">
                       <div class="btns-actions">
                         <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
+                          ><i class="fa fa-eye"></i
                         ></a>
                         <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
+                          ><i class="fa fa-pencil"></i
                         ></a>
                         <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
+                          ><i class="fa fa-trash"></i
                         ></a>
                       </div>
                     </td>
                   </tr>
                 </tbody>
               </table>
+              <div class="has-text-centered d-flex justify-content-end">
+                <pagination-controls
+                  (pageChange)="navigateIndividualPage($event)"
+                  id="Server"
+                  class="my-pagination"
+                ></pagination-controls>
+              </div>
+            </div>
+          </div>
+          <div
+            class="inner-box tab-pane fade"
+            id="v-pills-favorites"
+            role="tabpanel"
+            aria-labelledby="v-pills-favorites-tab"
+          >
+            <div class="dashboard-box">
+              <h2 class="dashbord-title">My Favourites</h2>
+            </div>
+            <div class="dashboard-wrapper">
+              <nav class="nav-table">
+                <ul>
+                  <li class="active"><a href="#">Featured (12)</a></li>
+                </ul>
+              </nav>
+              <table class="table table-responsive dashboardtable tablemyads">
+                <thead>
+                  <tr>
+                    <th>
+                      <div class="custom-control custom-checkbox">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          id="checkedall"
+                        />
+                        <label
+                          class="custom-control-label"
+                          for="checkedall"
+                        ></label>
+                      </div>
+                    </th>
+                    <th>Photo</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Ad Status</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    data-category="deleted"
+                    *ngFor="
+                      let favorite of favoritAds
+                        | paginate
+                          : {
+                              id: 'favorites',
+                              itemsPerPage: favoritAdsPaginationInfo.size,
+                              currentPage: favoritAdsPaginationInfo.number,
+                              totalItems: favoritAdsPaginationInfo.totalElements
+                            }
+                    "
+                  >
+                    <td>
+                      <div class="custom-control custom-checkbox">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          id="adten"
+                        />
+                        <label class="custom-control-label" for="adten"></label>
+                      </div>
+                    </td>
+                    <td class="photo">
+                      <img
+                        class="img-fluid"
+                        src="assets/img/product/img10.jpg"
+                        alt=""
+                      />
+                    </td>
+                    <td data-title="Title">
+                      <h3>{{ favorite?.title }}y</h3>
+                    </td>
+                    <td data-title="Category">
+                      {{ favorite?.subCategory?.category?.name }}
+                    </td>
+                    <td data-title="Ad Status">
+                      <span class="adstatus adstatusactive">{{
+                        favorite?.status
+                      }}</span>
+                    </td>
+                    <td data-title="Price">
+                      <h3>{{ favorite?.price | currency: "₦" }}</h3>
+                    </td>
+                    <td data-title="Action">
+                      <div class="btns-actions">
+                        <a class="btn-action btn-view" href="#"
+                          ><i class="fa fa-eye"></i
+                        ></a>
+                        <a class="btn-action btn-edit" href="#"
+                          ><i class="fa fa-pencil"></i
+                        ></a>
+                        <a class="btn-action btn-delete" href="#"
+                          ><i class="fa fa-trash"></i
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-end">
+                <pagination-controls
+                  (pageChange)="navigateIndividualPage($event)"
+                  id="favorites"
+                  class="my-pagination"
+                ></pagination-controls>
+              </div>
+            </div>
+          </div>
+          <!-- myAds -->
+          <div
+            class="inner-box tab-pane fade"
+            id="v-pills-my-ads"
+            role="tabpanel"
+            aria-labelledby="v-pills-my-ads-tab"
+          >
+            <div class="dashboard-box">
+              <h2 class="dashbord-title">My Ads</h2>
+            </div>
+            <div class="dashboard-wrapper">
+              <nav class="nav-table">
+                <ul>
+                  <li class="active"><a href="#">All Ads (42)</a></li>
+                  <li><a href="#">Active (88)</a></li>
+                  <li><a href="#">Pending (12)</a></li>
+                  <li><a href="#">Approved (02)</a></li>
+                  <li><a href="#">Sold (42)</a></li>
+                </ul>
+              </nav>
+              <table class="table table-responsive dashboardtable tablemyads">
+                <thead>
+                  <tr>
+                    <th>
+                      <div class="custom-control custom-checkbox">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          id="checkedall"
+                        />
+                        <label
+                          class="custom-control-label"
+                          for="checkedall"
+                        ></label>
+                      </div>
+                    </th>
+                    <th>Photo</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Ad Status</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    data-category="active"
+                    *ngFor="
+                      let myAd of myAds
+                        | paginate
+                          : {
+                              id: 'myAds',
+                              itemsPerPage: myAdsPaginationInfo.size,
+                              currentPage: myAdsPaginationInfo.number,
+                              totalItems: myAdsPaginationInfo.totalElements
+                            }
+                    "
+                  >
+                    <td>
+                      <div class="custom-control custom-checkbox">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          id="adone"
+                        />
+                        <label class="custom-control-label" for="adone"></label>
+                      </div>
+                    </td>
+                    <td class="photo">
+                      <img
+                        class="img-fluid"
+                        src="assets/img/product/img1.jpg"
+                        alt=""
+                      />
+                    </td>
+                    <td data-title="Title">
+                      <h3>{{ myAd?.title }}</h3>
+                    </td>
+                    <td data-title="Category">
+                      <span class="adcategories">{{
+                        myAd?.subCategory?.category?.name
+                      }}</span>
+                    </td>
+                    <td
+                      data-title="Ad Status"
+                      *ngIf="myAd?.status === 'PENDING'"
+                    >
+                      <span class="adstatus adstatusexpired">pending</span>
+                    </td>
+                    <td
+                      data-title="Ad Status"
+                      *ngIf="myAd?.status === 'APPROVED'"
+                    >
+                      <span class="adstatus adstatusactive">active</span>
+                    </td>
+                    <td data-title="Price">
+                      <h3>{{ myAd?.dailyPrice | currency: "₦" }}</h3>
+                    </td>
+                    <td data-title="Action">
+                      <div class="btns-actions">
+                        <a class="btn-action btn-view" href="#"
+                          ><i class="fa fa-eye"></i
+                        ></a>
+                        <a class="btn-action btn-edit" href="#"
+                          ><i class="fa fa-pencil"></i
+                        ></a>
+                        <a class="btn-action btn-delete" href="#"
+                          ><i class="fa fa-trash"></i
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="has-text-centered d-flex justify-content-end">
+                <pagination-controls
+                  (pageChange)="navigateIndividualPage($event)"
+                  id="myAds"
+                  class="my-pagination"
+                ></pagination-controls>
+              </div>
+            </div>
+          </div>
+          <!-- message -->
+          <div
+            class="inner-box tab-pane fade"
+            id="v-pills-messages"
+            role="tabpanel"
+            aria-labelledby="v-pills-messages-tab"
+          >
+            <div class="dashboard-wrapper">
+              <nav class="nav-table">
+                <ul>
+                  <li class="active"><a href="#">All Ads (42)</a></li>
+                  <li><a href="#">Active (88)</a></li>
+                  <li><a href="#">Pending (12)</a></li>
+                  <li><a href="#">Approved (02)</a></li>
+                  <li><a href="#">Sold (42)</a></li>
+                </ul>
+              </nav>
+              <form class="row offers-messages">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+                  <div class="offers-box">
+                    <div class="dashboardboxtitle">
+                      <h2>User</h2>
+                    </div>
+                    <ul class="offers-user-online">
+                      <li class="offerer">
+                        <figure>
+                          <img src="assets/img/author/img1.jpg" alt="" />
+                        </figure>
+                        <div class="user-name">
+                          <h3>Sarah Higgle</h3>
+                          <h4><a href="#">Offline</a></h4>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+                  <div class="chat-message-box">
+                    <div class="dashboardboxtitle">
+                      <h2>Chat Messages</h2>
+                    </div>
+                    <div class="offerermessage">
+                      <figure>
+                        <img src="assets/img/author/img1.jpg" alt="" />
+                      </figure>
+                      <div class="description">
+                        <div class="info">
+                          <h3>Meagan Miller</h3>
+                          <p>
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry
+                          </p>
+                        </div>
+                        <time class="date">June 21, 2018</time>
+                      </div>
+                    </div>
+                    <div class="memessage readmessage">
+                      <figure>
+                        <img src="assets/img/author/img1.jpg" alt="" />
+                      </figure>
+                      <div class="description">
+                        <div class="info">
+                          <h3>You</h3>
+                          <p>
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry
+                          </p>
+                        </div>
+                        <div class="text-right">
+                          <p>It that ok?</p>
+                          <time class="date">Jun 28, 2017 09:30</time>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="offerermessage">
+                      <figure>
+                        <img src="assets/img/author/img1.jpg" alt="" />
+                      </figure>
+                      <div class="description">
+                        <div class="info">
+                          <h3>Meagan Miller</h3>
+                          <p>
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry
+                          </p>
+                        </div>
+                        <time class="date">June 21, 2018</time>
+                      </div>
+                    </div>
+                    <div class="memessage readmessage">
+                      <figure>
+                        <img src="assets/img/author/img1.jpg" alt="" />
+                      </figure>
+                      <div class="description">
+                        <div class="info">
+                          <h3>You</h3>
+                          <p>
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry
+                          </p>
+                        </div>
+                        <div class="text-right">
+                          <p>It that ok?</p>
+                          <time class="date">Jun 28, 2017 09:30</time>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="replay-box">
+                    <textarea
+                      class="form-control"
+                      name="reply"
+                      placeholder="Type Here & Press Enter"
+                    ></textarea>
+                    <div class="icon-box">
+                      <i class="fa fa-thumbs-up"></i>
+                      <i class="fa fa-thumbs-down"></i>
+                      <i class="fa fa-emoji-smile"></i>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -593,5 +742,7 @@
     </div>
   </div>
 </div>
+
+<!-- favorites -->
 
 <app-footer></app-footer>
