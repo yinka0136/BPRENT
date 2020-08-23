@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { endpoints } from '../config/endpoints';
+import { PagedResponse } from '../_models/pagination';
+import { map } from 'rxjs/operators';
+import { ResponseStructure } from '../_models/respose';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +21,25 @@ export class AdServiceService {
     );
   }
 
-  fetchAllAds() {
-    return this.http.get(`${environment.API_URL}/${endpoints.findAllAds}`);
+  fetchAllAds(page, size) {
+    const pagedResponse: PagedResponse<any> = new PagedResponse<any>();
+    const params = new HttpParams().set('page', page).set('size', size);
+    return this.http
+      .get<ResponseStructure>(
+        `${environment.API_URL}/${endpoints.findAllAds}`,
+        { params, observe: 'response' }
+      )
+      .pipe(
+        map((res) => {
+          pagedResponse.result = res.body.responseResult;
+          if (res.headers.get('pagination') != null) {
+            pagedResponse.paginationInfo = JSON.parse(
+              res.headers.get('pagination')
+            );
+          }
+          return pagedResponse;
+        })
+      );
   }
 
   fetchTrendingAds() {
@@ -28,36 +48,99 @@ export class AdServiceService {
   fetchNewAds() {
     return this.http.get(`${environment.API_URL}/${endpoints.newAds}`);
   }
-  myAds() {
-    return this.http.get(`${environment.API_URL}/${endpoints.myAds}`);
+  myAds(page, size) {
+    const pagedResponse: PagedResponse<any> = new PagedResponse<any>();
+    const params = new HttpParams().set('page', page).set('size', size);
+    return this.http
+      .get<ResponseStructure>(`${environment.API_URL}/${endpoints.myAds}`, {
+        params,
+        observe: 'response',
+      })
+      .pipe(
+        map((res) => {
+          pagedResponse.result = res.body.responseResult;
+          if (res.headers.get('pagination') != null) {
+            pagedResponse.paginationInfo = JSON.parse(
+              res.headers.get('pagination')
+            );
+          }
+          return pagedResponse;
+        })
+      );
   }
-  savedAds() {
-    return this.http.get(`${environment.API_URL}/${endpoints.savedAds}`);
+  savedAds(page, size) {
+    const pagedResponse: PagedResponse<any> = new PagedResponse<any>();
+    const params = new HttpParams().set('page', page).set('size', size);
+    return this.http
+      .get<ResponseStructure>(`${environment.API_URL}/${endpoints.savedAds}`, {
+        params,
+        observe: 'response',
+      })
+      .pipe(
+        map((res) => {
+          pagedResponse.result = res.body.responseResult;
+          if (res.headers.get('pagination') != null) {
+            pagedResponse.paginationInfo = JSON.parse(
+              res.headers.get('pagination')
+            );
+          }
+          return pagedResponse;
+        })
+      );
   }
-  findAllPendingAds() {
-    return this.http.get(
-      `${environment.API_URL}/${endpoints.findAllPendingAds}`
-    );
+  findAllPendingAds(page, size) {
+    const pagedResponse: PagedResponse<any> = new PagedResponse<any>();
+    const params = new HttpParams().set('page', page).set('size', size);
+    return this.http
+      .get<ResponseStructure>(
+        `${environment.API_URL}/${endpoints.findAllPendingAds}`,
+        { params, observe: 'response' }
+      )
+      .pipe(
+        map((res) => {
+          pagedResponse.result = res.body.responseResult;
+          if (res.headers.get('pagination') != null) {
+            pagedResponse.paginationInfo = JSON.parse(
+              res.headers.get('pagination')
+            );
+          }
+          return pagedResponse;
+        })
+      );
   }
-  findAllActiveAds() {
-    return this.http.get(
-      `${environment.API_URL}/${endpoints.findAllActiveAds}`
-    );
+  findAllActiveAds(page, size) {
+    const pagedResponse: PagedResponse<any> = new PagedResponse<any>();
+    const params = new HttpParams().set('page', page).set('size', size);
+    return this.http
+      .get<ResponseStructure>(
+        `${environment.API_URL}/${endpoints.findAllActiveAds}`,
+        { params, observe: 'response' }
+      )
+      .pipe(
+        map((res) => {
+          pagedResponse.result = res.body.responseResult;
+          if (res.headers.get('pagination') != null) {
+            pagedResponse.paginationInfo = JSON.parse(
+              res.headers.get('pagination')
+            );
+          }
+          return pagedResponse;
+        })
+      );
   }
 
-  updateAd(payload) {
-    const formData = new FormData();
-    formData.append('adJson', payload.adJson);
-    formData.append('images', payload.images);
-    return this.http.put(
-      `${environment.API_URL}/${endpoints.updateAd}/${payload.slug}/update`,
+  updateAd(formData, slug) {
+    return this.http.patch(
+      `${environment.API_URL}/${endpoints.updateAd}/${slug}/update`,
       formData
     );
   }
 
   toggleSaveAd(slug) {
-    return this.http.get(
-      `${environment.API_URL}/${endpoints.toggleSaveAd}/${slug}/toggle_save`
+    let payload = {};
+    return this.http.post(
+      `${environment.API_URL}/${endpoints.toggleSaveAd}/${slug}/toggle_save`,
+      payload
     );
   }
 
@@ -80,7 +163,12 @@ export class AdServiceService {
   }
   deleteAd(slug) {
     return this.http.delete(
-      `${environment.API_URL}/${endpoints.deleteAd}/${slug}delete`
+      `${environment.API_URL}/${endpoints.deleteAd}/${slug}/delete`
+    );
+  }
+  deleteAdImage(imageId) {
+    return this.http.delete(
+      `${environment.API_URL}/${endpoints.deleteAdImage}/${imageId}/delete`
     );
   }
   declineAd(slug) {

@@ -23,13 +23,13 @@ export const endpoints = {
   //Users
   usersList: 'users',
   createUser: 'users',
-  updateUsers: 'users',
+  updateUsers: 'users/update',
   usersProfile: 'users/me',
-  createAdmin: 'users/admin',
+  createAdmin: 'users/create_admin',
   updateAdmin: 'users/admin/',
   uploadAvatar: 'users/upload_avatar',
   adminUserCrud: 'users',
-  passwordUpdate: 'users/password_update',
+  passwordUpdate: 'users/update_password',
 
   //Categories
   getAllCategories: 'category/all',
@@ -63,8 +63,30 @@ export const endpoints = {
   deleteAd: 'ads',
   newAds: 'ads/new',
   trendingAds: 'ads/trending',
+  deleteAdImage: 'ads/image',
   //Coins
   buyCoins: 'coins/buy',
   allTransactios: 'coins/transactions',
   myTransactions: 'coins/my_transactions',
+  //FeedBack
+  deleteFeedBack: 'feedbacks',
+  updateFeedBack: 'feedbacks',
+  getAllFeedBacks: 'feedbacks/all',
+  getAllSentFeedBacks: 'feedbacks/sent',
+  getAllRecievedFeedBacks: 'feedbacks/recieved',
+  createFeedBack: 'feedbacks',
+  getUserFeedBack: 'feedbacks',
+  //Message
+  deleteMessage: 'messages',
+  getAllMessages: 'messages/all',
+  getAllSentMessages: 'messages/sent',
+  getAllRecievedMessages: 'messages/received',
+  createMessage: 'messages',
+  getMessage: 'messages',
+  //Report
+  deletereport: 'reports',
+  getAllreports: 'reports/all',
+  getAllSentreports: 'reports/sent',
+  createreport: 'reports',
+  getreportByAd: 'reports',
 };

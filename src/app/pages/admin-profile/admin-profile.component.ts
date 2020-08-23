@@ -1,7 +1,7 @@
 import { ResponseStructure } from './../../_models/respose';
 import { PagedResponse } from 'src/app/_models/pagination';
 import { PaginationInfo } from './../../_models/pagination';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from 'angularx-social-login';
 import { AuthenticationService } from 'src/app/_services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,27 +11,27 @@ import { AdServiceService } from 'src/app/_services/ad-service.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsersService } from 'src/app/_services/users.service';
 import { GlobalService } from 'src/app/_services/global.service';
-
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+  selector: 'app-admin-profile',
+  templateUrl: './admin-profile.component.html',
+  styleUrls: ['./admin-profile.component.scss'],
 })
-export class ProfileComponent implements OnInit, OnDestroy {
+export class AdminProfileComponent implements OnInit, OnDestroy {
   profileForm: FormGroup;
   adminForm: FormGroup;
   updatePasswordForm: FormGroup;
   avatarUrl;
-  favoritAds: any[] = [];
   myProfile;
-  myAds: any[] = [];
-  sentMessages: any[] = [];
+  myAds = [
+    {
+      title: 'test',
+      status: 'PENDING',
+      dailyPrice: 70000,
+      weeklyPrice: 80000,
+      slug: 'fghjk',
+    },
+  ];
   show: boolean = false;
-  recievedMessages: any[] = [];
-  favoritAdsPaginationInfo: PaginationInfo;
-  myAdsPaginationInfo: PaginationInfo;
-  sentMessagesPaginationInfo: PaginationInfo;
-  recievedMessagesPaginationInfo: PaginationInfo;
   IsHidden;
 
   sub: Subscription = new Subscription();
@@ -96,20 +96,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.route.data.subscribe((res) => {
       console.log(res);
       this.myProfile = res['resolvedData'].profile['responseResult'];
-      const favoriteResponse = res['resolvedData'].favorites['result'];
-      this.favoritAds = favoriteResponse.ads;
-      this.favoritAdsPaginationInfo = favoriteResponse.paginationInfo;
-      const myAdsResponse = res['resolvedData'].myAds['result'];
-      this.myAds = myAdsResponse.ads;
-      this.myAdsPaginationInfo = myAdsResponse.paginationInfo;
-      const sentMessagesResponse = res['resolvedData'].sentMessages['result'];
-      this.sentMessages = sentMessagesResponse.messages;
-      this.sentMessagesPaginationInfo = sentMessagesResponse.paginationInfo;
-      const recievedMessagesResponse =
-        res['resolvedData'].recievedMessages['result'];
-      this.recievedMessages = recievedMessagesResponse.messages;
-      this.recievedMessagesPaginationInfo =
-        recievedMessagesResponse.paginationInfo;
     });
   }
   uploadAvatar(file) {
@@ -171,55 +157,49 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.auth.logout();
   }
   navigateMyAdPage(page) {
-    console.log(page);
-    this._global.showSpinner();
-    this.sub.add(
-      this.ad
-        .myAds(page, this.myAdsPaginationInfo.totalElements - 1)
-        .subscribe({
-          next: (res: PagedResponse<any>) => {
-            this._global.hideSpinner();
-            this.myAds = res.result['ads'];
-            this.myAdsPaginationInfo = res.result['paginationInfo'];
-            console.log(res, this.myAdsPaginationInfo);
-          },
-        })
-    );
+    // console.log(page);
+    // this._global.showSpinner();
+    // this.sub.add(
+    //   this.ad
+    //     .myAds(page, this.myAdsPaginationInfo.totalElements - 1)
+    //     .subscribe({
+    //       next: (res: PagedResponse<any>) => {
+    //         this._global.hideSpinner();
+    //         this.myAds = res.result['ads'];
+    //         this.myAdsPaginationInfo = res.result['paginationInfo'];
+    //         console.log(res, this.myAdsPaginationInfo);
+    //       },
+    //     })
+    // );
   }
   manageCat() {
     this.router.navigate(['create-category']);
   }
   deleteAd(slug) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
-      if (result.value) {
-        this.delete(slug);
-      }
-    });
+    // Swal.fire({
+    //   title: 'Are you sure?',
+    //   text: "You won't be able to revert this!",
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Yes, delete it!',
+    // }).then((result) => {
+    //   if (result.value) {
+    //     this.delete(slug);
+    //   }
+    // });
   }
-  copyToClipboard() {
-    const referralLink = <HTMLInputElement>document.getElementById('referral');
-    referralLink.select();
-    referralLink.setSelectionRange(0, 99999);
-    document.execCommand('copy');
-    alert('Link copied to clipboard');
-  }
-  delete(slug) {
-    this.ad.deleteAd(slug).subscribe({
-      next: (res) => {
-        this.myAds = this.myAds.filter((a) => a.slug != slug);
-        console.log(res);
-        Swal.fire('Deleted!', 'Your ad has been deleted.', 'success');
-      },
-    });
-  }
+
+  // delete(slug) {
+  //   this.ad.deleteAd(slug).subscribe({
+  //     next: (res) => {
+  //       this.myAds = this.myAds.filter((a) => a.slug != slug);
+  //       console.log(res);
+  //       Swal.fire('Deleted!', 'Your ad has been deleted.', 'success');
+  //     },
+  //   });
+  // }
   createAdmin() {
     this._global.showSpinner();
     const payload = this.adminForm.value;
@@ -227,6 +207,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this._user.createAdmin(payload).subscribe({
         next: (res: ResponseStructure) => {
           console.log(res);
+          this.adminForm.reset();
           this._global.globalSuccessHandler(res);
         },
       })

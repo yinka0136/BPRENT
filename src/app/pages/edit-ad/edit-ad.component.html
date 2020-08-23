@@ -31,33 +31,79 @@
                   >
                 </div>
               </label>
-              <!-- <div>
-          <span class="fileRemove" (click) = "removeDoc()"></span>
-      </div> -->
-              <!-- <app-file-upload
-                formControlName="file"
-                [ngClass]="{
-                  'is-invalid':
-                    adForm.get('file').errors && adForm.get('file').touched
-                }"
-                [placeholder]="'Upload Image'"
-                [elementId]="'imageFile'"
-              ></app-file-upload> -->
             </div>
           </div>
-          <div class="col-md-6 imageNames" *ngIf="images?.length > 0">
-            <div class="items-list" *ngFor="let image of images">
-              <div class="item px-3 py-2 mb-2">
-                <span class="mr-4 text-white">
-                  {{ image.name }}
-                </span>
-                <img
-                  src="../../../assets/images/close.png"
-                  class="ml-auto click"
-                  alt=""
-                  (click)="removeImage(image)"
-                />
+          <div class="col-md-8 mt-5">
+            <div class="d-flex flex-wrap">
+              <div class="adImg-wrapper" *ngFor="let adImage of images">
+                <div class="remove">
+                  <svg
+                    (click)="removeImage(adImage?.id)"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    aria-hidden="true"
+                    focusable="false"
+                    width="1em"
+                    height="1em"
+                    style="
+                      -ms-transform: rotate(360deg);
+                      -webkit-transform: rotate(360deg);
+                      transform: rotate(360deg);
+                    "
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 1024 1024"
+                  >
+                    <path
+                      d="M685.4 354.8c0-4.4-3.6-8-8-8l-66 .3L512 465.6l-99.3-118.4l-66.1-.3c-4.4 0-8 3.5-8 8c0 1.9.7 3.7 1.9 5.2l130.1 155L340.5 670a8.32 8.32 0 0 0-1.9 5.2c0 4.4 3.6 8 8 8l66.1-.3L512 564.4l99.3 118.4l66 .3c4.4 0 8-3.5 8-8c0-1.9-.7-3.7-1.9-5.2L553.5 515l130.1-155c1.2-1.4 1.8-3.3 1.8-5.2z"
+                      fill="red"
+                    />
+                    <path
+                      d="M512 65C264.6 65 64 265.6 64 513s200.6 448 448 448s448-200.6 448-448S759.4 65 512 65zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372s372 166.6 372 372s-166.6 372-372 372z"
+                      fill="red"
+                    />
+                  </svg>
+                </div>
+                <img src="{{ adImage.imageUrl }}" alt="" />
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-2 mb-3 col-12">
+          <p class="font24 text-grey">Added images</p>
+          <div class="d-flex flex-wrap">
+            <div
+              class="adImg-wrapper"
+              *ngFor="let adImage of addedImagesToView"
+            >
+              <div class="remove">
+                <svg
+                  (click)="removeaddedImage(adImage)"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true"
+                  focusable="false"
+                  width="1em"
+                  height="1em"
+                  style="
+                    -ms-transform: rotate(360deg);
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                  "
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 1024 1024"
+                >
+                  <path
+                    d="M685.4 354.8c0-4.4-3.6-8-8-8l-66 .3L512 465.6l-99.3-118.4l-66.1-.3c-4.4 0-8 3.5-8 8c0 1.9.7 3.7 1.9 5.2l130.1 155L340.5 670a8.32 8.32 0 0 0-1.9 5.2c0 4.4 3.6 8 8 8l66.1-.3L512 564.4l99.3 118.4l66 .3c4.4 0 8-3.5 8-8c0-1.9-.7-3.7-1.9-5.2L553.5 515l130.1-155c1.2-1.4 1.8-3.3 1.8-5.2z"
+                    fill="red"
+                  />
+                  <path
+                    d="M512 65C264.6 65 64 265.6 64 513s200.6 448 448 448s448-200.6 448-448S759.4 65 512 65zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372s372 166.6 372 372s-166.6 372-372 372z"
+                    fill="red"
+                  />
+                </svg>
+              </div>
+              <img src="{{ adImage.imageUrl }}" alt="" />
             </div>
           </div>
         </div>
@@ -66,7 +112,6 @@
           <input
             class="form-control"
             type="text"
-            placeholder="Title"
             formControlName="title"
             [ngClass]="{
               'is-invalid':
@@ -81,7 +126,6 @@
           <p class="font24 text-grey">Description</p>
           <div class="bg-white px-1 py-3 border-radius">
             <angular-editor
-              [placeholder]="'Enter text here...'"
               [config]="config"
               formControlName="description"
               [ngClass]="{
@@ -123,9 +167,6 @@
                   adForm.get('subCategoryId').touched
               }"
             >
-              <option value="" disabled selected>
-                --select subcategory--</option
-              >
               <option
                 *ngFor="let subCategory of subCategories"
                 value="{{ subCategory?.id }}"
@@ -137,13 +178,13 @@
         </div>
         <div class="row mt-2 mb-2 mx-0">
           <div class="col-lg-12 col-sm-12">
-            <p class="font24 text-grey">Price</p>
+            <p class="font24 text-grey">Daily Price</p>
             <div class="d-flex justify-content-between">
               <div class="col-lg-6 col-sm-6 pl-0">
                 <input
                   class="form-control"
                   type="text"
-                  placeholder="#0.00"
+                  [value]="ad.dailyPrice | currency"
                   formControlName="dailyPrice"
                   [ngClass]="{
                     'is-invalid':
@@ -166,12 +207,12 @@
                 >
               </div>
             </div>
+            <p class="font24 text-grey">Weekly Price</p>
             <div class="d-flex justify-content-between">
               <div class="col-lg-6 col-sm-6 pl-0">
                 <input
                   class="form-control"
                   type="text"
-                  placeholder="#0.00"
                   formControlName="weeklyPrice"
                   [ngClass]="{
                     'is-invalid':
@@ -193,7 +234,7 @@
               class="form-control"
               (change)="getRegions($event.target.value)"
             >
-              <option value="" disabled selected> --select state--</option>
+              <option value="" disabled selected> --select state-- </option>
               <option *ngFor="let state of states" value="{{ state?.code }}">{{
                 state?.name
               }}</option>
@@ -210,7 +251,6 @@
                   adForm.get('regionId').touched
               }"
             >
-              <option value="" disabled selected> --select region--</option>
               <option *ngFor="let region of regions" value="{{ region?.id }}">
                 {{ region?.name }}</option
               >
@@ -235,13 +275,10 @@
           </button>
           <button
             class="btn my-button ml-4"
-            (click)="postAd()"
+            (click)="editAd()"
             [disabled]="adForm.invalid"
           >
-            Post Ad
-            <!-- <span *ngIf="isLoading" class="ml-4"
-              ><i class="fa fa-spinner fa-spin"></i
-            ></span> -->
+            Update Ad
           </button>
         </div>
       </form>

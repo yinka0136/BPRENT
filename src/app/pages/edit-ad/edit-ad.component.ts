@@ -1,30 +1,33 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Subscription } from 'rxjs';
-import Swal from 'sweetalert2';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { GlobalService } from 'src/app/_services/global.service';
 import { AdServiceService } from 'src/app/_services/ad-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { CatStatesService } from 'src/app/_services/cat-states.service';
+import Swal from 'sweetalert2';
 import { ResponseStructure } from 'src/app/_models/respose';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-post-ad',
-  templateUrl: './post-ad.component.html',
-  styleUrls: ['./post-ad.component.scss'],
+  selector: 'app-edit-ad',
+  templateUrl: './edit-ad.component.html',
+  styleUrls: ['./edit-ad.component.scss'],
 })
-export class PostAdComponent implements OnInit, OnDestroy {
+export class EditAdComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
   adForm: FormGroup;
   images: any[] = [];
+  ad;
+  subCategory;
   image: any;
+  addedImagesToView: any[] = [];
+  addedImagesToSend: any[] = [];
   categories: any[] = [];
   subCategories: any[] = [];
   states: any[] = [];
-  subCategory;
   regions: any[] = [];
-
   config: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -51,7 +54,6 @@ export class PostAdComponent implements OnInit, OnDestroy {
       },
     ],
   };
-
   constructor(
     private fb: FormBuilder,
     private _global: GlobalService,
@@ -61,24 +63,31 @@ export class PostAdComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.initAdForm();
-    console.log(this.adForm.value);
     this.route.data.subscribe((res) => {
+      console.log(res);
       this.categories = res['resolvedData'].categories['responseResult'];
       this.states = res['resolvedData'].states['responseResult'];
-      console.log(res);
+      this.ad = res['resolvedData'].ad['responseResult'].ad;
+      this.addImagesToArray();
+    });
+    this.initAdForm();
+  }
+
+  addImagesToArray() {
+    this.ad.adImages.forEach((adImage) => {
+      this.images.push(adImage);
     });
   }
   initAdForm() {
     this.adForm = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      subCategoryId: ['', Validators.required],
-      regionId: [''],
-      dailyPrice: ['', Validators.required],
-      weeklyPrice: ['', Validators.required],
-      boosted: [false],
-      negotiable: [''],
+      title: [this.ad.title],
+      description: [this.ad.description],
+      subCategoryId: [this.ad.subCategory.id],
+      regionId: [this.ad.region.id],
+      weeklyPrice: [this.ad.weeklyPrice],
+      dailyPrice: [this.ad.dailyPrice],
+      boosted: [this.ad.boosted],
+      negotiable: [this.ad.negotiable],
     });
   }
 
@@ -116,24 +125,43 @@ export class PostAdComponent implements OnInit, OnDestroy {
   }
 
   addFile(images) {
-    console.log(images);
-    this.images.push(images[0]);
+    this.addedImagesToSend.push(images[0]);
+    var reader = new FileReader();
+    reader.readAsDataURL(images[0]);
+    reader.onloadend = () => {
+      this.addedImagesToView.push({ imageUrl: reader.result });
+    };
   }
-  removeImage(image) {
-    this.images = this.images.filter((i) => i != image);
+
+  removeImage(id) {
+    this.sub.add(
+      this._adService.deleteAdImage(id).subscribe({
+        next: (res) => {
+          this.images = this.images.filter((i) => i.id != id);
+          console.log(res);
+        },
+      })
+    );
   }
-  postAd() {
+  removeaddedImage(image) {
+    this.addedImagesToView = this.addedImagesToView.filter((i) => i != image);
+    this.addedImagesToSend = this.addedImagesToSend.pop();
+  }
+  editAd() {
+    console.log(this.addedImagesToSend);
     this._global.showSpinner();
+
     const payload = this.adForm.value;
     const adJson = JSON.stringify(payload);
+    console.log(payload, adJson);
     const formData = new FormData();
-    this.images.forEach((i) => {
+    this.addedImagesToSend.forEach((i) => {
       formData.append('images', i);
     });
     formData.append('adJson', adJson);
 
     this.sub.add(
-      this._adService.createAd(formData).subscribe({
+      this._adService.updateAd(formData, this.ad.slug).subscribe({
         next: (res: ResponseStructure) => {
           this.adForm.reset();
           this._global.hideSpinner();
@@ -151,7 +179,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
           this.adForm.reset();
           Toast.fire({
             icon: 'success',
-            title: 'Ad posted successfully',
+            title: 'Ad updated successfully',
           });
         },
       })

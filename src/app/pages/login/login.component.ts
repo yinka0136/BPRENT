@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService, SocialUser } from 'angularx-social-login';
-import {
-  FacebookLoginProvider,
-  GoogleLoginProvider,
-} from 'angularx-social-login';
+// import { AuthService, SocialUser } from 'angularx-social-login';
+// import {
+//   FacebookLoginProvider,
+//   GoogleLoginProvider,
+// } from 'angularx-social-login';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -18,7 +18,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  private socialUser: SocialUser;
+  // private socialUser: SocialUser;
   user: any;
   authToken: any;
   token;
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private auth: AuthenticationService,
-    private socialAuth: AuthService,
+    // private socialAuth: AuthService,
     private _global: GlobalService,
     private router: Router,
     private toast: ToastrService
@@ -48,13 +48,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  signInWithGoogle(): void {
-    this.socialAuth.signIn(GoogleLoginProvider.PROVIDER_ID).then((userData) => {
-      console.log(userData);
-      this.authToken = userData.authToken;
-      this.googleAuth();
-    });
-  }
+  // signInWithGoogle(): void {
+  //   this.socialAuth.signIn(GoogleLoginProvider.PROVIDER_ID).then((userData) => {
+  //     console.log(userData);
+  //     this.authToken = userData.authToken;
+  //     this.googleAuth();
+  //   });
+  // }
   googleAuth() {
     let payload = { access_token: this.authToken };
     console.log(payload);
@@ -71,15 +71,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  signInWithFB(): void {
-    this.socialAuth
-      .signIn(FacebookLoginProvider.PROVIDER_ID)
-      .then((userData) => {
-        console.log(userData);
-        this.authToken = userData.authToken;
-        this.facebookAuth();
-      });
-  }
+  // signInWithFB(): void {
+  //   this.socialAuth
+  //     .signIn(FacebookLoginProvider.PROVIDER_ID)
+  //     .then((userData) => {
+  //       console.log(userData);
+  //       this.authToken = userData.authToken;
+  //       this.facebookAuth();
+  //     });
+  // }
 
   login() {
     this._global.showSpinner();
@@ -103,7 +103,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   signOut(): void {
-    this.socialAuth.signOut();
+    // this.socialAuth.signOut();
   }
   ngOnDestroy() {
     this.sub.unsubscribe();

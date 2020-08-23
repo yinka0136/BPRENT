@@ -4,7 +4,7 @@
       <div class="row align-items-center">
         <div class="col-lg-3 col-sm-4 col-md-4 col-5 click">
           <a (click)="routeHome()" class="brand-wrap">
-            <img class="logo" src="../../assets/images/logo.jpg" />
+            <img class="logo" src="../../../assets/images/logo.jpg" />
           </a>
           <!-- brand-wrap.// -->
         </div>
@@ -53,23 +53,41 @@
                 <i class="fa fa-bars"></i>
               </button>
             </div>
+
             <a
-              href="#"
-              class="widget-header mr-3"
+              class="widget-header mr-2 click"
               *ngIf="loggedIn()"
-              (click)="buyCoin('hjk')"
+              data-toggle="modal"
+              data-target="#paystack"
             >
-              <div class="icon">
-                <span class="mr-1" style="color: black;"> buy coins</span>
-                <i class="icon-sm rounded-circle border fa fa-credit-card"></i>
+              <div class="ico">
+                <span class="mr-1"> buy coins</span>
+                <i
+                  class="icon-sm rounded-circle border fa fa-credit-card"
+                  style="color: #2196f3;"
+                ></i>
               </div>
             </a>
-
-            <a href="#" class="widget-header mr-3" *ngIf="loggedIn()">
+            <div class="notification mr-2" *ngIf="loggedIn()">
+              <a
+                [routerLink]="['/admin/notifications']"
+                routerLinkActive="router-link-active"
+              >
+                <div class="icon-sm rounded-circle border">
+                  <img
+                    class="icon"
+                    src="../../../assets/images/notification.svg"
+                    alt="Notification Icon"
+                  />
+                  <span class="badge badge-danger">5</span>
+                </div>
+              </a>
+            </div>
+            <!-- <a href="#" class="widget-header mr-3">
               <div class="icon">
                 <i class="icon-sm rounded-circle border fa fa-heart"></i>
               </div>
-            </a>
+            </a> -->
 
             <div class="widget-header dropdown" *ngIf="loggedIn()">
               <a
@@ -85,7 +103,18 @@
               </a>
 
               <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">Profile</a>
+                <a
+                  *ngIf="userRole === 'CUSTOMER'"
+                  class="dropdown-item"
+                  routerLink="/profile"
+                  >Profile</a
+                >
+                <a
+                  *ngIf="userRole === 'ADMIN' || userRole === 'SUPER_ADMIN'"
+                  class="dropdown-item"
+                  routerLink="/a-profile"
+                  >Profile</a
+                >
                 <a class="dropdown-item" href="#">My Ads</a>
                 <hr class="dropdown-divider" />
                 <a class="dropdown-item click" (click)="logOut()">Log out</a>
@@ -152,15 +181,6 @@
         <ul class="navbar-nav">
           <li class="nav-item">
             <a
-              (click)="manageCat()"
-              style="color: white;"
-              class="btn btn-primary ml-md-4"
-            >
-              Manage category
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
               (click)="postAdd()"
               style="color: white;"
               class="btn btn-primary ml-md-4"
@@ -174,3 +194,68 @@
     <!-- container .// -->
   </nav>
 </header>
+<button
+  #paystack
+  angular4-paystack
+  [email]="email"
+  [amount]="amount"
+  [ref]="reference"
+  (paymentInit)="paymentInit()"
+  style="visibility: hidden;"
+  (close)="paymentCancel()"
+  (callback)="paymentDone($event)"
+>
+  Pay with Paystack
+</button>
+
+<app-modal
+  elementId="paystack"
+  headerTitle="Buy Coins"
+  centered="true"
+  [styles]="{
+    modalBodyHeight: '150px',
+    modalContentWidth: '300px'
+  }"
+>
+  <div class="content mb-2">
+    <div class="d-flex justify-content-center mb-2">
+      <p><b>1 coin = ₦100</b></p>
+    </div>
+    <div class="form-row">
+      <div class="d-flex justify-content-center mb-2 form-group">
+        <input
+          #amount
+          type="text"
+          class="text-start form-control"
+          (keyup)="getAmount(amount.value)"
+          placeholder="Enter number of coins"
+        />
+      </div>
+    </div>
+    <div
+      class="d-flex justify-content-center mb-2"
+      *ngIf="
+        amount.value != null && amount.value != undefined && amount.value != ''
+      "
+    >
+      <p>{{ amount.value }} coins will cost you ₦{{ amountCost }}</p>
+    </div>
+
+    <div class="d-flex justify-content-center mt-3">
+      <button
+        #paystack
+        angular4-paystack
+        [email]="email"
+        [amount]="paystackAmount"
+        [ref]="reference"
+        (paymentInit)="paymentInit()"
+        (close)="paymentCancel()"
+        (callback)="paymentDone($event)"
+      >
+        Pay with Paystack
+      </button>
+    </div>
+  </div>
+</app-modal>
+
+<div data-dismiss="modal" class="close" #closeModal></div>

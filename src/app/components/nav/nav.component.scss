@@ -109,3 +109,19 @@
 // @media all and (min-width: 768px) {
 // }
 // /* desktop only .end */
+btn-paystack {
+  visibility: hidden;
+}
+.notification {
+  position: relative;
+  img {
+    max-width: 50px;
+    background-color: #2196f3;
+  }
+  span {
+    position: absolute;
+    top: -4px;
+    left: 8px;
+    border-radius: 50%;
+  }
+}

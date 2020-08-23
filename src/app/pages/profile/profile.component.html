@@ -7,60 +7,72 @@
           <div class="sidebar-box">
             <div class="user">
               <figure>
-                <a href="#"><img src="assets/img/author/img1.jpg" alt="" /></a>
+                <a *ngIf="avatarUrl"><img src="{{ avatarUrl }}" alt="" /></a>
+                <a *ngIf="!avatarUrl"
+                  ><img src="{{ myProfile?.avatarUrl }}" width="45px" alt=""
+                /></a>
               </figure>
               <div class="usercontent">
                 <h3>User</h3>
                 <h4>Administrator</h4>
               </div>
+              <div class="d-flex justify-content-end">
+                <label
+                  class="btn btn-common"
+                  style="background-color: white; color: #2196f3;"
+                  type="button"
+                  for="file"
+                >
+                  upload avatar
+                </label>
+                <input
+                  type="file"
+                  name="file"
+                  id="file"
+                  (change)="uploadAvatar($event.target.files[0])"
+                />
+              </div>
             </div>
             <nav class="navdashboard">
-              <ul>
+              <ul class="nav">
                 <li>
-                  <a class="active" href="dashboard.html">
-                    <i class="lni-dashboard"></i>
+                  <a
+                    class="active"
+                    href="#v-pills-dashboard"
+                    data-toggle="pill"
+                  >
+                    <i class="fa fa-dashboard"></i>
                     <span>Dashboard</span>
                   </a>
                 </li>
                 <li>
-                  <a href="account-profile-setting.html">
-                    <i class="lni-cog"></i>
+                  <a href="#v-pills-profile" data-toggle="pill">
+                    <i class="fa fa-cog"></i>
                     <span>Profile Settings</span>
                   </a>
                 </li>
                 <li>
-                  <a href="account-myads.html">
-                    <i class="lni-layers"></i>
+                  <a href="#v-pills-my-ads" data-toggle="pill">
+                    <i class="fa fa-stack-overflow"></i>
                     <span>My Ads</span>
                   </a>
                 </li>
                 <li>
-                  <a href="offermessages.html">
-                    <i class="lni-envelope"></i>
-                    <span>Offers/Messages</span>
+                  <a href="#v-pills-messages" data-toggle="pill">
+                    <i class="fa fa-envelope"></i>
+                    <span>Messages</span>
                   </a>
                 </li>
+
                 <li>
-                  <a href="payments.html">
-                    <i class="lni-wallet"></i>
-                    <span>Payments</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="account-favourite-ads.html">
-                    <i class="lni-heart"></i>
+                  <a href="#v-pills-favorites" data-toggle="pill">
+                    <i class="fa fa-heart"></i>
                     <span>My Favourites</span>
                   </a>
                 </li>
                 <li>
-                  <a href="privacy-setting.html">
-                    <i class="lni-star"></i>
-                    <span>Privacy Settings</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i class="lni-enter"></i>
+                  <a (click)="logout()" class="click">
+                    <i class="fa fa-sign-out"></i>
                     <span>Logout</span>
                   </a>
                 </li>
@@ -70,14 +82,19 @@
           <div class="widget">
             <h4 class="widget-title">Advertisement</h4>
             <div class="add-box">
-              <img class="img-fluid" src="assets/img/img1.jpg" alt="" />
+              <!-- Advert goes here -->
             </div>
           </div>
         </aside>
       </div>
       <div class="col-sm-12 col-md-8 col-lg-9">
-        <div class="page-content">
-          <div class="inner-box">
+        <div class="page-content tab-content">
+          <div
+            class="inner-box tab-pane fade show active"
+            id="v-pills-dashboard"
+            role="tabpanel"
+            aria-labelledby="v-pills-dashboard-tab"
+          >
             <div class="dashboard-box">
               <h2 class="dashbord-title">Dashboard</h2>
             </div>
@@ -86,34 +103,60 @@
                 <div class="row">
                   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
                     <div class="dashboardbox">
-                      <div class="icon"><i class="lni-write"></i></div>
+                      <div class="icon">
+                        <i class="fa fa-file-archive-o"></i>
+                      </div>
                       <div class="contentbox">
-                        <h2><a href="#">Total Ad Posted</a></h2>
-                        <h3>480 Add Posted</h3>
+                        <h2>Total Ad Posted</h2>
+                        <h3>{{ myAds.length }} Add Posted</h3>
                       </div>
                     </div>
                   </div>
                   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
                     <div class="dashboardbox">
-                      <div class="icon"><i class="lni-add-files"></i></div>
+                      <div class="icon"><i class="fa fa-file-o"></i></div>
                       <div class="contentbox">
-                        <h2><a href="#">Featured Ads</a></h2>
-                        <h3>80 Add Posted</h3>
+                        <h2>Saved Ads</h2>
+                        <h3>{{ favoritAds.length }} Ads Saved</h3>
                       </div>
                     </div>
                   </div>
                   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
                     <div class="dashboardbox">
-                      <div class="icon"><i class="lni-support"></i></div>
+                      <div class="icon"><i class="fa fa-commenting-o"></i></div>
                       <div class="contentbox">
-                        <h2><a href="#">Offers / Messages</a></h2>
-                        <h3>2040 Messages</h3>
+                        <h2>Messages</h2>
+                        <h3>{{ recievedMessages.length }} Messages</h3>
                       </div>
                     </div>
                   </div>
                 </div>
+                <div>
+                  <div class="mt-2">
+                    <p class=""><b>My referrer link</b></p>
+                  </div>
+                  <div class="input-group mb-3">
+                    <input
+                      id="referral"
+                      class="form-control"
+                      type="text"
+                      size="20"
+                      value="http://localhost:5000/register;referrer={{
+                        myProfile.referralCode
+                      }}"
+                    />
+                    <div
+                      class="input-group-append click"
+                      (click)="copyToClipboard()"
+                    >
+                      <span class="input-group-text"
+                        ><i class="fa fa-clone"></i
+                      ></span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <table class="table table-responsive dashboardtable tablemyads">
+              <!-- <table class="table table-responsive dashboardtable tablemyads">
                 <thead>
                   <tr>
                     <th>
@@ -138,140 +181,6 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr data-category="active">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adone"
-                        />
-                        <label class="custom-control-label" for="adone"></label>
-                      </div>
-                    </td>
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="assets/img/product/img1.jpg"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3>HP Laptop 6560b core i3 3nd generation</h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
-                    </td>
-                    <td data-title="Category">
-                      <span class="adcategories">Laptops & PCs</span>
-                    </td>
-                    <td data-title="Ad Status">
-                      <span class="adstatus adstatusactive">active</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>139$</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
-                        ></a>
-                        <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
-                        ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="active">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adtwo"
-                        />
-                        <label class="custom-control-label" for="adtwo"></label>
-                      </div>
-                    </td>
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="assets/img/product/img2.jpg"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3>Jvc Haebr80b In-ear Sports Headphones</h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
-                    </td>
-                    <td data-title="Category">Electronics</td>
-                    <td data-title="Ad Status">
-                      <span class="adstatus adstatusactive">Active</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>$189</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
-                        ></a>
-                        <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
-                        ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="inactive">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adthree"
-                        />
-                        <label
-                          class="custom-control-label"
-                          for="adthree"
-                        ></label>
-                      </div>
-                    </td>
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="assets/img/product/img3.jpg"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3>Furniture Straps 4-Pack, TV Anti-Tip Metal Wall</h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
-                    </td>
-                    <td data-title="Category">Real Estate</td>
-                    <td>
-                      <span class="adstatus adstatusinactive">Inactive</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>$69</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
-                        ></a>
-                        <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
-                        ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
                   <tr data-category="sold">
                     <td>
                       <div class="custom-control custom-checkbox">
@@ -295,11 +204,12 @@
                     </td>
                     <td data-title="Title">
                       <h3>
-                        Apple iPhone X, Fully Unlocked 5.8", 64 GB - Black
+                        fghjk
                       </h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
                     </td>
-                    <td data-title="Category">Mobile</td>
+                    <td data-title="Category">
+                      xcfghjk
+                    </td>
                     <td data-title="Ad Status">
                       <span class="adstatus adstatussold">Sold</span>
                     </td>
@@ -309,249 +219,53 @@
                     <td data-title="Action">
                       <div class="btns-actions">
                         <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
+                          ><i class="fa fa-eye"></i
                         ></a>
                         <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
+                          ><i class="fa fa-trash"></i
                         ></a>
                       </div>
                     </td>
                   </tr>
-                  <tr data-category="active">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adfive"
-                        />
-                        <label
-                          class="custom-control-label"
-                          for="adfive"
-                        ></label>
-                      </div>
-                    </td>
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="assets/img/product/img5.jpg"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3>Apple Macbook Pro 13 Inch with/without Touch Bar</h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
-                    </td>
-                    <td data-title="Category">Apple</td>
-                    <td data-title="Ad Status">
-                      <span class="adstatus adstatusactive">Active</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>$289</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
-                        ></a>
-                        <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
-                        ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
-                        ></a>
-                      </div>
-                    </td>
+                </tbody>
+              </table> -->
+            </div>
+          </div>
+          <div
+            class="inner-box tab-pane fade"
+            id="v-pills-favorites"
+            role="tabpanel"
+            aria-labelledby="v-pills-favorites-tab"
+          >
+            <div class="dashboard-box">
+              <h2 class="dashbord-title">My Favourites</h2>
+            </div>
+            <div class="dashboard-wrapper">
+              <table class="table table-responsive dashboardtable tablemyads">
+                <thead>
+                  <tr>
+                    <th>Photo</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Ad Status</th>
+                    <th>Price</th>
+                    <th>Action</th>
                   </tr>
-                  <tr data-category="sold">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adsix"
-                        />
-                        <label class="custom-control-label" for="adsix"></label>
-                      </div>
-                    </td>
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="assets/img/product/img6.jpg"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3>Apple MQDT2CL/A 10.5-Inch 64GB Wi-Fi iPad Pro</h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
-                    </td>
-                    <td data-title="Category">Apple iPad</td>
-                    <td data-title="Ad Status">
-                      <span class="adstatus adstatussold">Sold</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>$159</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
-                        ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="expired">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adseven"
-                        />
-                        <label
-                          class="custom-control-label"
-                          for="adseven"
-                        ></label>
-                      </div>
-                    </td>
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="assets/img/product/img7.jpg"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3>Essential Phone 8GB Unlocked with Dual Camera</h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
-                    </td>
-                    <td data-title="Category">Mobile</td>
-                    <td data-title="Ad Status">
-                      <span class="adstatus adstatusexpired">Expired</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>$89</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
-                        ></a>
-                        <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
-                        ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="inactive">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adeight"
-                        />
-                        <label
-                          class="custom-control-label"
-                          for="adeight"
-                        ></label>
-                      </div>
-                    </td>
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="assets/img/product/img8.jpg"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3>LG Nexus 5x LG-H791 32GB GSM Smartphone</h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
-                    </td>
-                    <td data-title="Category">Mobile</td>
-                    <td>
-                      <span class="adstatus adstatusinactive">Inactive</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>$59</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
-                        ></a>
-                        <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
-                        ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="expired">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adnine"
-                        />
-                        <label
-                          class="custom-control-label"
-                          for="adnine"
-                        ></label>
-                      </div>
-                    </td>
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="assets/img/product/img9.jpg"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3>Samsung Galaxy G550T On5 GSM Unlocked Smartphone</h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
-                    </td>
-                    <td data-title="Category">Mobile</td>
-                    <td data-title="Ad Status">
-                      <span class="adstatus adstatusexpired">Expired</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>$129</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
-                        ></a>
-                        <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
-                        ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="deleted">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adten"
-                        />
-                        <label class="custom-control-label" for="adten"></label>
-                      </div>
-                    </td>
+                </thead>
+                <tbody>
+                  <tr
+                    data-category="deleted"
+                    *ngFor="
+                      let favorite of favoritAds
+                        | paginate
+                          : {
+                              id: 'favorites',
+                              itemsPerPage: favoritAdsPaginationInfo.size,
+                              currentPage: favoritAdsPaginationInfo.number,
+                              totalItems: favoritAdsPaginationInfo.totalElements
+                            }
+                    "
+                  >
                     <td class="photo">
                       <img
                         class="img-fluid"
@@ -560,32 +274,530 @@
                       />
                     </td>
                     <td data-title="Title">
-                      <h3>Apple iMac Pro 27" All-in-One Desktop, Space Gray</h3>
-                      <span>Ad ID: ng3D5hAMHPajQrM</span>
+                      <h3>{{ favorite?.title }}y</h3>
                     </td>
-                    <td data-title="Category">Apple iMac</td>
+                    <td data-title="Category">
+                      {{ favorite?.subCategory?.category?.name }}
+                    </td>
                     <td data-title="Ad Status">
-                      <span class="adstatus adstatusdeleted">Deleted</span>
+                      <span class="adstatus adstatusactive">{{
+                        favorite?.status
+                      }}</span>
                     </td>
                     <td data-title="Price">
-                      <h3>$389</h3>
+                      <h3>{{ favorite?.price | currency: "₦" }}</h3>
                     </td>
                     <td data-title="Action">
                       <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="lni-eye"></i
+                        <a
+                          class="btn-action btn-view"
+                          [routerLink]="[
+                            '/ad/view',
+                            favorite?.slug,
+                            favorite?.user?.slug
+                          ]"
+                          ><i class="fa fa-eye"></i
                         ></a>
-                        <a class="btn-action btn-edit" href="#"
-                          ><i class="lni-pencil"></i
+                        <a
+                          class="btn-action btn-edit"
+                          [routerLink]="['/ad/edit', favorite?.slug]"
+                          ><i class="fa fa-pencil"></i
                         ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="lni-trash"></i
+                        <a
+                          class="btn-action btn-delete"
+                          (click)="deleteAd(favorite?.slug)"
+                          ><i class="fa fa-trash"></i
                         ></a>
                       </div>
                     </td>
                   </tr>
                 </tbody>
               </table>
+              <div class="d-flex justify-content-end">
+                <pagination-controls
+                  (pageChange)="navigateMyAdPage($event)"
+                  id="favorites"
+                  class="my-pagination"
+                ></pagination-controls>
+              </div>
+            </div>
+          </div>
+          <!-- myAds -->
+          <div
+            class="inner-box tab-pane fade"
+            id="v-pills-my-ads"
+            role="tabpanel"
+            aria-labelledby="v-pills-my-ads-tab"
+          >
+            <div class="dashboard-box">
+              <h2 class="dashbord-title">My Ads</h2>
+            </div>
+            <div class="dashboard-wrapper">
+              <nav class="nav-table">
+                <ul>
+                  <li class="active"><a href="#">All Ads (42)</a></li>
+                  <li><a href="#">Active (88)</a></li>
+                  <li><a href="#">Pending (12)</a></li>
+                  <li><a href="#">Approved (02)</a></li>
+                  <li><a href="#">Sold (42)</a></li>
+                </ul>
+              </nav>
+              <table class="table table-responsive dashboardtable tablemyads">
+                <thead>
+                  <tr>
+                    <th>Photo</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Ad Status</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    data-category="sold"
+                    *ngFor="
+                      let myAd of myAds
+                        | paginate
+                          : {
+                              id: 'myAds',
+                              itemsPerPage: myAdsPaginationInfo.size,
+                              currentPage: myAdsPaginationInfo.number,
+                              totalItems: myAdsPaginationInfo.totalElements
+                            }
+                    "
+                  >
+                    <td class="photo">
+                      <img
+                        class="img-fluid"
+                        src="{{ (myAd?.adImages)[0].imageUrl }}"
+                        alt=""
+                      />
+                    </td>
+                    <td data-title="Title">
+                      <h3 class="ellipses">
+                        {{ myAd?.title }}
+                      </h3>
+                    </td>
+                    <td data-title="Category">
+                      {{ myAd?.subCategory?.category?.name }}
+                    </td>
+                    <td
+                      data-title="Ad Status"
+                      *ngIf="myAd?.status === 'PENDING'"
+                    >
+                      <span class="adstatus adstatusexpired">pending</span>
+                    </td>
+                    <td
+                      data-title="Ad Status"
+                      *ngIf="myAd?.status === 'APPROVED'"
+                    >
+                      <span class="adstatus adstatusactive">active</span>
+                    </td>
+                    <td data-title="Price">
+                      <h3>{{ myAd?.dailyPrice | currency: "₦" }}</h3>
+                    </td>
+                    <td data-title="Action">
+                      <div class="btns-actions">
+                        <a
+                          class="btn-action btn-view click"
+                          [routerLink]="[
+                            '/ad/view',
+                            myAd?.slug,
+                            myAd?.user?.slug
+                          ]"
+                          ><i class="fa fa-eye"></i
+                        ></a>
+                        <a
+                          class="btn-action btn-edit click"
+                          [routerLink]="['/ad/edit', myAd?.slug]"
+                          ><i class="fa fa-pencil"></i
+                        ></a>
+                        <a
+                          class="btn-action btn-delete click"
+                          (click)="deleteAd(myAd?.slug)"
+                          ><i class="fa fa-trash"></i
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="has-text-centered d-flex justify-content-end">
+                <pagination-controls
+                  (pageChange)="navigateMyAdPage($event - 1)"
+                  previousLabel="Prev"
+                  nextLabel="Next"
+                  responsive="true"
+                  id="myAds"
+                  class="my-pagination"
+                ></pagination-controls>
+              </div>
+            </div>
+          </div>
+          <!-- message -->
+          <div
+            class="inner-box tab-pane fade"
+            id="v-pills-messages"
+            role="tabpanel"
+            aria-labelledby="v-pills-messages-tab"
+          >
+            <div class="dashboard-wrapper">
+              <nav class="nav-table">
+                <ul class="nav nav-pills">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#sent" data-toggle="pill"
+                      >Sent (88)</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#recieved" data-toggle="pill"
+                      >Recieved (12)</a
+                    >
+                  </li>
+                </ul>
+              </nav>
+              <div class="tab-pane fade show active" id="sent" role="tabpanel">
+                <form class="row offers-messages">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+                    <div class="offers-box">
+                      <div class="dashboardboxtitle">
+                        <h2>User</h2>
+                      </div>
+                      <ul class="offers-user-online">
+                        <li class="offerer">
+                          <figure>
+                            <img src="assets/img/author/img1.jpg" alt="" />
+                          </figure>
+                          <div class="user-name">
+                            <h3>Sarah Higgle</h3>
+                            <h4><a href="#">Offline</a></h4>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+                    <div class="chat-message-box">
+                      <div class="dashboardboxtitle">
+                        <h2>Chat Messages</h2>
+                      </div>
+                      <div class="offerermessage">
+                        <figure>
+                          <img src="assets/img/author/img1.jpg" alt="" />
+                        </figure>
+                        <div class="description">
+                          <div class="info">
+                            <h3>Meagan Miller</h3>
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing
+                              and typesetting industry
+                            </p>
+                          </div>
+                          <time class="date">June 21, 2018</time>
+                        </div>
+                      </div>
+                      <div class="memessage readmessage">
+                        <figure>
+                          <img src="assets/img/author/img1.jpg" alt="" />
+                        </figure>
+                        <div class="description">
+                          <div class="info">
+                            <h3>You</h3>
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing
+                              and typesetting industry
+                            </p>
+                          </div>
+                          <div class="text-right">
+                            <p>It that ok?</p>
+                            <time class="date">Jun 28, 2017 09:30</time>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="offerermessage">
+                        <figure>
+                          <img src="assets/img/author/img1.jpg" alt="" />
+                        </figure>
+                        <div class="description">
+                          <div class="info">
+                            <h3>Meagan Miller</h3>
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing
+                              and typesetting industry
+                            </p>
+                          </div>
+                          <time class="date">June 21, 2018</time>
+                        </div>
+                      </div>
+                      <div class="memessage readmessage">
+                        <figure>
+                          <img src="assets/img/author/img1.jpg" alt="" />
+                        </figure>
+                        <div class="description">
+                          <div class="info">
+                            <h3>You</h3>
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing
+                              and typesetting industry
+                            </p>
+                          </div>
+                          <div class="text-right">
+                            <p>It that ok?</p>
+                            <time class="date">Jun 28, 2017 09:30</time>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="replay-box">
+                      <textarea
+                        class="form-control"
+                        name="reply"
+                        placeholder="Type Here & Press Enter"
+                      ></textarea>
+                      <div class="icon-box">
+                        <i class="fa fa-thumbs-up"></i>
+                        <i class="fa fa-thumbs-down"></i>
+                        <i class="fa fa-emoji-smile"></i>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane fade" id="recieved" role="tabpanel">
+                <form class="row offers-messages">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+                    <div class="offers-box">
+                      <div class="dashboardboxtitle">
+                        <h2>User</h2>
+                      </div>
+                      <ul class="offers-user-online">
+                        <li class="offerer">
+                          <figure>
+                            <img src="assets/img/author/img1.jpg" alt="" />
+                          </figure>
+                          <div class="user-name">
+                            <h3>Sarah Higgle</h3>
+                            <h4><a href="#">Offline</a></h4>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+                    <div class="chat-message-box">
+                      <div class="dashboardboxtitle">
+                        <h2>Chat Messages</h2>
+                      </div>
+                      <div
+                        class="offerermessage"
+                        *ngFor="let message of recievedMessages"
+                      >
+                        <figure>
+                          <img src="assets/img/author/img1.jpg" alt="" />
+                        </figure>
+                        <div class="description">
+                          <div class="info">
+                            <h3>Meagan Miller</h3>
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing
+                              and typesetting industry
+                            </p>
+                          </div>
+                          <time class="date">June 21, 2018</time>
+                        </div>
+                      </div>
+                      <div class="memessage readmessage">
+                        <figure>
+                          <img src="assets/img/author/img1.jpg" alt="" />
+                        </figure>
+                        <div class="description">
+                          <div class="info">
+                            <h3>You</h3>
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing
+                              and typesetting industry
+                            </p>
+                          </div>
+                          <div class="text-right">
+                            <p>It that ok?</p>
+                            <time class="date">Jun 28, 2017 09:30</time>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="offerermessage">
+                        <figure>
+                          <img src="assets/img/author/img1.jpg" alt="" />
+                        </figure>
+                        <div class="description">
+                          <div class="info">
+                            <h3>Meagan Miller</h3>
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing
+                              and typesetting industry
+                            </p>
+                          </div>
+                          <time class="date">June 21, 2018</time>
+                        </div>
+                      </div>
+                      <div class="memessage readmessage">
+                        <figure>
+                          <img src="assets/img/author/img1.jpg" alt="" />
+                        </figure>
+                        <div class="description">
+                          <div class="info">
+                            <h3>You</h3>
+                            <p>
+                              Lorem Ipsum is simply dummy text of the printing
+                              and typesetting industry
+                            </p>
+                          </div>
+                          <div class="text-right">
+                            <p>It that ok?</p>
+                            <time class="date">Jun 28, 2017 09:30</time>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="replay-box">
+                      <textarea
+                        class="form-control"
+                        name="reply"
+                        placeholder="Type Here & Press Enter"
+                      ></textarea>
+                      <div class="icon-box">
+                        <i class="fa fa-thumbs-up"></i>
+                        <i class="fa fa-thumbs-down"></i>
+                        <i class="fa fa-emoji-smile"></i>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div
+            class="inner-box tab-pane fade"
+            id="v-pills-profile"
+            role="tabpanel"
+            aria-labelledby="v-pills-profile-tab"
+          >
+            <div class="dashboard-box">
+              <h2 class="dashbord-title">Contact Detail</h2>
+            </div>
+            <div class="dashboard-wrapper" [formGroup]="profileForm">
+              <div class="form-group mb-3">
+                <label class="control-label">First Name*</label>
+                <input
+                  class="form-control input-md"
+                  name="name"
+                  type="text"
+                  formControlName="firstName"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="control-label">Last Name*</label>
+                <input
+                  class="form-control input-md"
+                  name="name"
+                  type="text"
+                  formControlName="lastName"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="control-label">Phone*</label>
+                <input
+                  class="form-control input-md"
+                  name="phoneNumber"
+                  type="text"
+                  formControlName="phoneNumber"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="control-label">Address</label>
+                <input
+                  class="form-control input-md"
+                  formControlName="address"
+                  name="address"
+                  type="text"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="control-label">Email</label>
+                <input
+                  class="form-control input-md"
+                  name="email"
+                  formControlName="email"
+                  type="email"
+                  autocomplete="email"
+                />
+              </div>
+              <div class="d-flex justify-content-end">
+                <button
+                  id="update"
+                  class="btn btn-common"
+                  style="background-color: #2196f3; color: white;"
+                  type="button"
+                  (click)="toggleDisabled()"
+                >
+                  Edit
+                </button>
+                <div class="ml-3" *ngIf="IsHidden">
+                  <button
+                    class="btn btn-common"
+                    style="background-color: #2196f3; color: white;"
+                    type="button"
+                    (click)="updateProfile()"
+                  >
+                    update
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <button
+                class="btn btn-common"
+                style="background-color: #2196f3; color: white;"
+                type="button"
+                (click)="togglePasswordUpdate()"
+              >
+                Change password
+              </button>
+            </div>
+            <div
+              class="dashboard-wrapper"
+              [formGroup]="updatePasswordForm"
+              *ngIf="show"
+            >
+              <div class="form-group mb-3">
+                <label class="control-label">Enter old password*</label>
+                <input
+                  class="form-control input-md"
+                  type="password"
+                  name="password"
+                  formControlName="oldPassword"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="control-label">Enter new password*</label>
+                <input
+                  class="form-control input-md"
+                  name="password"
+                  type="password"
+                  autocomplete="new-password"
+                  formControlName="newPassword"
+                />
+              </div>
+              <div class="d-flex justify-content-end">
+                <button
+                  (click)="updatePassword()"
+                  class="btn btn-common"
+                  style="background-color: #2196f3; color: white;"
+                  type="button"
+                >
+                  Change
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -593,5 +805,7 @@
     </div>
   </div>
 </div>
+
+<!-- favorites -->
 
 <app-footer></app-footer>

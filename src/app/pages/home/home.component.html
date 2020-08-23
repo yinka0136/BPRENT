@@ -106,14 +106,13 @@
   <!-- ========================= SECTION MAIN END// ========================= -->
 
   <!-- =============== SECTION DEAL =============== -->
-  <section class="padding-bottom">
+  <!-- <section class="padding-bottom">
     <div class="card card-deal">
       <div class="col-heading content-body">
         <header class="section-heading">
           <h3 class="section-title">Deals and offers</h3>
           <p>Hygiene equipments</p>
         </header>
-        <!-- sect-heading -->
         <div class="timer">
           <div><span class="num">04</span> <small>Days</small></div>
           <div><span class="num">12</span> <small>Hours</small></div>
@@ -121,7 +120,6 @@
           <div><span class="num">02</span> <small>Sec</small></div>
         </div>
       </div>
-      <!-- col.// -->
       <div class="row no-gutters items-wrap">
         <div class="col-md col-6">
           <figure class="card-product-grid card-sm">
@@ -134,7 +132,6 @@
             </div>
           </figure>
         </div>
-        <!-- col.// -->
         <div class="col-md col-6">
           <figure class="card-product-grid card-sm">
             <a routerLink="/ad/view" class="img-wrap">
@@ -146,7 +143,6 @@
             </div>
           </figure>
         </div>
-        <!-- col.// -->
         <div class="col-md col-6">
           <figure class="card-product-grid card-sm">
             <a routerLink="/ad/view" class="img-wrap">
@@ -158,7 +154,6 @@
             </div>
           </figure>
         </div>
-        <!-- col.// -->
         <div class="col-md col-6">
           <figure class="card-product-grid card-sm">
             <a routerLink="/ad/view" class="img-wrap">
@@ -170,7 +165,6 @@
             </div>
           </figure>
         </div>
-        <!-- col.// -->
         <div class="col-md col-6">
           <figure class="card-product-grid card-sm">
             <a routerLink="/ad/view" class="img-wrap">
@@ -184,10 +178,9 @@
             </div>
           </figure>
         </div>
-        <!-- col.// -->
       </div>
     </div>
-  </section>
+  </section> -->
   <!-- =============== SECTION DEAL // END =============== -->
 
   <!-- =============== SECTION 1 =============== -->
@@ -203,25 +196,25 @@
   <!-- =============== SECTION REQUEST .//END =============== -->
 
   <!-- =============== SECTION ITEMS =============== -->
-  <section class="padding-bottom-sm">
+  <section class="padding-bottom-sm featured">
     <header class="section-heading heading-line">
       <h4 class="title-section text-uppercase">Trending Ads</h4>
     </header>
 
     <div class="row row-sm">
-      <!-- col.// -->
       <div
         class="col-xl-3 col-lg-3 col-md-4 col-6 click"
-        [routerLink]="['/ad/view', trending?.slug]"
+        [routerLink]="['/ad/view', trending?.slug, trending?.user?.slug]"
         *ngFor="let trending of trendingAds"
       >
-        <div class="card card-sm card-product-grid focus">
+        <div class="card card-sm card-product-grid focus featured-box">
           <a class="img-wrap">
             <img src="{{ (trending?.adImages)[0].imageUrl }}" />
           </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">{{ trending?.title }}</a>
-            <div class="rating-wrap">
+
+          <figcaption class="info-wrap feature-content">
+            <h4>{{ trending?.title }}</h4>
+            <div class="rating-wrap d-flex">
               <ul class="rating-stars">
                 <li style="width: 80%;" class="stars-active">
                   <i class="fa fa-star"></i><i class="fa fa-star"></i
@@ -236,38 +229,52 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">#{{ trending?.price }}.00</div>
-            <!-- price-wrap.// -->
+            <div class="listing-bottom">
+              <h3 class="price">
+                {{ trending?.dailyPrice | currency: "₦" }}
+              </h3>
+              <div class="float-right click">
+                <div
+                  class="heart click"
+                  (click)="toggleSave(trending?.slug, trending.bookmarked)"
+                >
+                  <i
+                    class="fa fa-heart"
+                    [ngClass]="{
+                      black: !trending?.bookmarked,
+                      red: trending?.bookmarked
+                    }"
+                  ></i>
+                </div>
+              </div>
+              <a class="btn-verified" *ngIf="trending?.boosted"
+                ><i class="fa fa-check-square-o"></i> Boosted Ad</a
+              >
+            </div>
           </figcaption>
         </div>
       </div>
-      <!-- col.// -->
-
-      <!-- col.// -->
-
-      <!-- col.// -->
     </div>
-    <!-- row.// -->
   </section>
   <!-- =============== SECTION ITEMS .//END =============== -->
-  <section class="padding-bottom-sm">
+  <section class="padding-bottom-sm featured">
     <header class="section-heading heading-line">
       <h4 class="title-section text-uppercase">New Ads</h4>
     </header>
 
     <div class="row row-sm">
-      <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-        <div
-          [routerLink]="['/ad/view', newAd?.slug]"
-          class="card card-sm card-product-grid click"
-          *ngFor="let newAd of newAds"
-        >
+      <div
+        class="col-xl-3 col-lg-3 col-md-4 col-6 click"
+        [routerLink]="['/ad/view', newAd?.slug, newAd?.user?.slug]"
+        *ngFor="let newAd of newAds"
+      >
+        <div class="card card-sm card-product-grid focus featured-box">
           <a class="img-wrap">
             <img src="{{ (newAd?.adImages)[0].imageUrl }}" />
           </a>
-          <figcaption class="info-wrap">
-            <a href="#" class="title">{{ newAd?.title }}</a>
-            <div class="rating-wrap">
+          <figcaption class="info-wrap feature-content">
+            <h4>{{ newAd?.title }}</h4>
+            <div class="rating-wrap d-flex">
               <ul class="rating-stars">
                 <li style="width: 80%;" class="stars-active">
                   <i class="fa fa-star"></i><i class="fa fa-star"></i
@@ -282,19 +289,32 @@
               </ul>
               <span class="label-rating text-muted"> 34 reviws</span>
             </div>
-            <div class="price mt-1">${{ newAd?.price }}.00</div>
-            <!-- price-wrap.// -->
+            <div class="listing-bottom">
+              <h3 class="price">
+                {{ newAd?.dailyPrice | currency: "₦" }}
+              </h3>
+              <div class="float-right click">
+                <div
+                  class="heart click"
+                  (click)="toggleSave(newAd?.slug, newAd.bookmarked)"
+                >
+                  <i
+                    class="fa fa-heart"
+                    [ngClass]="{
+                      black: !newAd?.bookmarked,
+                      red: newAd?.bookmarked
+                    }"
+                  ></i>
+                </div>
+              </div>
+              <a class="btn-verified" *ngIf="newAd?.boosted"
+                ><i class="fa fa-check-square-o"></i> Boosted Ad</a
+              >
+            </div>
           </figcaption>
         </div>
       </div>
-      <!-- col.// -->
     </div>
-    <!-- row.// -->
   </section>
-  <!-- =============== SECTION SERVICES .//END =============== -->
-
-  <!-- =============== SECTION REGION =============== -->
-
-  <!-- =============== SECTION REGION .//END =============== -->
 </div>
 <app-footer></app-footer>

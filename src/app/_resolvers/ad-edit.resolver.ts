@@ -1,31 +1,31 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, forkJoin, of } from 'rxjs';
-import { CatStatesService } from '../_services/cat-states.service';
 import { map, catchError } from 'rxjs/operators';
 import { GlobalService } from '../_services/global.service';
 import { AdServiceService } from '../_services/ad-service.service';
-import { FeedbackService } from '../_services/feedback.service';
+import { CatStatesService } from '../_services/cat-states.service';
 
 @Injectable({ providedIn: 'root' })
-export class AdDetailResolver implements Resolve<any> {
+export class AdEditResolver implements Resolve<any> {
   constructor(
     private _adService: AdServiceService,
     private _global: GlobalService,
-    private _feedBack: FeedbackService
+    private _category: CatStatesService
   ) {}
   resolve(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
     const slug = route.paramMap.get('slug');
-    const userSlug = route.paramMap.get('userSlug');
     this._global.showSpinner();
     const ad = this._adService.getAd(slug);
-    const feedbacks = this._feedBack.findUserFeedback(0, 4, userSlug);
-    return forkJoin([ad, feedbacks]).pipe(
+    const categories = this._category.getAllCategories();
+    const states = this._category.fetchAllStates();
+    return forkJoin([categories, states, ad]).pipe(
       map((res) => {
         this._global.hideSpinner();
         return {
-          ad: res[0],
-          feedbacks: res[1],
+          categories: res[0],
+          states: res[1],
+          ad: res[2],
         };
       }),
       catchError((error) => {

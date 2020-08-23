@@ -27,7 +27,13 @@ export class GlobalService {
 
   hideSpinnerWithErrorMessage(response: ResponseStructure) {
     this._spinner.hide();
+    // console.log(response);
     this._toastr.error(response.responseMessage);
+  }
+
+  hideSpinnerWithError(error) {
+    this._spinner.hide();
+    this._toastr.error(error);
   }
 
   globalAuthErrorHandler(error: ResponseStructure) {
