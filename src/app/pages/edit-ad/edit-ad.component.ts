@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CatStatesService } from 'src/app/_services/cat-states.service';
 import Swal from 'sweetalert2';
 import { ResponseStructure } from 'src/app/_models/respose';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-ad',
@@ -19,7 +20,10 @@ export class EditAdComponent implements OnInit, OnDestroy {
   adForm: FormGroup;
   images: any[] = [];
   ad;
+  subCategory;
   image: any;
+  addedImagesToView: any[] = [];
+  addedImagesToSend: any[] = [];
   categories: any[] = [];
   subCategories: any[] = [];
   states: any[] = [];
@@ -64,16 +68,24 @@ export class EditAdComponent implements OnInit, OnDestroy {
       this.categories = res['resolvedData'].categories['responseResult'];
       this.states = res['resolvedData'].states['responseResult'];
       this.ad = res['resolvedData'].ad['responseResult'].ad;
+      this.addImagesToArray();
     });
     this.initAdForm();
   }
+
+  addImagesToArray() {
+    this.ad.adImages.forEach((adImage) => {
+      this.images.push(adImage);
+    });
+  }
   initAdForm() {
     this.adForm = this.fb.group({
-      title: [this.ad.title, Validators.required],
-      description: [this.ad.description, Validators.required],
-      subCategoryId: ['', Validators.required],
-      regionId: [''],
-      price: [this.ad.price, Validators.required],
+      title: [this.ad.title],
+      description: [this.ad.description],
+      subCategoryId: [this.ad.subCategory.id],
+      regionId: [this.ad.region.id],
+      weeklyPrice: [this.ad.weeklyPrice],
+      dailyPrice: [this.ad.dailyPrice],
       boosted: [this.ad.boosted],
       negotiable: [this.ad.negotiable],
     });
@@ -82,7 +94,7 @@ export class EditAdComponent implements OnInit, OnDestroy {
   boostAd() {
     Swal.fire({
       title: 'Boost Ad?',
-      text: 'this will cost you',
+      text: 'this will cost you ' + this.subCategory.coins + ' coins',
       icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#2196F3',
@@ -113,25 +125,43 @@ export class EditAdComponent implements OnInit, OnDestroy {
   }
 
   addFile(images) {
-    console.log(images);
-    this.images.push(images[0]);
+    this.addedImagesToSend.push(images[0]);
+    var reader = new FileReader();
+    reader.readAsDataURL(images[0]);
+    reader.onloadend = () => {
+      this.addedImagesToView.push({ imageUrl: reader.result });
+    };
   }
-  removeImage(image) {
-    this.images = this.images.filter((i) => i != image);
+
+  removeImage(id) {
+    this.sub.add(
+      this._adService.deleteAdImage(id).subscribe({
+        next: (res) => {
+          this.images = this.images.filter((i) => i.id != id);
+          console.log(res);
+        },
+      })
+    );
   }
-  postAd() {
+  removeaddedImage(image) {
+    this.addedImagesToView = this.addedImagesToView.filter((i) => i != image);
+    this.addedImagesToSend = this.addedImagesToSend.pop();
+  }
+  editAd() {
+    console.log(this.addedImagesToSend);
     this._global.showSpinner();
 
     const payload = this.adForm.value;
     const adJson = JSON.stringify(payload);
+    console.log(payload, adJson);
     const formData = new FormData();
-    this.images.forEach((i) => {
+    this.addedImagesToSend.forEach((i) => {
       formData.append('images', i);
     });
     formData.append('adJson', adJson);
 
     this.sub.add(
-      this._adService.createAd(formData).subscribe({
+      this._adService.updateAd(formData, this.ad.slug).subscribe({
         next: (res: ResponseStructure) => {
           this.adForm.reset();
           this._global.hideSpinner();
@@ -149,7 +179,7 @@ export class EditAdComponent implements OnInit, OnDestroy {
           this.adForm.reset();
           Toast.fire({
             icon: 'success',
-            title: 'Ad posted successfully',
+            title: 'Ad updated successfully',
           });
         },
       })
@@ -166,7 +196,10 @@ export class EditAdComponent implements OnInit, OnDestroy {
       })
     );
   }
-
+  getSubcategory(id) {
+    const subCategory = this.subCategories.find((s) => s.id == id);
+    this.subCategory = subCategory;
+  }
   getRegions(code) {
     this.sub.add(
       this._catService.fetchAllRegions(code).subscribe({

@@ -27,6 +27,7 @@ export class GlobalService {
 
   hideSpinnerWithErrorMessage(response: ResponseStructure) {
     this._spinner.hide();
+    // console.log(response);
     this._toastr.error(response.responseMessage);
   }
 

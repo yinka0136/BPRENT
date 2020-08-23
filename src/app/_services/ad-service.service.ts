@@ -129,19 +129,18 @@ export class AdServiceService {
       );
   }
 
-  updateAd(payload) {
-    const formData = new FormData();
-    formData.append('adJson', payload.adJson);
-    formData.append('images', payload.images);
-    return this.http.put(
-      `${environment.API_URL}/${endpoints.updateAd}/${payload.slug}/update`,
+  updateAd(formData, slug) {
+    return this.http.patch(
+      `${environment.API_URL}/${endpoints.updateAd}/${slug}/update`,
       formData
     );
   }
 
   toggleSaveAd(slug) {
-    return this.http.get(
-      `${environment.API_URL}/${endpoints.toggleSaveAd}/${slug}/toggle_save`
+    let payload = {};
+    return this.http.post(
+      `${environment.API_URL}/${endpoints.toggleSaveAd}/${slug}/toggle_save`,
+      payload
     );
   }
 
@@ -164,7 +163,12 @@ export class AdServiceService {
   }
   deleteAd(slug) {
     return this.http.delete(
-      `${environment.API_URL}/${endpoints.deleteAd}/${slug}delete`
+      `${environment.API_URL}/${endpoints.deleteAd}/${slug}/delete`
+    );
+  }
+  deleteAdImage(imageId) {
+    return this.http.delete(
+      `${environment.API_URL}/${endpoints.deleteAdImage}/${imageId}/delete`
     );
   }
   declineAd(slug) {

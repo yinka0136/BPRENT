@@ -22,6 +22,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
   categories: any[] = [];
   subCategories: any[] = [];
   states: any[] = [];
+  subCategory;
   regions: any[] = [];
 
   config: AngularEditorConfig = {
@@ -84,7 +85,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
   boostAd() {
     Swal.fire({
       title: 'Boost Ad?',
-      text: 'this will cost you',
+      text: 'this will cost you ' + this.subCategory.coins + ' coins',
       icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#2196F3',
@@ -167,7 +168,10 @@ export class PostAdComponent implements OnInit, OnDestroy {
       })
     );
   }
-
+  getSubcategory(id) {
+    const subCategory = this.subCategories.find((s) => s.id == id);
+    this.subCategory = subCategory;
+  }
   getRegions(code) {
     this.sub.add(
       this._catService.fetchAllRegions(code).subscribe({

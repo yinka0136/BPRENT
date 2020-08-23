@@ -23,13 +23,13 @@ export const endpoints = {
   //Users
   usersList: 'users',
   createUser: 'users',
-  updateUsers: 'users',
+  updateUsers: 'users/update',
   usersProfile: 'users/me',
-  createAdmin: 'users/admin',
+  createAdmin: 'users/create_admin',
   updateAdmin: 'users/admin/',
   uploadAvatar: 'users/upload_avatar',
   adminUserCrud: 'users',
-  passwordUpdate: 'users/password_update',
+  passwordUpdate: 'users/update_password',
 
   //Categories
   getAllCategories: 'category/all',
@@ -63,6 +63,7 @@ export const endpoints = {
   deleteAd: 'ads',
   newAds: 'ads/new',
   trendingAds: 'ads/trending',
+  deleteAdImage: 'ads/image',
   //Coins
   buyCoins: 'coins/buy',
   allTransactios: 'coins/transactions',

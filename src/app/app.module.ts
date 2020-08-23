@@ -4,7 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { RoutingModule } from './routing/routing.module';
-import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
+// import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {
@@ -38,23 +38,24 @@ import { Angular4PaystackModule } from 'angular4-paystack';
 import { PasswordConfirmComponent } from './password-confirm/password-confirm.component';
 import { EditAdComponent } from './pages/edit-ad/edit-ad.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AdminProfileComponent } from './pages/admin-profile/admin-profile.component';
 const jQuery = window['$'];
-let config = new AuthServiceConfig([
-  {
-    id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider(
-      '648266134944-pbb0c4elfgnt1ka81m47pmlmgl8jtb4b.apps.googleusercontent.com'
-    ),
-  },
-  {
-    id: FacebookLoginProvider.PROVIDER_ID,
-    provider: new FacebookLoginProvider('1061592434258551'),
-  },
-]);
+// let config = new AuthServiceConfig([
+//   {
+//     id: GoogleLoginProvider.PROVIDER_ID,
+//     provider: new GoogleLoginProvider(
+//       '648266134944-pbb0c4elfgnt1ka81m47pmlmgl8jtb4b.apps.googleusercontent.com'
+//     ),
+//   },
+//   {
+//     id: FacebookLoginProvider.PROVIDER_ID,
+//     provider: new FacebookLoginProvider('1061592434258551'),
+//   },
+// ]);
 
-export function provideConfig() {
-  return config;
-}
+// export function provideConfig() {
+//   return config;
+// }
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ export function provideConfig() {
     ModalTriggerDirective,
     PasswordConfirmComponent,
     EditAdComponent,
+    AdminProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,17 +94,17 @@ export function provideConfig() {
     JwtModule.forRoot({
       config: {},
     }),
-    SocialLoginModule,
+    // SocialLoginModule,
     ReactiveFormsModule,
     HttpClientModule,
     NgxSpinnerModule,
     ToastrModule.forRoot(),
   ],
   providers: [
-    {
-      provide: AuthServiceConfig,
-      useFactory: provideConfig,
-    },
+    // {
+    //   provide: AuthServiceConfig,
+    //   useFactory: provideConfig,
+    // },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

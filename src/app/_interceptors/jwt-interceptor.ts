@@ -41,7 +41,7 @@ export class JwtInterceptor implements HttpInterceptor {
         } else if (e.status == 0 || e.status == 500) {
           this.global.handleNetworkError();
         } else {
-          this.global.hideSpinnerWithError(e.error.error);
+          this.global.hideSpinnerWithErrorMessage(e.error);
           console.log(e.status);
         }
 

@@ -86,3 +86,24 @@ div.items-list {
     width: 150px;
   }
 }
+.adImg-wrapper {
+  position: relative;
+  margin: 0.3rem;
+  img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+  }
+  .remove {
+    position: absolute;
+    cursor: pointer;
+    top: -8px;
+    right: -1px;
+    transition: 0.3s all ease;
+  }
+  &:hover {
+    .remove {
+      transform: scale(1.5);
+    }
+  }
+}

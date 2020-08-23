@@ -17,6 +17,7 @@ import { PagedResponse } from 'src/app/_models/pagination';
 })
 export class ViewAdComponent implements OnInit, OnDestroy {
   show: boolean;
+  currentDate: Date = new Date();
   sub: Subscription = new Subscription();
   ratingForm: FormGroup;
   reportForm: FormGroup;
@@ -38,7 +39,11 @@ export class ViewAdComponent implements OnInit, OnDestroy {
     private _feedback: FeedbackService,
     private _report: ReportService,
     private _message: MessageService
-  ) {}
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+  }
 
   ngOnInit(): void {
     this.initRatingForm();
@@ -165,6 +170,11 @@ export class ViewAdComponent implements OnInit, OnDestroy {
   postAd() {
     this.router.navigate(['ad/post']);
   }
+  save() {}
+  goToRoute(ad) {
+    this.router.navigate(['/ad/view', ad.slug, ad.user.slug]);
+  }
+  setColor() {}
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

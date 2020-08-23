@@ -113,8 +113,10 @@
           <div class="col-lg-6 col-sm-12">
             <p class="font24 text-grey">Subcategory</p>
             <select
+              #selected
               formControlName="subCategoryId"
               class="form-control"
+              (click)="getSubcategory(selected.value)"
               [ngClass]="{
                 'is-invalid':
                   adForm.get('subCategoryId').errors &&
@@ -180,16 +182,6 @@
                 <div class="invalid-feedback mt-0 p-0">
                   State your weekly Price
                 </div>
-              </div>
-              <div class="col-lg-6 col-sm-6">
-                <input
-                  type="checkbox"
-                  id="negotiable"
-                  formControlName="negotiable"
-                />
-                <label class="ml-2 font24 text-grey" for="negotiable"
-                  >Negotiable</label
-                >
               </div>
             </div>
           </div>

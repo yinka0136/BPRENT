@@ -20,16 +20,19 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit, OnDestroy {
+  @ViewChild('closeModal', { static: false }) closeModal: ElementRef;
   sub: Subscription = new Subscription();
-  email: any;
-  amount: any;
+  paystackAmount;
+  amountCost;
   categories: any[] = [];
   reference;
-  options: PaystackOptions = {
-    amount: 100 * 100,
-    email: JSON.parse(localStorage.getItem('user')).email,
-    ref: `${Math.ceil(Math.random() * 10e10)}`,
-  };
+  userRole;
+  email;
+  // options: PaystackOptions = {
+  //   amount: this.amount * 100 * 100,
+  //   email: JSON.parse(localStorage.getItem('user')).email,
+  //   ref: `${Math.ceil(Math.random() * 10e10)}`,
+  // };
   @ViewChild('paystack', { static: false }) paystack: ElementRef<
     HTMLInputElement
   >;
@@ -42,9 +45,13 @@ export class NavComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    if (this.loggedIn()) {
+      this.email = JSON.parse(localStorage.getItem('user')).email;
+      this.userRole = JSON.parse(localStorage.getItem('user')).role;
+      this.reference = `ref-${Math.ceil(Math.random() * 10e13)}`;
+    }
     this.getAllCategories();
     console.log(this.loggedIn());
-    this.reference = `ref-${Math.ceil(Math.random() * 10e13)}`;
   }
   paymentInit() {
     console.log('Payment initialized');
@@ -52,7 +59,7 @@ export class NavComponent implements OnInit, OnDestroy {
 
   paymentDone(ref: any) {
     console.log('Payment successfull', ref);
-    // this.buyCoin();
+    this.closeModal.nativeElement.click();
   }
 
   paymentCancel() {
@@ -87,18 +94,24 @@ export class NavComponent implements OnInit, OnDestroy {
     console.log(this.keyword);
   }
 
-  async buy() {
-    const { value: amount } = await Swal.fire({
-      title: '1 coin = 60kobo',
-      input: 'number',
-      inputPlaceholder: 'Enter amount of coin to buy',
-    });
+  // async buy() {
+  //   const { value: amount } = await Swal.fire({
+  //     title: '1 coin = 100Naira',
+  //     input: 'number',
+  //     inputPlaceholder: 'Number of coins',
+  //   });
 
-    if (amount) {
-      this.amount = amount;
-      console.log(this.amount);
-      this.paystack.nativeElement.click();
-    }
+  //   if (amount) {
+  //     this.amount = amount;
+  //     this.amount = this.amount * 100 * 100;
+  //     console.log(this.amount);
+  //     this.paystack.nativeElement.click();
+  //   }
+  // }
+
+  getAmount(amount) {
+    this.paystackAmount = amount * 100 * 100;
+    this.amountCost = amount * 100;
   }
 
   buyCoin() {

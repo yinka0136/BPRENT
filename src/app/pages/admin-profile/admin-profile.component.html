@@ -1,0 +1,381 @@
+<app-nav></app-nav>
+<div id="content" class="section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-4 col-lg-3 page-sidebar">
+        <aside>
+          <div class="sidebar-box">
+            <div class="user">
+              <figure>
+                <a *ngIf="avatarUrl"><img src="{{ avatarUrl }}" alt="" /></a>
+                <a *ngIf="!avatarUrl"
+                  ><img src="{{ myProfile?.avatarUrl }}" width="45px" alt=""
+                /></a>
+              </figure>
+              <div class="usercontent">
+                <h3>User</h3>
+                <h4>Administrator</h4>
+              </div>
+              <div class="d-flex justify-content-end">
+                <label
+                  class="btn btn-common"
+                  style="background-color: white; color: #2196f3;"
+                  type="button"
+                  for="file"
+                >
+                  upload avatar
+                </label>
+                <input
+                  type="file"
+                  name="file"
+                  id="file"
+                  (change)="uploadAvatar($event.target.files[0])"
+                />
+              </div>
+            </div>
+            <nav class="navdashboard">
+              <ul class="nav">
+                <li>
+                  <a href="#v-pills-profile" class="active" data-toggle="pill">
+                    <i class="fa fa-cog"></i>
+                    <span>Profile Settings</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="click" (click)="manageCat()">
+                    <i class="fa fa-wrench"></i>
+                    Manage category
+                  </a>
+                </li>
+
+                <li *ngIf="myProfile.role === 'SUPER_ADMIN'">
+                  <a href="#v-pills-create" data-toggle="pill">
+                    <i class="fa fa-plus"></i>
+                    <span>Create admin user</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#v-pills-my-ads" data-toggle="pill">
+                    <i class="fa fa-stack-overflow"></i>
+                    <span>All Ads</span>
+                  </a>
+                </li>
+                <li></li>
+
+                <li>
+                  <a (click)="logout()" class="click">
+                    <i class="fa fa-sign-out"></i>
+                    <span>Logout</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="widget">
+            <h4 class="widget-title">Advertisement</h4>
+            <div class="add-box">
+              <!-- Advert goes here -->
+            </div>
+          </div>
+        </aside>
+      </div>
+      <div class="col-sm-12 col-md-8 col-lg-9">
+        <div class="page-content tab-content">
+          <!-- myAds -->
+          <div
+            class="inner-box tab-pane fade"
+            id="v-pills-my-ads"
+            role="tabpanel"
+            aria-labelledby="v-pills-my-ads-tab"
+          >
+            <div class="dashboard-box">
+              <h2 class="dashbord-title">My Ads</h2>
+            </div>
+            <div class="dashboard-wrapper">
+              <nav class="nav-table">
+                <ul>
+                  <li class="active"><a href="#">All Ads (42)</a></li>
+                  <li><a href="#">Active (88)</a></li>
+                  <li><a href="#">Pending (12)</a></li>
+                  <li><a href="#">Approved (02)</a></li>
+                  <li><a href="#">Sold (42)</a></li>
+                </ul>
+              </nav>
+              <table class="table table-responsive dashboardtable tablemyads">
+                <thead>
+                  <tr>
+                    <th>Photo</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Ad Status</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-category="sold" *ngFor="let myAd of myAds">
+                    <td class="photo">
+                      <img class="img-fluid" alt="" />
+                    </td>
+                    <td data-title="Title">
+                      <h3 class="ellipses">
+                        {{ myAd?.title }}
+                      </h3>
+                    </td>
+                    <td data-title="Category">
+                      {{ myAd?.title }}
+                    </td>
+                    <td
+                      data-title="Ad Status"
+                      *ngIf="myAd?.status === 'PENDING'"
+                    >
+                      <span class="adstatus adstatusexpired">pending</span>
+                    </td>
+                    <td
+                      data-title="Ad Status"
+                      *ngIf="myAd?.status === 'APPROVED'"
+                    >
+                      <span class="adstatus adstatusactive">active</span>
+                    </td>
+                    <td data-title="Price">
+                      <h3>{{ myAd?.dailyPrice | currency: "₦" }}</h3>
+                    </td>
+                    <td data-title="Action">
+                      <div class="btns-actions">
+                        <a
+                          class="btn-action btn-view click"
+                          [routerLink]="['/ad/view', myAd?.slug, myAd?.slug]"
+                          ><i class="fa fa-eye"></i
+                        ></a>
+                        <a
+                          class="btn-action btn-edit click"
+                          [routerLink]="['/ad/edit', myAd?.slug]"
+                          ><i class="fa fa-pencil"></i
+                        ></a>
+                        <a
+                          class="btn-action btn-delete click"
+                          (click)="deleteAd(myAd?.slug)"
+                          ><i class="fa fa-trash"></i
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="has-text-centered d-flex justify-content-end">
+                <pagination-controls
+                  (pageChange)="navigateMyAdPage($event - 1)"
+                  previousLabel="Prev"
+                  nextLabel="Next"
+                  responsive="true"
+                  id="myAds"
+                  class="my-pagination"
+                ></pagination-controls>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="inner-box tab-pane fade show active"
+            id="v-pills-profile"
+            role="tabpanel"
+            aria-labelledby="v-pills-profile-tab"
+          >
+            <div class="dashboard-box">
+              <h2 class="dashbord-title">Contact Detail</h2>
+            </div>
+            <div class="dashboard-wrapper" [formGroup]="profileForm">
+              <div class="form-group mb-3">
+                <label class="control-label">First Name*</label>
+                <input
+                  class="form-control input-md"
+                  name="name"
+                  type="text"
+                  formControlName="firstName"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="control-label">Last Name*</label>
+                <input
+                  class="form-control input-md"
+                  name="name"
+                  type="text"
+                  formControlName="lastName"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="control-label">Phone*</label>
+                <input
+                  class="form-control input-md"
+                  name="phoneNumber"
+                  type="text"
+                  formControlName="phoneNumber"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="control-label">Address</label>
+                <input
+                  class="form-control input-md"
+                  formControlName="address"
+                  name="address"
+                  type="text"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="control-label">Email</label>
+                <input
+                  class="form-control input-md"
+                  name="email"
+                  formControlName="email"
+                  type="email"
+                  autocomplete="email"
+                />
+              </div>
+              <div class="d-flex justify-content-end">
+                <button
+                  id="update"
+                  class="btn btn-common"
+                  style="background-color: #2196f3; color: white;"
+                  type="button"
+                  (click)="toggleDisabled()"
+                >
+                  Edit
+                </button>
+                <div class="ml-3" *ngIf="IsHidden">
+                  <button
+                    class="btn btn-common"
+                    style="background-color: #2196f3; color: white;"
+                    type="button"
+                    (click)="updateProfile()"
+                  >
+                    update
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <button
+                class="btn btn-common"
+                style="background-color: #2196f3; color: white;"
+                type="button"
+                (click)="togglePasswordUpdate()"
+              >
+                Change password
+              </button>
+            </div>
+            <div
+              class="dashboard-wrapper"
+              [formGroup]="updatePasswordForm"
+              *ngIf="show"
+            >
+              <div class="form-group mb-3">
+                <label class="control-label">Enter old password*</label>
+                <input
+                  class="form-control input-md"
+                  type="password"
+                  name="password"
+                  formControlName="oldPassword"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="control-label">Enter new password*</label>
+                <input
+                  class="form-control input-md"
+                  name="password"
+                  type="password"
+                  autocomplete="new-password"
+                  formControlName="newPassword"
+                />
+              </div>
+              <div class="d-flex justify-content-end">
+                <button
+                  (click)="updatePassword()"
+                  class="btn btn-common"
+                  style="background-color: #2196f3; color: white;"
+                  type="button"
+                >
+                  Change
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="inner-box tab-pane fade"
+            id="v-pills-create"
+            role="tabpanel"
+            aria-labelledby="v-pills-create-tab"
+          >
+            <div class="dashboard-box">
+              <h2 class="dashbord-title">Create Admin User</h2>
+            </div>
+            <div class="dashboard-wrapper" [formGroup]="adminForm">
+              <div class="form-group mb-3">
+                <label class="control-label">First Name*</label>
+                <input
+                  class="form-control input-md"
+                  name="name"
+                  type="text"
+                  formControlName="firstName"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="control-label">Last Name*</label>
+                <input
+                  class="form-control input-md"
+                  name="name"
+                  type="text"
+                  formControlName="lastName"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="control-label">Phone*</label>
+                <input
+                  class="form-control input-md"
+                  name="phoneNumber"
+                  type="text"
+                  formControlName="phoneNumber"
+                />
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="control-label">Email</label>
+                <input
+                  class="form-control input-md"
+                  name="email"
+                  formControlName="email"
+                  type="email"
+                  autocomplete="email"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label class="control-label">Password</label>
+                <input
+                  class="form-control input-md"
+                  formControlName="password"
+                  name="password"
+                  type="password"
+                />
+              </div>
+              <div class="d-flex justify-content-end">
+                <div class="">
+                  <button
+                    class="btn btn-common"
+                    style="background-color: #2196f3; color: white;"
+                    type="button"
+                    (click)="createAdmin()"
+                  >
+                    create
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- favorites -->
+
+<app-footer></app-footer>

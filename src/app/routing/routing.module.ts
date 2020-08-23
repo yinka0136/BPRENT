@@ -20,6 +20,8 @@ import { PasswordConfirmComponent } from '../password-confirm/password-confirm.c
 import { EditAdComponent } from '../pages/edit-ad/edit-ad.component';
 import { AdEditResolver } from '../_resolvers/ad-edit.resolver';
 import { ProfileResolver } from '../_resolvers/profile.resolver';
+import { AdminProfileComponent } from '../pages/admin-profile/admin-profile.component';
+import { AdminProfileResolver } from '../_resolvers/admin-profile.resolver';
 
 const routes: Routes = [
   {
@@ -58,6 +60,11 @@ const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     resolve: { resolvedData: ProfileResolver },
+  },
+  {
+    path: 'a-profile',
+    component: AdminProfileComponent,
+    resolve: { resolvedData: AdminProfileResolver },
   },
   {
     path: 'ad/view/:slug/:userSlug',

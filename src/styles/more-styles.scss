@@ -1035,6 +1035,7 @@ a.back-to-top:focus {
 }
 .featured-box {
   width: 100%;
+  height: 345px;
   background: #fff;
   box-shadow: 0 2px 18px 0 rgba(198, 198, 198, 0.3);
   margin-bottom: 15px;
@@ -1084,6 +1085,10 @@ a.back-to-top:focus {
   font-size: 16px;
   line-height: 20px;
   text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 204px;
 }
 .featured-box .feature-content h4 a {
   color: #333;
@@ -3448,7 +3453,6 @@ blockquote {
   font-size: 14px;
   box-shadow: none;
   color: #848484;
-  text-transform: capitalize;
   background: #fff;
   padding: 7px 19px;
   border: 1px solid #e5e5e5;
@@ -4082,4 +4086,14 @@ footer .menu li a:hover {
 }
 .error-content .description a:hover {
   color: #2196f3;
+}
+
+.ellipses {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 78px;
+}
+#file {
+  display: none;
 }
