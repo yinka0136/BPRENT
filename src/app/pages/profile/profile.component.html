@@ -156,79 +156,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <table class="table table-responsive dashboardtable tablemyads">
-                <thead>
-                  <tr>
-                    <th>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="checkedall"
-                        />
-                        <label
-                          class="custom-control-label"
-                          for="checkedall"
-                        ></label>
-                      </div>
-                    </th>
-                    <th>Photo</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Ad Status</th>
-                    <th>Price</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr data-category="sold">
-                    <td>
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="adfour"
-                        />
-                        <label
-                          class="custom-control-label"
-                          for="adfour"
-                        ></label>
-                      </div>
-                    </td>
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="assets/img/product/img4.jpg"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3>
-                        fghjk
-                      </h3>
-                    </td>
-                    <td data-title="Category">
-                      xcfghjk
-                    </td>
-                    <td data-title="Ad Status">
-                      <span class="adstatus adstatussold">Sold</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>$89</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a class="btn-action btn-view" href="#"
-                          ><i class="fa fa-eye"></i
-                        ></a>
-                        <a class="btn-action btn-delete" href="#"
-                          ><i class="fa fa-trash"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table> -->
             </div>
           </div>
           <div
@@ -394,6 +321,12 @@
                     >
                       <span class="adstatus adstatusactive">active</span>
                     </td>
+                    <td
+                      data-title="Ad Status"
+                      *ngIf="myAd?.status === 'DECLINED'"
+                    >
+                      <span class="adstatus adstatusinactive">Declined</span>
+                    </td>
                     <td data-title="Price">
                       <h3>{{ myAd?.dailyPrice | currency: "₦" }}</h3>
                     </td>
@@ -425,7 +358,7 @@
               </table>
               <div class="has-text-centered d-flex justify-content-end">
                 <pagination-controls
-                  (pageChange)="navigateMyAdPage($event - 1)"
+                  (pageChange)="navigateMyAdPage($event)"
                   previousLabel="Prev"
                   nextLabel="Next"
                   responsive="true"

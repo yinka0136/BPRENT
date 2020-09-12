@@ -86,26 +86,34 @@ export class EditAdComponent implements OnInit, OnDestroy {
       regionId: [this.ad.region.id],
       weeklyPrice: [this.ad.weeklyPrice],
       dailyPrice: [this.ad.dailyPrice],
-      boosted: [this.ad.boosted],
+      boosted: [],
       negotiable: [this.ad.negotiable],
+      numberOfDays: [''],
     });
   }
 
-  boostAd() {
-    Swal.fire({
+  async boostAd() {
+    const { value: noOfDays } = await Swal.fire({
       title: 'Boost Ad?',
+      input: 'number',
+      inputPlaceholder: 'No of days',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'You need to specify the number of days!';
+        }
+      },
       text: 'this will cost you ' + this.subCategory.coins + ' coins',
       icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#2196F3',
       cancelButtonColor: '#D32F2F',
       confirmButtonText: 'Boost!',
-    }).then((result) => {
-      if (result.value) {
-        this.adForm.get('boosted').patchValue(true);
-        Swal.fire('Boosted!', 'Your ad has been boosted.', 'success');
-      }
     });
+    if (noOfDays) {
+      this.adForm.get('boosted').patchValue(true);
+      this.adForm.get('numberOfDays').patchValue(noOfDays);
+      Swal.fire('Boosted!', 'Your ad has been boosted.', 'success');
+    }
   }
   unboostAd() {
     Swal.fire({

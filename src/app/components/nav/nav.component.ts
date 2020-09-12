@@ -1,9 +1,12 @@
+import { PaginationInfo } from './../../_models/pagination';
 import {
   Component,
   OnInit,
   ViewChild,
   ElementRef,
   OnDestroy,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { AuthenticationService } from 'src/app/_services/auth.service';
 import { Router } from '@angular/router';
@@ -13,6 +16,8 @@ import { CatStatesService } from 'src/app/_services/cat-states.service';
 import { PaystackOptions } from 'angular4-paystack';
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { GlobalService } from 'src/app/_services/global.service';
+import { AdServiceService } from 'src/app/_services/ad-service.service';
 
 @Component({
   selector: 'app-nav',
@@ -36,12 +41,19 @@ export class NavComponent implements OnInit, OnDestroy {
   @ViewChild('paystack', { static: false }) paystack: ElementRef<
     HTMLInputElement
   >;
+  // @Output() ads = new EventEmitter<{
+  //   ads: [];
+  //   paginationInfo: PaginationInfo;
+  //   keyword: string;
+  // }>();
   keyword;
   constructor(
     private auth: AuthenticationService,
     private router: Router,
     private coinService: CoinService,
-    private category: CatStatesService
+    private category: CatStatesService,
+    private _global: GlobalService,
+    private _ad: AdServiceService
   ) {}
 
   ngOnInit(): void {
@@ -90,24 +102,18 @@ export class NavComponent implements OnInit, OnDestroy {
     this.keyword = keyword;
   }
   search() {
-    this.router.navigate(['products']);
-    console.log(this.keyword);
+    this._global.showSpinner();
+    this._ad.search(0, 5, this.keyword).subscribe({
+      next: (res) => {
+        this._global.hideSpinner();
+        console.log(res['responseResult']);
+        const response = res['responseResult'];
+        response.keyword = this.keyword;
+        this._ad.setData(response);
+        this.router.navigate(['products']);
+      },
+    });
   }
-
-  // async buy() {
-  //   const { value: amount } = await Swal.fire({
-  //     title: '1 coin = 100Naira',
-  //     input: 'number',
-  //     inputPlaceholder: 'Number of coins',
-  //   });
-
-  //   if (amount) {
-  //     this.amount = amount;
-  //     this.amount = this.amount * 100 * 100;
-  //     console.log(this.amount);
-  //     this.paystack.nativeElement.click();
-  //   }
-  // }
 
   getAmount(amount) {
     this.paystackAmount = amount * 100 * 100;

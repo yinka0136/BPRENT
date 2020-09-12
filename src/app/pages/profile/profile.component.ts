@@ -174,16 +174,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
     console.log(page);
     this._global.showSpinner();
     this.sub.add(
-      this.ad
-        .myAds(page, this.myAdsPaginationInfo.totalElements - 1)
-        .subscribe({
-          next: (res: PagedResponse<any>) => {
-            this._global.hideSpinner();
-            this.myAds = res.result['ads'];
-            this.myAdsPaginationInfo = res.result['paginationInfo'];
-            console.log(res, this.myAdsPaginationInfo);
-          },
-        })
+      this.ad.myAds(page, 5).subscribe({
+        next: (res: PagedResponse<any>) => {
+          this._global.hideSpinner();
+          this.myAds = res.result['ads'];
+          this.myAdsPaginationInfo = res.result['paginationInfo'];
+          console.log(res, this.myAdsPaginationInfo);
+        },
+      })
     );
   }
   manageCat() {

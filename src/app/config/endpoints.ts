@@ -34,6 +34,7 @@ export const endpoints = {
   //Categories
   getAllCategories: 'category/all',
   createCategory: 'category/create',
+  getAllCategoriesWithSub: 'category/sub_categories',
 
   getCategory: 'category/find',
   updateCategory: 'category',
@@ -64,6 +65,8 @@ export const endpoints = {
   newAds: 'ads/new',
   trendingAds: 'ads/trending',
   deleteAdImage: 'ads/image',
+  search: 'ads/search',
+  searchBySubcategory: 'sub_category',
   //Coins
   buyCoins: 'coins/buy',
   allTransactios: 'coins/transactions',

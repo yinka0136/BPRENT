@@ -19,7 +19,7 @@ export class ProfileResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
     this._global.showSpinner();
     const favorites = this._adService.savedAds(0, 5);
-    const myAds = this._adService.myAds(0, 5);
+    const myAds = this._adService.myAds(1, 5);
     const recievedMessages = this._messageService.findAllRecievedMessages(0, 5);
     const sentMessages = this._messageService.findAllSentMessages(0, 5);
     const profile = this._user.userProfile();

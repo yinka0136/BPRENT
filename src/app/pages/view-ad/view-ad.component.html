@@ -75,7 +75,16 @@
                   >Reviews</a
                 >
               </li>
+
+              <li
+                class="nav-link active click"
+                (click)="boostAd()"
+                *ngIf="ad?.status == 'APPROVED' && !ad?.boosted"
+              >
+                <a> Boost Ad </a>
+              </li>
             </ul>
+
             <span class="font14 pt-2 mr-2">
               <i class="fa fa-eye mr-2"></i>{{ ad?.views }} views
             </span>
@@ -101,7 +110,7 @@
           >
             <div class="my-4 row">
               <div class="col-lg-8 col-sm-12">
-                <div class="bg-white py-3 px-4" style="min-height: 246px;">
+                <div class="bg-white py-3 px-4" style="min-height: 246px">
                   <div class="text-center mb-3">
                     Did this vendor meet your expectations?
                   </div>
@@ -115,7 +124,7 @@
                           aria-valuenow="70"
                           aria-valuemin="0"
                           aria-valuemax="100"
-                          style="width: 53%;"
+                          style="width: 53%"
                         ></div>
                       </div>
                     </div>
@@ -131,7 +140,7 @@
                           aria-valuenow="70"
                           aria-valuemin="0"
                           aria-valuemax="100"
-                          style="width: 28%;"
+                          style="width: 28%"
                         ></div>
                       </div>
                     </div>
@@ -147,7 +156,7 @@
                           aria-valuenow="70"
                           aria-valuemin="0"
                           aria-valuemax="100"
-                          style="width: 10%;"
+                          style="width: 10%"
                         ></div>
                       </div>
                     </div>
@@ -163,7 +172,7 @@
                           aria-valuenow="70"
                           aria-valuemin="0"
                           aria-valuemax="100"
-                          style="width: 7%;"
+                          style="width: 7%"
                         ></div>
                       </div>
                     </div>
@@ -179,7 +188,7 @@
                           aria-valuenow="70"
                           aria-valuemin="0"
                           aria-valuemax="100"
-                          style="width: 2%;"
+                          style="width: 2%"
                         ></div>
                       </div>
                     </div>
@@ -188,10 +197,8 @@
                 </div>
               </div>
               <div class="col-lg-4 col-sm-12 sm-mt">
-                <div class="bg-white py-3 px-4" style="min-height: 246px;">
-                  <div class="text-center mb-3">
-                    Interaction
-                  </div>
+                <div class="bg-white py-3 px-4" style="min-height: 246px">
+                  <div class="text-center mb-3">Interaction</div>
                   <p class="font14">
                     <i class="fa fa-thumbs-up mr-3"></i>
                     672 Recommended
@@ -204,9 +211,9 @@
               </div>
             </div>
             <button
-              *ngIf="userSlug != ad?.user?.slug"
+              *ngIf="userSlug != ad?.user?.slug && userRole != 'SUPER_ADMIN'"
               class="btn btn-chat bt-sm mb-3"
-              style="background-color: blue;"
+              style="background-color: blue"
               data-toggle="modal"
               data-target="#rateModal"
             >
@@ -292,7 +299,22 @@
             {{ ad?.user?.lastName }} {{ ad?.user?.firstName }}
           </h4>
 
-          <div class="btn-margin mt-2" *ngIf="userSlug != ad?.user?.slug">
+          <div
+            class="btn-margin mt-2"
+            *ngIf="
+              userSlug == ad?.user?.slug &&
+              userRole != 'SUPER_ADMIN' &&
+              ad?.status == 'EXPIRED'
+            "
+          >
+            <button class="btn btn-approve" (click)="repostAd(ad?.slug)">
+              Repost Ad
+            </button>
+          </div>
+          <div
+            class="btn-margin mt-2"
+            *ngIf="userSlug != ad?.user?.slug && userRole != 'SUPER_ADMIN'"
+          >
             <button
               class="btn btn-feedback"
               data-target="#rateModal"
@@ -302,10 +324,51 @@
             </button>
           </div>
           <div
+            class="d-flex justify-content-between btn-margin"
+            *ngIf="
+              ad?.status == 'PENDING' &&
+              !approved &&
+              !declined &&
+              userRole != 'SUPER_ADMIN'
+            "
+          >
+            <div *ngIf="userSlug != ad?.user?.slug">
+              <button class="btn btn-approve" (click)="approve(ad?.slug)">
+                <span> <i class="fa fa-thumbs-up"></i></span> Approve
+              </button>
+            </div>
+            <div class="mx-1"></div>
+            <div *ngIf="userSlug != ad?.user?.slug">
+              <button class="btn btn-feedback" (click)="decline(ad?.slug)">
+                <span> <i class="fa fa-thumbs-down"></i></span> Decline
+              </button>
+            </div>
+          </div>
+          <div
+            class="btn-margin mt-2"
+            *ngIf="ad?.status == 'APPROVED' || approved"
+          >
+            <button class="btn btn-approve">ACTIVE</button>
+          </div>
+          <div
+            class="btn-margin mt-2"
+            *ngIf="ad?.status == 'DECLINED' || declined"
+          >
+            <button class="btn btn-feedback">DECLINED</button>
+          </div>
+
+          <div
+            class="btn-margin mt-2"
+            *ngIf="ad?.status == 'EXPIRED' && !approved"
+          >
+            <button class="btn adstatusexpired">EXPIRED</button>
+          </div>
+
+          <div
             class="btn-margin mt-2"
             [routerLink]="['/ad/edit', ad.slug]"
             routerLinkActive="router-link-active"
-            *ngIf="userSlug == ad?.user?.slug"
+            *ngIf="userSlug == ad?.user?.slug && ad?.status != 'PENDING'"
           >
             <button class="btn btn-feedback">
               <span> <i class="fa fa-pencil"></i></span> Edit Ad
@@ -314,15 +377,11 @@
           <!-- rating-wrap.// -->
           <div class="b-seller-online-info">
             <div class="b-seller-online-info-block">
-              <div class="b-seller-online-title">
-                21 Feb 2020
-              </div>
-              <div class="b-seller-online-aside">
-                Registered
-              </div>
+              <div class="b-seller-online-title">21 Feb 2020</div>
+              <div class="b-seller-online-aside">Registered</div>
             </div>
             <div class="b-seller-online-info-block">
-              <div class="b-seller-online-title" style="color: green;">
+              <div class="b-seller-online-title" style="color: green">
                 {{ ad?.negotiable ? "Negotiable" : "Not negotiable" }}
               </div>
               <!-- <div class="b-seller-online-aside">
@@ -344,7 +403,10 @@
             </button>
           </div>
 
-          <div class="btn-margin" *ngIf="userSlug != ad?.user?.slug">
+          <div
+            class="btn-margin"
+            *ngIf="userSlug != ad?.user?.slug && userRole != 'SUPER_ADMIN'"
+          >
             <button
               class="btn btn-chat"
               data-target="#messageModal"
@@ -364,25 +426,17 @@
             <div class="tips">
               <h4 class="text-center">Safety tips</h4>
               <ul class="b-advert-safety-list">
-                <li>
-                  Do not pay in advance even for the delivery
-                </li>
-                <li>
-                  Try to meet at a safe, public location
-                </li>
-                <li>
-                  Check the item BEFORE you rent it
-                </li>
-                <li>
-                  Pay only after collecting the item
-                </li>
+                <li>Do not pay in advance even for the delivery</li>
+                <li>Try to meet at a safe, public location</li>
+                <li>Check the item BEFORE you rent it</li>
+                <li>Pay only after collecting the item</li>
               </ul>
               <div class="h-mt-10 click">
                 <a
                   data-toggle="modal"
                   data-target="#reportModal"
                   class="qa-button-report-abuse b-report-abuse-button"
-                  ><span style="color: red;"><i class="fa fa-flag"></i></span>
+                  ><span style="color: red"><i class="fa fa-flag"></i></span>
                   Report Abuse
                 </a>
               </div>
@@ -491,7 +545,7 @@
               class="img-fluid"
               src="/assets/images/rating.jpg"
               alt=""
-              style="height: 150px;"
+              style="height: 150px"
             />
           </div>
           <p class="font16 text-grey my-4 d-flex justify-content-center">
@@ -550,7 +604,7 @@
             <div class="mb-5">
               <textarea
                 class="largeInput"
-                style="height: 200px;"
+                style="height: 200px"
                 formControlName="message"
                 type="text"
                 placeholder="Enter text here"
@@ -593,7 +647,7 @@
             <div class="mb-5">
               <textarea
                 class="largeInput p-2"
-                style="height: 200px;"
+                style="height: 200px"
                 formControlName="message"
                 type="text"
                 placeholder="Enter message here"

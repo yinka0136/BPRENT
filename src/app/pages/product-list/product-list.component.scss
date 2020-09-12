@@ -1,0 +1,11 @@
+.elipses {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.cat {
+  &:hover {
+    background: #2196f3;
+    color: #fff !important;
+  }
+}

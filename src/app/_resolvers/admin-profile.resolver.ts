@@ -17,11 +17,13 @@ export class AdminProfileResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
     this._global.showSpinner();
     const profile = this._user.userProfile();
-    return forkJoin([profile]).pipe(
+    const allAds = this._adService.fetchAllAds(0, 10);
+    return forkJoin([profile, allAds]).pipe(
       map((res) => {
         this._global.hideSpinner();
         return {
           profile: res[0],
+          allAds: res[1],
         };
       }),
       catchError((error) => {

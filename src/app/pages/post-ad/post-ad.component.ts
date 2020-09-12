@@ -79,24 +79,32 @@ export class PostAdComponent implements OnInit, OnDestroy {
       weeklyPrice: ['', Validators.required],
       boosted: [false],
       negotiable: [''],
+      numberOfDays: [''],
     });
   }
 
-  boostAd() {
-    Swal.fire({
+  async boostAd() {
+    const { value: noOfDays } = await Swal.fire({
       title: 'Boost Ad?',
-      text: 'this will cost you ' + this.subCategory.coins + ' coins',
+      input: 'number',
+      inputPlaceholder: 'No of days',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'You need to specify the number of days!';
+        }
+      },
+      text: 'this will cost you ' + this.subCategory.coins + ' coins per day',
       icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#2196F3',
       cancelButtonColor: '#D32F2F',
       confirmButtonText: 'Boost!',
-    }).then((result) => {
-      if (result.value) {
-        this.adForm.get('boosted').patchValue(true);
-        Swal.fire('Boosted!', 'Your ad has been boosted.', 'success');
-      }
     });
+    if (noOfDays) {
+      this.adForm.get('boosted').patchValue(true);
+      this.adForm.get('numberOfDays').patchValue(noOfDays);
+      Swal.fire('Boosted!', 'Your ad has been boosted.', 'success');
+    }
   }
   unboostAd() {
     Swal.fire({
@@ -110,6 +118,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
     }).then((result) => {
       if (result.value) {
         this.adForm.get('boosted').patchValue(false);
+
         Swal.fire('Unboosted!', 'Your ad has been Un boosted.', 'success');
       }
     });

@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AdServiceService } from 'src/app/_services/ad-service.service';
+import { GlobalService } from 'src/app/_services/global.service';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   trendingAds: any[] = [];
   constructor(
     private route: ActivatedRoute,
-    private adService: AdServiceService
+    private adService: AdServiceService,
+    private _global: GlobalService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +41,20 @@ export class HomeComponent implements OnInit, OnDestroy {
         },
       })
     );
+  }
+
+  searchBySubCat(slug) {
+    this._global.showSpinner();
+    const payload = { slug: slug, page: 1, size: 5 };
+    this.adService.searchAdBySubCategory(payload).subscribe({
+      next: (res) => {
+        this._global.hideSpinner();
+        console.log(res['responseResult']);
+        const response = res['responseResult'];
+        this.adService.setData(response);
+        this.router.navigate(['products']);
+      },
+    });
   }
   ngOnDestroy(): void {}
 }

@@ -15,15 +15,12 @@
                 </li>
                 <li *ngFor="let category of categories">
                   <a href="#">{{ category?.name }}</a>
-                </li>
-
-                <li class="has-submenu">
-                  <a href="#">More items</a>
                   <ul class="submenu">
-                    <li><a href="#">Submenu name</a></li>
-                    <li><a href="#">Great submenu</a></li>
-                    <li><a href="#">Another menu</a></li>
-                    <li><a href="#">Some others</a></li>
+                    <li *ngFor="let subCat of category?.subCategories">
+                      <a (click)="searchBySubCat(subCat?.slug)">{{
+                        subCat?.name
+                      }}</a>
+                    </li>
                   </ul>
                 </li>
               </ul>
@@ -216,7 +213,7 @@
             <h4>{{ trending?.title }}</h4>
             <div class="rating-wrap d-flex">
               <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
+                <li style="width: 80%" class="stars-active">
                   <i class="fa fa-star"></i><i class="fa fa-star"></i
                   ><i class="fa fa-star"></i><i class="fa fa-star"></i
                   ><i class="fa fa-star"></i>
@@ -276,7 +273,7 @@
             <h4>{{ newAd?.title }}</h4>
             <div class="rating-wrap d-flex">
               <ul class="rating-stars">
-                <li style="width: 80%;" class="stars-active">
+                <li style="width: 80%" class="stars-active">
                   <i class="fa fa-star"></i><i class="fa fa-star"></i
                   ><i class="fa fa-star"></i><i class="fa fa-star"></i
                   ><i class="fa fa-star"></i>

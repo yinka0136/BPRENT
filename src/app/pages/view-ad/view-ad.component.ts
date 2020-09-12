@@ -9,6 +9,8 @@ import { FeedbackService } from 'src/app/_services/feedback.service';
 import { ReportService } from 'src/app/_services/report.service';
 import { MessageService } from 'src/app/_services/message.service';
 import { PagedResponse } from 'src/app/_models/pagination';
+import { AdServiceService } from 'src/app/_services/ad-service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-view-ad',
@@ -27,7 +29,10 @@ export class ViewAdComponent implements OnInit, OnDestroy {
   ad: any;
   relatedAds: any;
   description;
+  approved: boolean;
+  declined: boolean;
   userSlug;
+  userRole;
   imageToView;
   paginationInfo: PaginationInfo;
   reviews = [1, 2, 3, 4];
@@ -38,7 +43,8 @@ export class ViewAdComponent implements OnInit, OnDestroy {
     private _global: GlobalService,
     private _feedback: FeedbackService,
     private _report: ReportService,
-    private _message: MessageService
+    private _message: MessageService,
+    private _ad: AdServiceService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -51,6 +57,8 @@ export class ViewAdComponent implements OnInit, OnDestroy {
     this.initMessageForm();
     this.getResolvedData();
     this.userSlug = JSON.parse(localStorage.getItem('user')).slug;
+    this.userRole = JSON.parse(localStorage.getItem('user')).role;
+    console.log(this.userRole);
   }
 
   getResolvedData() {
@@ -174,7 +182,79 @@ export class ViewAdComponent implements OnInit, OnDestroy {
   goToRoute(ad) {
     this.router.navigate(['/ad/view', ad.slug, ad.user.slug]);
   }
+
+  approve(slug) {
+    this._global.showSpinner();
+    this.sub.add(
+      this._ad.approveAd(slug).subscribe({
+        next: (res: ResponseStructure) => {
+          this.approved = true;
+          console.log(res);
+          this._global.globalSuccessHandler(res);
+        },
+      })
+    );
+  }
+  decline(slug) {
+    this._global.showSpinner();
+    this.sub.add(
+      this._ad.declineAd(slug).subscribe({
+        next: (res: ResponseStructure) => {
+          this.declined = true;
+          console.log(res);
+          this._global.globalSuccessHandler(res);
+        },
+      })
+    );
+  }
+
+  repostAd(slug) {
+    this._global.showSpinner();
+    this.sub.add(
+      this._ad.repostAd(slug).subscribe({
+        next: (res: ResponseStructure) => {
+          this.approved = true;
+          console.log(res);
+          this._global.globalSuccessHandler(res);
+        },
+      })
+    );
+  }
+  async boostAd() {
+    const { value: noOfDays } = await Swal.fire({
+      title: 'Boost Ad?',
+      input: 'number',
+      inputPlaceholder: 'No of days',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'You need to specify the number of days!';
+        }
+      },
+      text:
+        'this will cost you ' + this.ad.subCategory.coins + ' coins per day',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#2196F3',
+      cancelButtonColor: '#D32F2F',
+      confirmButtonText: 'Boost!',
+    });
+    if (noOfDays) {
+      console.log(noOfDays);
+      this.boost(noOfDays);
+    }
+  }
   setColor() {}
+  boost(noOfDays) {
+    console.log(noOfDays);
+    this.sub.add(
+      this._ad.boostAd(this.ad.slug, noOfDays).subscribe({
+        next: (res) => {
+          console.log(res);
+          Swal.fire('Boosted!', 'Your ad has been boosted.', 'success');
+        },
+      })
+    );
+  }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }

@@ -20,17 +20,10 @@ export class AdminProfileComponent implements OnInit, OnDestroy {
   profileForm: FormGroup;
   adminForm: FormGroup;
   updatePasswordForm: FormGroup;
+  paginationInfo: PaginationInfo;
   avatarUrl;
   myProfile;
-  myAds = [
-    {
-      title: 'test',
-      status: 'PENDING',
-      dailyPrice: 70000,
-      weeklyPrice: 80000,
-      slug: 'fghjk',
-    },
-  ];
+  allAds: any[] = [];
   show: boolean = false;
   IsHidden;
 
@@ -96,6 +89,9 @@ export class AdminProfileComponent implements OnInit, OnDestroy {
     this.route.data.subscribe((res) => {
       console.log(res);
       this.myProfile = res['resolvedData'].profile['responseResult'];
+      const adDetails = res['resolvedData'].allAds['result'];
+      this.allAds = adDetails.ads;
+      this.paginationInfo = adDetails.paginationInfo;
     });
   }
   uploadAvatar(file) {
