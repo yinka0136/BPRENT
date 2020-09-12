@@ -39,6 +39,8 @@ import { PasswordConfirmComponent } from './password-confirm/password-confirm.co
 import { EditAdComponent } from './pages/edit-ad/edit-ad.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AdminProfileComponent } from './pages/admin-profile/admin-profile.component';
+import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-and-conditions.component';
+import { PrivacyComponent } from './pages/privacy/privacy.component';
 const jQuery = window['$'];
 // let config = new AuthServiceConfig([
 //   {
@@ -79,6 +81,8 @@ const jQuery = window['$'];
     PasswordConfirmComponent,
     EditAdComponent,
     AdminProfileComponent,
+    TermsAndConditionsComponent,
+    PrivacyComponent,
   ],
   imports: [
     BrowserModule,

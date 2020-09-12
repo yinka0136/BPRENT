@@ -2,6 +2,14 @@
 <section>
   <div class="container">
     <div class="left col-lg-8 col-sm-12 col-md-8 mt-5 mb-3">
+      <p>
+        <em
+          ><b
+            >NB: Unboosted Ads expire after 40 days while boosted Ads stay as
+            long as you specify</b
+          ></em
+        >
+      </p>
       <form action="" [formGroup]="adForm">
         <div class="row">
           <div class="col-md-4 form-group">
@@ -137,14 +145,14 @@
         </div>
         <div class="row mt-2 mb-2 mx-0">
           <div class="col-lg-12 col-sm-12">
-            <p class="font24 text-grey">Price</p>
+            <p class="font24 text-grey">Daily Price</p>
             <div class="d-flex justify-content-between">
               <div class="col-lg-6 col-sm-6 pl-0">
                 <input
                   class="form-control"
                   type="text"
-                  placeholder="#0.00"
                   formControlName="dailyPrice"
+                  placeholder="Enter daily price"
                   [ngClass]="{
                     'is-invalid':
                       adForm.get('dailyPrice').errors &&
@@ -166,12 +174,13 @@
                 >
               </div>
             </div>
+            <p class="font24 text-grey">Weekly Price</p>
             <div class="d-flex justify-content-between">
               <div class="col-lg-6 col-sm-6 pl-0">
                 <input
                   class="form-control"
                   type="text"
-                  placeholder="#0.00"
+                  placeholder="Enter weekly price"
                   formControlName="weeklyPrice"
                   [ngClass]="{
                     'is-invalid':

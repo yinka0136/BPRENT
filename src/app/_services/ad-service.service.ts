@@ -2,19 +2,52 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { endpoints } from '../config/endpoints';
-import { PagedResponse } from '../_models/pagination';
+import { PagedResponse, PaginationInfo } from '../_models/pagination';
 import { map } from 'rxjs/operators';
 import { ResponseStructure } from '../_models/respose';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { Ad } from '../_models/ad';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdServiceService {
+  private initialData: Ad = {
+    ads: [],
+    paginationInfo: {
+      number: 0,
+      size: 0,
+      currentPage: 0,
+      totalElements: 0,
+      totalPages: 0,
+    },
+    keyword: '',
+  };
+  private dataTracker = new BehaviorSubject<Ad>(this.initialData);
   constructor(private http: HttpClient) {}
+
+  getData(): Observable<Ad> {
+    return this.dataTracker.asObservable();
+  }
+  setData(response: {
+    ads: [];
+    paginationInfo: {
+      number: 0;
+      size: 0;
+      currentPage: 0;
+      totalElements: 0;
+      totalPages: 0;
+    };
+    keyword: '';
+  }): void {
+    this.dataTracker.next(response);
+  }
+
+  /** Resets the count to the initial value */
+  resetData(): void {
+    this.dataTracker.next(this.initialData);
+  }
   createAd(formData) {
-    // const formData = new FormData();
-    // formData.append('adJson', adJson);
-    // formData.append('images', images);
     return this.http.post(
       `${environment.API_URL}/${endpoints.createAd}`,
       formData
@@ -186,11 +219,11 @@ export class AdServiceService {
       payload
     );
   }
-  boostAd(slug) {
-    const payload = '';
-    return this.http.post(
+  boostAd(slug, days) {
+    const params = new HttpParams().set('days', days);
+    return this.http.get(
       `${environment.API_URL}/${endpoints.boostAd}/${slug}/boost`,
-      payload
+      { params }
     );
   }
   cancelAd(slug) {
@@ -198,6 +231,29 @@ export class AdServiceService {
     return this.http.post(
       `${environment.API_URL}/${endpoints.cancelAd}/${slug}/cancel`,
       payload
+    );
+  }
+
+  search(page, size, query) {
+    const params = new HttpParams()
+      .set('query', query)
+      .set('page', page)
+      .set('size', size);
+    return this.http.get(`${environment.API_URL}/${endpoints.search}`, {
+      params,
+    });
+  }
+
+  searchAdBySubCategory(payload) {
+    const params = new HttpParams()
+      .set('page', payload.page)
+      .set('size', payload.size);
+
+    return this.http.get(
+      `${environment.API_URL}/${endpoints.searchBySubcategory}/${payload.slug}/search`,
+      {
+        params,
+      }
     );
   }
 }

@@ -15,7 +15,7 @@ export class DashboardResolver implements Resolve<any> {
   ) {}
   resolve(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
     this._global.showSpinner();
-    const categories = this._category.getAllCategories();
+    const categories = this._category.getAllCategoriesWithSubCategories();
     const newAds = this._adService.fetchNewAds();
     const trendingAds = this._adService.fetchTrendingAds();
     return forkJoin([categories, newAds, trendingAds]).pipe(

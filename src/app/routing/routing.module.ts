@@ -1,3 +1,5 @@
+import { PrivacyComponent } from './../pages/privacy/privacy.component';
+import { TermsAndConditionsComponent } from './../pages/terms-and-conditions/terms-and-conditions.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
@@ -85,6 +87,8 @@ const routes: Routes = [
   },
   { path: 'products', component: ProductListComponent },
   { path: 'products/grid', component: ProductGridComponent },
+  { path: 'terms', component: TermsAndConditionsComponent },
+  { path: 'privacy', component: PrivacyComponent },
 ];
 
 @NgModule({

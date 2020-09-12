@@ -23,6 +23,11 @@ export class CatStatesService {
       `${environment.API_URL}/${endpoints.getAllCategories}`
     );
   }
+  getAllCategoriesWithSubCategories() {
+    return this.http.get(
+      `${environment.API_URL}/${endpoints.getAllCategoriesWithSub}`
+    );
+  }
 
   getAllSubCategories(slug) {
     return this.http.get(

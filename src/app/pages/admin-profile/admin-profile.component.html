@@ -89,7 +89,7 @@
             aria-labelledby="v-pills-my-ads-tab"
           >
             <div class="dashboard-box">
-              <h2 class="dashbord-title">My Ads</h2>
+              <h2 class="dashbord-title">All Ads</h2>
             </div>
             <div class="dashboard-wrapper">
               <nav class="nav-table">
@@ -113,50 +113,57 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr data-category="sold" *ngFor="let myAd of myAds">
+                  <tr data-category="sold" *ngFor="let ad of allAds">
                     <td class="photo">
-                      <img class="img-fluid" alt="" />
+                      <img
+                        class="img-fluid"
+                        alt=""
+                        src="{{ (ad?.adImages)[0].imageUrl }}"
+                      />
                     </td>
                     <td data-title="Title">
                       <h3 class="ellipses">
-                        {{ myAd?.title }}
+                        {{ ad?.title }}
                       </h3>
                     </td>
                     <td data-title="Category">
-                      {{ myAd?.title }}
+                      {{ ad?.title }}
                     </td>
-                    <td
-                      data-title="Ad Status"
-                      *ngIf="myAd?.status === 'PENDING'"
-                    >
+                    <td data-title="Ad Status" *ngIf="ad?.status === 'PENDING'">
                       <span class="adstatus adstatusexpired">pending</span>
                     </td>
                     <td
                       data-title="Ad Status"
-                      *ngIf="myAd?.status === 'APPROVED'"
+                      *ngIf="ad?.status === 'APPROVED'"
                     >
                       <span class="adstatus adstatusactive">active</span>
                     </td>
+                    <td
+                      data-title="Ad Status"
+                      *ngIf="ad?.status === 'DECLINED'"
+                    >
+                      <span class="adstatus adstatusinactive">Declined</span>
+                    </td>
                     <td data-title="Price">
-                      <h3>{{ myAd?.dailyPrice | currency: "₦" }}</h3>
+                      <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
                     </td>
                     <td data-title="Action">
                       <div class="btns-actions">
                         <a
                           class="btn-action btn-view click"
-                          [routerLink]="['/ad/view', myAd?.slug, myAd?.slug]"
+                          [routerLink]="['/ad/view', ad?.slug, ad?.user?.slug]"
                           ><i class="fa fa-eye"></i
                         ></a>
-                        <a
+                        <!-- <a
                           class="btn-action btn-edit click"
-                          [routerLink]="['/ad/edit', myAd?.slug]"
+                          [routerLink]="['/ad/edit', ad?.slug]"
                           ><i class="fa fa-pencil"></i
-                        ></a>
-                        <a
+                        ></a> -->
+                        <!-- <a
                           class="btn-action btn-delete click"
-                          (click)="deleteAd(myAd?.slug)"
+                          (click)="deleteAd(ad?.slug)"
                           ><i class="fa fa-trash"></i
-                        ></a>
+                        ></a> -->
                       </div>
                     </td>
                   </tr>
