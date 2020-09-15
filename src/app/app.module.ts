@@ -90,7 +90,7 @@ const jQuery = window['$'];
     FormsModule,
     BrowserAnimationsModule,
     NgxPaginationModule,
-    BarRatingModule,
+    // BarRatingModule,
     AngularEditorModule,
     Angular4PaystackModule.forRoot(
       'pk_test_e746e7f11bfcb5735e098b0ca21fca212afb77fc'
