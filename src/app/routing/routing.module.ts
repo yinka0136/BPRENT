@@ -32,7 +32,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'home/',
+    path: 'home',
     component: HomeComponent,
     resolve: { resolvedData: DashboardResolver },
   },
