@@ -30,14 +30,27 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.trendingAds = result['trendingAds'].responseResult;
     });
   }
-  toggleSave(slug, bookmarked) {
+  toggleSaveTrending(slug, index, e) {
+    e.stopPropagation();
+    e.preventDefault();
     this.sub.add(
       this.adService.toggleSaveAd(slug).subscribe({
         next: (res) => {
           console.log(res);
-          if (bookmarked) {
-            return 'red';
-          } else return 'black';
+          this.trendingAds[index].bookmarked = !this.trendingAds[index]
+            .bookmarked;
+        },
+      })
+    );
+  }
+  toggleSaveNew(slug, index, e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.sub.add(
+      this.adService.toggleSaveAd(slug).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.newAds[index].bookmarked = !this.newAds[index].bookmarked;
         },
       })
     );

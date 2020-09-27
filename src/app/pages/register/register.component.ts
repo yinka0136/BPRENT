@@ -93,7 +93,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           console.log(res);
         },
         error: (e) => {
-          this._global.hideSpinnerWithErrorMessage(e);
+          this._global.hideSpinnerWithErrorMessage(e.error);
           console.log(e);
         },
       })
