@@ -14,7 +14,7 @@
                   <a routerLink="/products">All</a>
                 </li>
                 <li *ngFor="let category of categories">
-                  <a href="#">{{ category?.name }}</a>
+                  <a>{{ category?.name }}</a>
                   <ul class="submenu">
                     <li *ngFor="let subCat of category?.subCategories">
                       <a (click)="searchBySubCat(subCat?.slug)">{{
@@ -100,99 +100,7 @@
     </main>
     <!-- card.// -->
   </section>
-  <!-- ========================= SECTION MAIN END// ========================= -->
 
-  <!-- =============== SECTION DEAL =============== -->
-  <!-- <section class="padding-bottom">
-    <div class="card card-deal">
-      <div class="col-heading content-body">
-        <header class="section-heading">
-          <h3 class="section-title">Deals and offers</h3>
-          <p>Hygiene equipments</p>
-        </header>
-        <div class="timer">
-          <div><span class="num">04</span> <small>Days</small></div>
-          <div><span class="num">12</span> <small>Hours</small></div>
-          <div><span class="num">58</span> <small>Min</small></div>
-          <div><span class="num">02</span> <small>Sec</small></div>
-        </div>
-      </div>
-      <div class="row no-gutters items-wrap">
-        <div class="col-md col-6">
-          <figure class="card-product-grid card-sm">
-            <a routerLink="/ad/view" class="img-wrap">
-              <img src="../../assets/images/items/3.jpg" />
-            </a>
-            <div class="text-wrap p-3">
-              <a routerLink="/ad/view" class="title">Summer clothes</a>
-              <span class="badge badge-danger"> -20% </span>
-            </div>
-          </figure>
-        </div>
-        <div class="col-md col-6">
-          <figure class="card-product-grid card-sm">
-            <a routerLink="/ad/view" class="img-wrap">
-              <img src="../../assets/images/items/4.jpg" />
-            </a>
-            <div class="text-wrap p-3">
-              <a routerLink="/ad/view" class="title">Some category</a>
-              <span class="badge badge-danger"> -5% </span>
-            </div>
-          </figure>
-        </div>
-        <div class="col-md col-6">
-          <figure class="card-product-grid card-sm">
-            <a routerLink="/ad/view" class="img-wrap">
-              <img src="../../assets/images/items/5.jpg" />
-            </a>
-            <div class="text-wrap p-3">
-              <a routerLink="/ad/view" class="title">Another category</a>
-              <span class="badge badge-danger"> -20% </span>
-            </div>
-          </figure>
-        </div>
-        <div class="col-md col-6">
-          <figure class="card-product-grid card-sm">
-            <a routerLink="/ad/view" class="img-wrap">
-              <img src="../../assets/images/items/6.jpg" />
-            </a>
-            <div class="text-wrap p-3">
-              <a routerLink="/ad/view" class="title">Home apparel</a>
-              <span class="badge badge-danger"> -15% </span>
-            </div>
-          </figure>
-        </div>
-        <div class="col-md col-6">
-          <figure class="card-product-grid card-sm">
-            <a routerLink="/ad/view" class="img-wrap">
-              <img src="../../assets/images/items/7.jpg" />
-            </a>
-            <div class="text-wrap p-3">
-              <a routerLink="/ad/view" class="title text-truncate"
-                >Smart watches</a
-              >
-              <span class="badge badge-danger"> -10% </span>
-            </div>
-          </figure>
-        </div>
-      </div>
-    </div>
-  </section> -->
-  <!-- =============== SECTION DEAL // END =============== -->
-
-  <!-- =============== SECTION 1 =============== -->
-
-  <!-- =============== SECTION 1 END =============== -->
-
-  <!-- =============== SECTION 2 =============== -->
-
-  <!-- =============== SECTION 2 END =============== -->
-
-  <!-- =============== SECTION REQUEST =============== -->
-
-  <!-- =============== SECTION REQUEST .//END =============== -->
-
-  <!-- =============== SECTION ITEMS =============== -->
   <section class="padding-bottom-sm featured">
     <header class="section-heading heading-line">
       <h4 class="title-section text-uppercase">Trending Ads</h4>
@@ -202,11 +110,11 @@
       <div
         class="col-xl-3 col-lg-3 col-md-4 col-6 click"
         [routerLink]="['/ad/view', trending?.slug, trending?.user?.slug]"
-        *ngFor="let trending of trendingAds"
+        *ngFor="let trending of trendingAds; index as i"
       >
         <div class="card card-sm card-product-grid focus featured-box">
           <a class="img-wrap">
-            <img src="{{ (trending?.adImages)[0].imageUrl }}" />
+            <img src="{{ (trending?.adImages)[0]?.imageUrl }}" />
           </a>
 
           <figcaption class="info-wrap feature-content">
@@ -230,23 +138,22 @@
               <h3 class="price">
                 {{ trending?.dailyPrice | currency: "₦" }}
               </h3>
+              <a class="btn-verified" *ngIf="trending?.boosted"
+                ><i class="fa fa-check-square-o"></i> Boosted Ad</a
+              >
               <div class="float-right click">
                 <div
                   class="heart click"
-                  (click)="toggleSave(trending?.slug, trending.bookmarked)"
+                  (click)="toggleSaveTrending(trending?.slug, i, $event)"
                 >
                   <i
                     class="fa fa-heart"
                     [ngClass]="{
-                      black: !trending?.bookmarked,
                       red: trending?.bookmarked
                     }"
                   ></i>
                 </div>
               </div>
-              <a class="btn-verified" *ngIf="trending?.boosted"
-                ><i class="fa fa-check-square-o"></i> Boosted Ad</a
-              >
             </div>
           </figcaption>
         </div>
@@ -263,11 +170,11 @@
       <div
         class="col-xl-3 col-lg-3 col-md-4 col-6 click"
         [routerLink]="['/ad/view', newAd?.slug, newAd?.user?.slug]"
-        *ngFor="let newAd of newAds"
+        *ngFor="let newAd of newAds; index as i"
       >
         <div class="card card-sm card-product-grid focus featured-box">
           <a class="img-wrap">
-            <img src="{{ (newAd?.adImages)[0].imageUrl }}" />
+            <img src="{{ (newAd?.adImages)[0]?.imageUrl }}" />
           </a>
           <figcaption class="info-wrap feature-content">
             <h4>{{ newAd?.title }}</h4>
@@ -293,13 +200,12 @@
               <div class="float-right click">
                 <div
                   class="heart click"
-                  (click)="toggleSave(newAd?.slug, newAd.bookmarked)"
+                  (click)="toggleSaveNew(newAd?.slug, i, $event)"
                 >
                   <i
                     class="fa fa-heart"
                     [ngClass]="{
-                      black: !newAd?.bookmarked,
-                      red: newAd?.bookmarked
+                      red: newAds[i].bookmarked
                     }"
                   ></i>
                 </div>
