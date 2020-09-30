@@ -19,7 +19,7 @@
               <div class="d-flex justify-content-end">
                 <label
                   class="btn btn-common"
-                  style="background-color: white; color: #2196f3;"
+                  style="background-color: white; color: #2196f3"
                   type="button"
                   for="file"
                 >
@@ -57,12 +57,12 @@
                     <span>My Ads</span>
                   </a>
                 </li>
-                <li>
+                <!-- <li>
                   <a href="#v-pills-messages" data-toggle="pill">
                     <i class="fa fa-envelope"></i>
                     <span>Messages</span>
                   </a>
-                </li>
+                </li> -->
 
                 <li>
                   <a href="#v-pills-favorites" data-toggle="pill">
@@ -168,7 +168,14 @@
               <h2 class="dashbord-title">My Favourites</h2>
             </div>
             <div class="dashboard-wrapper">
-              <table class="table table-responsive dashboardtable tablemyads">
+              <p>
+                You do not have any saved ads yet. Try liking an ad to save it
+                here
+              </p>
+              <table
+                class="table table-responsive dashboardtable tablemyads"
+                *ngIf="favoritAds.length != 0"
+              >
                 <thead>
                   <tr>
                     <th>Photo</th>
@@ -240,7 +247,10 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="d-flex justify-content-end">
+              <div
+                class="d-flex justify-content-end"
+                *ngIf="favoritAds.length != 0"
+              >
                 <pagination-controls
                   (pageChange)="navigateMyAdPage($event)"
                   id="favorites"
@@ -262,14 +272,18 @@
             <div class="dashboard-wrapper">
               <nav class="nav-table">
                 <ul>
-                  <li class="active"><a href="#">All Ads (42)</a></li>
-                  <li><a href="#">Active (88)</a></li>
-                  <li><a href="#">Pending (12)</a></li>
-                  <li><a href="#">Approved (02)</a></li>
-                  <li><a href="#">Sold (42)</a></li>
+                  <li class="active">
+                    <a href="#">All Ads ({{ myAds?.length }})</a>
+                  </li>
                 </ul>
               </nav>
-              <table class="table table-responsive dashboardtable tablemyads">
+              <p>
+                You do not have any ads yet. Try posting an ad to view it here
+              </p>
+              <table
+                class="table table-responsive dashboardtable tablemyads"
+                *ngIf="myAds.length != 0"
+              >
                 <thead>
                   <tr>
                     <th>Photo</th>
@@ -356,7 +370,10 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="has-text-centered d-flex justify-content-end">
+              <div
+                class="has-text-centered d-flex justify-content-end"
+                *ngIf="myAds.length != 0"
+              >
                 <pagination-controls
                   (pageChange)="navigateMyAdPage($event)"
                   previousLabel="Prev"
@@ -669,7 +686,7 @@
                 <button
                   id="update"
                   class="btn btn-common"
-                  style="background-color: #2196f3; color: white;"
+                  style="background-color: #2196f3; color: white"
                   type="button"
                   (click)="toggleDisabled()"
                 >
@@ -678,7 +695,7 @@
                 <div class="ml-3" *ngIf="IsHidden">
                   <button
                     class="btn btn-common"
-                    style="background-color: #2196f3; color: white;"
+                    style="background-color: #2196f3; color: white"
                     type="button"
                     (click)="updateProfile()"
                   >
@@ -690,7 +707,7 @@
             <div class="">
               <button
                 class="btn btn-common"
-                style="background-color: #2196f3; color: white;"
+                style="background-color: #2196f3; color: white"
                 type="button"
                 (click)="togglePasswordUpdate()"
               >
@@ -725,7 +742,7 @@
                 <button
                   (click)="updatePassword()"
                   class="btn btn-common"
-                  style="background-color: #2196f3; color: white;"
+                  style="background-color: #2196f3; color: white"
                   type="button"
                 >
                   Change

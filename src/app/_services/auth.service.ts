@@ -62,7 +62,7 @@ export class AuthenticationService {
 
   emailConfirmation(token) {
     return this.http.get(
-      `${environment.API_URL}/${endpoints.confirmEmail}/${token}/`
+      `${environment.API_URL}/${endpoints.confirmEmail}/${token}/confirm_email/`
     );
   }
   loggedIn(): boolean {

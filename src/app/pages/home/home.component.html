@@ -15,7 +15,7 @@
                 </li>
                 <li *ngFor="let category of categories">
                   <a>{{ category?.name }}</a>
-                  <ul class="submenu">
+                  <ul class="submenu click">
                     <li *ngFor="let subCat of category?.subCategories">
                       <a (click)="searchBySubCat(subCat?.slug)">{{
                         subCat?.name
