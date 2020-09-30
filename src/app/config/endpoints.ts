@@ -6,7 +6,7 @@ export const endpoints = {
 
   //Email Confirmation
   resendEmailConfirmation: 'users/send_email_confirmation',
-  confirmEmail: 'users/confirm_email',
+  confirmEmail: 'users',
 
   //Password Reset
   sendPasswordReset: 'users/send_password_reset',

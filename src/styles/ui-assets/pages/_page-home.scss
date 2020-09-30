@@ -11,6 +11,7 @@
     }
     li:hover {
       background-color: #2196f3;
+      color: white;
       transition: all 0.3s;
     }
 
@@ -27,12 +28,12 @@
       margin: 0;
       padding: 0;
       box-shadow: 5px 5px 15px rgba(#000, 0.2);
-      z-index: 20;
+      z-index: 1;
       position: absolute;
       li {
         list-style: none;
       }
-      left: 100%;
+      // left: 100%;
       top: 0;
       width: 250px;
       background: #fff;
