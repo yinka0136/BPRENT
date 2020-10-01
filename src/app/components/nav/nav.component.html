@@ -4,7 +4,7 @@
       <div class="row align-items-center">
         <div class="col-lg-3 col-sm-4 col-md-4 col-5 click">
           <a (click)="routeHome()" class="brand-wrap">
-            <img class="logo" src="../../../assets/images/logo.jpg" />
+            <img class="logo" src="../../../assets/images/new_logo.jpeg" />
           </a>
           <!-- brand-wrap.// -->
         </div>
@@ -53,7 +53,9 @@
                 <i class="fa fa-bars"></i>
               </button>
             </div>
-
+            <span class="mr-1 d-none d-md-block d-flex text-align-center">
+              buy coins</span
+            >
             <a
               class="widget-header mr-2 click"
               *ngIf="loggedIn()"
@@ -61,7 +63,6 @@
               data-target="#paystack"
             >
               <div class="ico">
-                <span class="mr-1 d-none d-md-block"> buy coins</span>
                 <i
                   class="icon-sm rounded-circle border fa fa-credit-card"
                   style="color: #2196f3"
@@ -115,7 +116,7 @@
                   routerLink="/a-profile"
                   >Profile</a
                 >
-                <a class="dropdown-item" href="#">My Ads</a>
+                <!-- <a class="dropdown-item" href="#">My Ads</a> -->
                 <hr class="dropdown-divider" />
                 <a class="dropdown-item click" (click)="logOut()">Log out</a>
               </div>
