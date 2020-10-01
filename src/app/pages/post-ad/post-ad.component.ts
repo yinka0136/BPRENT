@@ -104,6 +104,8 @@ export class PostAdComponent implements OnInit, OnDestroy {
       this.adForm.get('boosted').patchValue(true);
       this.adForm.get('numberOfDays').patchValue(noOfDays);
       Swal.fire('Boosted!', 'Your ad has been boosted.', 'success');
+    } else {
+      this.adForm.get('numberOfDays').patchValue(0);
     }
   }
   unboostAd() {
