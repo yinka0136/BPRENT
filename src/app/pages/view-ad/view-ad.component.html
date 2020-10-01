@@ -34,7 +34,7 @@
               </div>
             </div>
             <!-- slider-product.// -->
-            <div class="thumbs-wrap">
+            <div class="thumbs-wrap click">
               <a
                 (click)="setImageToView(adImage?.imageUrl)"
                 class="item-thumb"
@@ -383,7 +383,7 @@
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
-<div class="container">
+<div class="container" *ngIf="relatedAds.length == 0">
   <section class="featured-lis section-padding">
     <div class="container">
       <h3 class="section-title">Recommended Ads</h3>
