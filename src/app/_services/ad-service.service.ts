@@ -178,8 +178,10 @@ export class AdServiceService {
   }
 
   toggleDisableAd(slug) {
-    return this.http.get(
-      `${environment.API_URL}/${endpoints.toggleDisabledAd}/${slug}/toggle_disable`
+    const payload = {};
+    return this.http.post(
+      `${environment.API_URL}/${endpoints.toggleDisabledAd}/${slug}/toggle_disable`,
+      payload
     );
   }
   repostAd(slug) {
