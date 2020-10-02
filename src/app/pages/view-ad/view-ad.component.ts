@@ -31,6 +31,7 @@ export class ViewAdComponent implements OnInit, OnDestroy {
   description;
   approved: boolean;
   declined: boolean;
+  isEnabled: boolean;
   userSlug;
   userRole;
   imageToView;
@@ -58,6 +59,12 @@ export class ViewAdComponent implements OnInit, OnDestroy {
     this.getResolvedData();
     this.userSlug = JSON.parse(localStorage.getItem('user')).slug;
     this.userRole = JSON.parse(localStorage.getItem('user')).role;
+    if (this.ad.status == 'DISABLED') {
+      this.isEnabled = false;
+    }
+    if (this.ad.status == 'APPROVED') {
+      this.isEnabled = true;
+    }
     console.log(this.userRole);
   }
 
@@ -201,6 +208,19 @@ export class ViewAdComponent implements OnInit, OnDestroy {
       this._ad.declineAd(slug).subscribe({
         next: (res: ResponseStructure) => {
           this.declined = true;
+          console.log(res);
+          this._global.globalSuccessHandler(res);
+        },
+      })
+    );
+  }
+  enable_disable(slug) {
+    this._global.showSpinner();
+    this.sub.add(
+      this._ad.toggleDisableAd(slug).subscribe({
+        next: (res: ResponseStructure) => {
+          this.isEnabled = !this.isEnabled;
+          console.log(this.isEnabled);
           console.log(res);
           this._global.globalSuccessHandler(res);
         },

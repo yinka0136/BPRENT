@@ -246,20 +246,48 @@
               ad?.status == 'PENDING' &&
               !approved &&
               !declined &&
-              userRole != 'SUPER_ADMIN'
+              userRole == 'SUPER_ADMIN'
             "
           >
-            <div *ngIf="userSlug != ad?.user?.slug">
+            <div>
               <button class="btn btn-approve" (click)="approve(ad?.slug)">
                 <span> <i class="fa fa-thumbs-up"></i></span> Approve
               </button>
             </div>
             <div class="mx-1"></div>
-            <div *ngIf="userSlug != ad?.user?.slug">
+            <div>
               <button class="btn btn-feedback" (click)="decline(ad?.slug)">
                 <span> <i class="fa fa-thumbs-down"></i></span> Decline
               </button>
             </div>
+          </div>
+          <div
+            class="btn-margin"
+            *ngIf="(approved || isEnabled) && userRole == 'SUPER_ADMIN'"
+          >
+            <div>
+              <button
+                class="btn btn-feedback"
+                (click)="enable_disable(ad?.slug)"
+              >
+                <span> <i class="fa fa-thumbs-up"></i></span> Disable
+              </button>
+            </div>
+            <div class="mx-1"></div>
+          </div>
+          <div
+            class="btn-margin"
+            *ngIf="!isEnabled && userRole == 'SUPER_ADMIN'"
+          >
+            <div>
+              <button
+                class="btn btn-approve"
+                (click)="enable_disable(ad?.slug)"
+              >
+                <span> <i class="fa fa-thumbs-up"></i></span> Enable
+              </button>
+            </div>
+            <div class="mx-1"></div>
           </div>
           <div
             class="btn-margin mt-2"
