@@ -20,12 +20,24 @@ export class ProfileResolver implements Resolve<any> {
     this._global.showSpinner();
     const favorites = this._adService.savedAds(0, 5);
     const myAds = this._adService.myAds(1, 5);
+    const pending = this._adService.findAllPendingAds(0, 10);
+    const disabled = this._adService.findAllDisabledAds(0, 10);
+    const approved = this._adService.findAllApprovedAds(0, 10);
+    const declined = this._adService.findAllDeclinedAds(0, 10);
+    const expired = this._adService.findAllExpiredAds(0, 10);
+    const closed = this._adService.findAllClosedAds(0, 10);
     const recievedMessages = this._messageService.findAllRecievedMessages(0, 5);
     const sentMessages = this._messageService.findAllSentMessages(0, 5);
     const profile = this._user.userProfile();
     return forkJoin([
       favorites,
       myAds,
+      pending,
+      disabled,
+      approved,
+      declined,
+      expired,
+      closed,
       recievedMessages,
       sentMessages,
       profile,
@@ -35,9 +47,15 @@ export class ProfileResolver implements Resolve<any> {
         return {
           favorites: res[0],
           myAds: res[1],
-          recievedMessages: res[2],
-          sentMessages: res[3],
-          profile: res[4],
+          pending: res[2],
+          disabled: res[3],
+          approved: res[4],
+          declined: res[5],
+          expired: res[6],
+          closed: res[7],
+          recievedMessages: res[8],
+          sentMessages: res[9],
+          profile: res[10],
         };
       }),
       catchError((error) => {

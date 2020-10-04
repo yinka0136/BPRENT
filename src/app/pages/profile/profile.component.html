@@ -273,7 +273,40 @@
               <nav class="nav-table">
                 <ul>
                   <li class="active">
-                    <a href="#">All Ads ({{ myAds?.length }})</a>
+                    <a href="#v-pills-all-ads" data-toggle="pill"
+                      >All Ads ({{ myAds?.length }})</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#v-pills-approved" data-toggle="pill"
+                      >Approved ({{ approved?.length }})</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#v-pills-pending" data-toggle="pill">
+                      Pending ({{ pending?.length }})</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#v-pills-disabled" data-toggle="pill"
+                      >Disabled ({{ disabled?.length }})</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#v-pills-declined" data-toggle="pill"
+                      >Declined ({{ declined?.length }})</a
+                    >
+                  </li>
+
+                  <li>
+                    <a href="#v-pills-expired" data-toggle="pill"
+                      >Expired ({{ expired?.length }})</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#v-pills-closed" data-toggle="pill"
+                      >Closed ({{ closed?.length }})</a
+                    >
                   </li>
                 </ul>
               </nav>
@@ -294,95 +327,677 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr
-                    data-category="sold"
-                    *ngFor="
-                      let myAd of myAds
-                        | paginate
-                          : {
-                              id: 'myAds',
-                              itemsPerPage: myAdsPaginationInfo.size,
-                              currentPage: myAdsPaginationInfo.number,
-                              totalItems: myAdsPaginationInfo.totalElements
-                            }
-                    "
+                <div class="page-content tab-content">
+                  <div
+                    class="tab-pane fade show active"
+                    id="v-pills-all-ads"
+                    role="tabpanel"
+                    aria-labelledby="v-pills-all-ads-tab"
                   >
-                    <td class="photo">
-                      <img
-                        class="img-fluid"
-                        src="{{ (myAd?.adImages)[0].imageUrl }}"
-                        alt=""
-                      />
-                    </td>
-                    <td data-title="Title">
-                      <h3 class="ellipses">
-                        {{ myAd?.title }}
-                      </h3>
-                    </td>
-                    <td data-title="Category">
-                      {{ myAd?.subCategory?.category?.name }}
-                    </td>
-                    <td
-                      data-title="Ad Status"
-                      *ngIf="myAd?.status === 'PENDING'"
-                    >
-                      <span class="adstatus adstatusexpired">pending</span>
-                    </td>
-                    <td
-                      data-title="Ad Status"
-                      *ngIf="myAd?.status === 'APPROVED'"
-                    >
-                      <span class="adstatus adstatusactive">active</span>
-                    </td>
-                    <td
-                      data-title="Ad Status"
-                      *ngIf="myAd?.status === 'DECLINED'"
-                    >
-                      <span class="adstatus adstatusinactive">Declined</span>
-                    </td>
-                    <td data-title="Price">
-                      <h3>{{ myAd?.dailyPrice | currency: "₦" }}</h3>
-                    </td>
-                    <td data-title="Action">
-                      <div class="btns-actions">
-                        <a
-                          class="btn-action btn-view click"
-                          [routerLink]="[
-                            '/ad/view',
-                            myAd?.slug,
-                            myAd?.user?.slug
-                          ]"
-                          ><i class="fa fa-eye"></i
-                        ></a>
-                        <a
+                    <tbody>
+                      <tr
+                        data-category="sold"
+                        *ngFor="
+                          let ad of myAds
+                            | paginate
+                              : {
+                                  id: 'myAds',
+                                  itemsPerPage: myAdsPaginationInfo.size,
+                                  currentPage: myAdsPaginationInfo.currentPage,
+                                  totalItems: myAdsPaginationInfo.totalElements
+                                }
+                        "
+                      >
+                        <td class="photo">
+                          <img
+                            class="img-fluid"
+                            alt=""
+                            src="{{ (ad?.adImages)[0].imageUrl }}"
+                          />
+                        </td>
+                        <td data-title="Title">
+                          <h3 class="ellipses">
+                            {{ ad?.title }}
+                          </h3>
+                        </td>
+                        <td data-title="Category">
+                          {{ ad?.title }}
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'PENDING'"
+                        >
+                          <span class="adstatus adstatusexpired">pending</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'APPROVED'"
+                        >
+                          <span class="adstatus adstatusactive">active</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'DECLINED'"
+                        >
+                          <span class="adstatus adstatusinactive"
+                            >Declined</span
+                          >
+                        </td>
+                        <td data-title="Price">
+                          <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
+                        </td>
+                        <td data-title="Action">
+                          <div class="btns-actions">
+                            <a
+                              class="btn-action btn-view click"
+                              [routerLink]="[
+                                '/ad/view',
+                                ad?.slug,
+                                ad?.user?.slug
+                              ]"
+                              ><i class="fa fa-eye"></i
+                            ></a>
+                            <!-- <a
+                            class="btn-action btn-edit click"
+                            [routerLink]="['/ad/edit', ad?.slug]"
+                            ><i class="fa fa-pencil"></i
+                          ></a> -->
+                            <!-- <a
+                            class="btn-action btn-delete click"
+                            (click)="deleteAd(ad?.slug)"
+                            ><i class="fa fa-trash"></i
+                          ></a> -->
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <div class="has-text-centered d-flex justify-content-end">
+                      <pagination-controls
+                        (pageChange)="navigateMyAdPage($event - 1)"
+                        previousLabel="Prev"
+                        nextLabel="Next"
+                        responsive="true"
+                        id="myAds"
+                        class="my-pagination"
+                      ></pagination-controls>
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="v-pills-approved"
+                    role="tabpanel"
+                    aria-labelledby="v-pills-approved-tab"
+                  >
+                    <tbody>
+                      <tr
+                        data-category="sold"
+                        *ngFor="
+                          let ad of approved
+                            | paginate
+                              : {
+                                  id: 'approved',
+                                  itemsPerPage: approvedPaginationInfo.size,
+                                  currentPage:
+                                    approvedPaginationInfo.currentPage,
+                                  totalItems:
+                                    approvedPaginationInfo.totalElements
+                                }
+                        "
+                      >
+                        <td class="photo">
+                          <img
+                            class="img-fluid"
+                            alt=""
+                            src="{{ (ad?.adImages)[0].imageUrl }}"
+                          />
+                        </td>
+                        <td data-title="Title">
+                          <h3 class="ellipses">
+                            {{ ad?.title }}
+                          </h3>
+                        </td>
+                        <td data-title="Category">
+                          {{ ad?.title }}
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'PENDING'"
+                        >
+                          <span class="adstatus adstatusexpired">pending</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'APPROVED'"
+                        >
+                          <span class="adstatus adstatusactive">active</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'DECLINED'"
+                        >
+                          <span class="adstatus adstatusinactive"
+                            >Declined</span
+                          >
+                        </td>
+                        <td data-title="Price">
+                          <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
+                        </td>
+                        <td data-title="Action">
+                          <div class="btns-actions">
+                            <a
+                              class="btn-action btn-view click"
+                              [routerLink]="[
+                                '/ad/view',
+                                ad?.slug,
+                                ad?.user?.slug
+                              ]"
+                              ><i class="fa fa-eye"></i
+                            ></a>
+                            <!-- <a
+                            class="btn-action btn-edit click"
+                            [routerLink]="['/ad/edit', ad?.slug]"
+                            ><i class="fa fa-pencil"></i
+                          ></a> -->
+                            <!-- <a
+                            class="btn-action btn-delete click"
+                            (click)="deleteAd(ad?.slug)"
+                            ><i class="fa fa-trash"></i
+                          ></a> -->
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <div class="has-text-centered d-flex justify-content-end">
+                      <pagination-controls
+                        (pageChange)="navigateMyAdPage($event - 1)"
+                        previousLabel="Prev"
+                        nextLabel="Next"
+                        responsive="true"
+                        id="approved"
+                        class="my-pagination"
+                      ></pagination-controls>
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="v-pills-pending"
+                    role="tabpanel"
+                    aria-labelledby="v-pills-pending-tab"
+                  >
+                    <tbody>
+                      <tr
+                        data-category="sold"
+                        *ngFor="
+                          let ad of pending
+                            | paginate
+                              : {
+                                  id: 'pending',
+                                  itemsPerPage: pendingPaginationInfo.size,
+                                  currentPage:
+                                    pendingPaginationInfo.currentPage,
+                                  totalItems:
+                                    pendingPaginationInfo.totalElements
+                                }
+                        "
+                      >
+                        <td class="photo">
+                          <img
+                            class="img-fluid"
+                            alt=""
+                            src="{{ (ad?.adImages)[0].imageUrl }}"
+                          />
+                        </td>
+                        <td data-title="Title">
+                          <h3 class="ellipses">
+                            {{ ad?.title }}
+                          </h3>
+                        </td>
+                        <td data-title="Category">
+                          {{ ad?.title }}
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'PENDING'"
+                        >
+                          <span class="adstatus adstatusexpired">pending</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'APPROVED'"
+                        >
+                          <span class="adstatus adstatusactive">active</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'DECLINED'"
+                        >
+                          <span class="adstatus adstatusinactive"
+                            >Declined</span
+                          >
+                        </td>
+                        <td data-title="Price">
+                          <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
+                        </td>
+                        <td data-title="Action">
+                          <div class="btns-actions">
+                            <a
+                              class="btn-action btn-view click"
+                              [routerLink]="[
+                                '/ad/view',
+                                ad?.slug,
+                                ad?.user?.slug
+                              ]"
+                              ><i class="fa fa-eye"></i
+                            ></a>
+                            <!-- <a
                           class="btn-action btn-edit click"
-                          [routerLink]="['/ad/edit', myAd?.slug]"
+                          [routerLink]="['/ad/edit', ad?.slug]"
                           ><i class="fa fa-pencil"></i
-                        ></a>
-                        <a
+                        ></a> -->
+                            <!-- <a
                           class="btn-action btn-delete click"
-                          (click)="deleteAd(myAd?.slug)"
+                          (click)="deleteAd(ad?.slug)"
                           ><i class="fa fa-trash"></i
-                        ></a>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
+                        ></a> -->
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <div class="has-text-centered d-flex justify-content-end">
+                      <pagination-controls
+                        (pageChange)="navigateMyAdPage($event - 1)"
+                        previousLabel="Prev"
+                        nextLabel="Next"
+                        responsive="true"
+                        id="pending"
+                        class="my-pagination"
+                      ></pagination-controls>
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="v-pills-declined"
+                    role="tabpanel"
+                    aria-labelledby="v-pills-declined-tab"
+                  >
+                    <tbody>
+                      <tr
+                        data-category="sold"
+                        *ngFor="
+                          let ad of declined
+                            | paginate
+                              : {
+                                  id: 'declined',
+                                  itemsPerPage: declinedPaginationInfo.size,
+                                  currentPage:
+                                    declinedPaginationInfo.currentPage,
+                                  totalItems:
+                                    declinedPaginationInfo.totalElements
+                                }
+                        "
+                      >
+                        <td class="photo">
+                          <img
+                            class="img-fluid"
+                            alt=""
+                            src="{{ (ad?.adImages)[0].imageUrl }}"
+                          />
+                        </td>
+                        <td data-title="Title">
+                          <h3 class="ellipses">
+                            {{ ad?.title }}
+                          </h3>
+                        </td>
+                        <td data-title="Category">
+                          {{ ad?.title }}
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'PENDING'"
+                        >
+                          <span class="adstatus adstatusexpired">pending</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'APPROVED'"
+                        >
+                          <span class="adstatus adstatusactive">active</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'DECLINED'"
+                        >
+                          <span class="adstatus adstatusinactive"
+                            >Declined</span
+                          >
+                        </td>
+                        <td data-title="Price">
+                          <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
+                        </td>
+                        <td data-title="Action">
+                          <div class="btns-actions">
+                            <a
+                              class="btn-action btn-view click"
+                              [routerLink]="[
+                                '/ad/view',
+                                ad?.slug,
+                                ad?.user?.slug
+                              ]"
+                              ><i class="fa fa-eye"></i
+                            ></a>
+                            <!-- <a
+                        class="btn-action btn-edit click"
+                        [routerLink]="['/ad/edit', ad?.slug]"
+                        ><i class="fa fa-pencil"></i
+                      ></a> -->
+                            <!-- <a
+                        class="btn-action btn-delete click"
+                        (click)="deleteAd(ad?.slug)"
+                        ><i class="fa fa-trash"></i
+                      ></a> -->
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <div class="has-text-centered d-flex justify-content-end">
+                      <pagination-controls
+                        (pageChange)="navigateMyAdPage($event - 1)"
+                        previousLabel="Prev"
+                        nextLabel="Next"
+                        responsive="true"
+                        id="declined"
+                        class="my-pagination"
+                      ></pagination-controls>
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="v-pills-expired"
+                    role="tabpanel"
+                    aria-labelledby="v-pills-expired-tab"
+                  >
+                    <tbody>
+                      <tr
+                        data-category="sold"
+                        *ngFor="
+                          let ad of expired
+                            | paginate
+                              : {
+                                  id: 'expired',
+                                  itemsPerPage: expiredPaginationInfo.size,
+                                  currentPage:
+                                    expiredPaginationInfo.currentPage,
+                                  totalItems:
+                                    expiredPaginationInfo.totalElements
+                                }
+                        "
+                      >
+                        <td class="photo">
+                          <img
+                            class="img-fluid"
+                            alt=""
+                            src="{{ (ad?.adImages)[0].imageUrl }}"
+                          />
+                        </td>
+                        <td data-title="Title">
+                          <h3 class="ellipses">
+                            {{ ad?.title }}
+                          </h3>
+                        </td>
+                        <td data-title="Category">
+                          {{ ad?.title }}
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'PENDING'"
+                        >
+                          <span class="adstatus adstatusexpired">pending</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'APPROVED'"
+                        >
+                          <span class="adstatus adstatusactive">active</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'DECLINED'"
+                        >
+                          <span class="adstatus adstatusinactive"
+                            >Declined</span
+                          >
+                        </td>
+                        <td data-title="Price">
+                          <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
+                        </td>
+                        <td data-title="Action">
+                          <div class="btns-actions">
+                            <a
+                              class="btn-action btn-view click"
+                              [routerLink]="[
+                                '/ad/view',
+                                ad?.slug,
+                                ad?.user?.slug
+                              ]"
+                              ><i class="fa fa-eye"></i
+                            ></a>
+                            <!-- <a
+                      class="btn-action btn-edit click"
+                      [routerLink]="['/ad/edit', ad?.slug]"
+                      ><i class="fa fa-pencil"></i
+                    ></a> -->
+                            <!-- <a
+                      class="btn-action btn-delete click"
+                      (click)="deleteAd(ad?.slug)"
+                      ><i class="fa fa-trash"></i
+                    ></a> -->
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <div class="has-text-centered d-flex justify-content-end">
+                      <pagination-controls
+                        (pageChange)="navigateMyAdPage($event - 1)"
+                        previousLabel="Prev"
+                        nextLabel="Next"
+                        responsive="true"
+                        id="expired"
+                        class="my-pagination"
+                      ></pagination-controls>
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="v-pills-disabled"
+                    role="tabpanel"
+                    aria-labelledby="v-pills-disabled-tab"
+                  >
+                    <tbody>
+                      <tr
+                        data-category="sold"
+                        *ngFor="
+                          let ad of disabled
+                            | paginate
+                              : {
+                                  id: 'disabled',
+                                  itemsPerPage: disabledPaginationInfo.size,
+                                  currentPage:
+                                    disabledPaginationInfo.currentPage,
+                                  totalItems:
+                                    disabledPaginationInfo.totalElements
+                                }
+                        "
+                      >
+                        <td class="photo">
+                          <img
+                            class="img-fluid"
+                            alt=""
+                            src="{{ (ad?.adImages)[0].imageUrl }}"
+                          />
+                        </td>
+                        <td data-title="Title">
+                          <h3 class="ellipses">
+                            {{ ad?.title }}
+                          </h3>
+                        </td>
+                        <td data-title="Category">
+                          {{ ad?.title }}
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'PENDING'"
+                        >
+                          <span class="adstatus adstatusexpired">pending</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'APPROVED'"
+                        >
+                          <span class="adstatus adstatusactive">active</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'DECLINED'"
+                        >
+                          <span class="adstatus adstatusinactive"
+                            >Declined</span
+                          >
+                        </td>
+                        <td data-title="Price">
+                          <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
+                        </td>
+                        <td data-title="Action">
+                          <div class="btns-actions">
+                            <a
+                              class="btn-action btn-view click"
+                              [routerLink]="[
+                                '/ad/view',
+                                ad?.slug,
+                                ad?.user?.slug
+                              ]"
+                              ><i class="fa fa-eye"></i
+                            ></a>
+                            <!-- <a
+                    class="btn-action btn-edit click"
+                    [routerLink]="['/ad/edit', ad?.slug]"
+                    ><i class="fa fa-pencil"></i
+                  ></a> -->
+                            <!-- <a
+                    class="btn-action btn-delete click"
+                    (click)="deleteAd(ad?.slug)"
+                    ><i class="fa fa-trash"></i
+                  ></a> -->
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <div class="has-text-centered d-flex justify-content-end">
+                      <pagination-controls
+                        (pageChange)="navigateMyAdPage($event - 1)"
+                        previousLabel="Prev"
+                        nextLabel="Next"
+                        responsive="true"
+                        id="disabled"
+                        class="my-pagination"
+                      ></pagination-controls>
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="v-pills-closed"
+                    role="tabpanel"
+                    aria-labelledby="v-pills-closed-tab"
+                  >
+                    <tbody>
+                      <tr
+                        data-category="sold"
+                        *ngFor="
+                          let ad of closed
+                            | paginate
+                              : {
+                                  id: 'closed',
+                                  itemsPerPage: closedPaginationInfo.size,
+                                  currentPage: closedPaginationInfo.currentPage,
+                                  totalItems: closedPaginationInfo.totalElements
+                                }
+                        "
+                      >
+                        <td class="photo">
+                          <img
+                            class="img-fluid"
+                            alt=""
+                            src="{{ (ad?.adImages)[0].imageUrl }}"
+                          />
+                        </td>
+                        <td data-title="Title">
+                          <h3 class="ellipses">
+                            {{ ad?.title }}
+                          </h3>
+                        </td>
+                        <td data-title="Category">
+                          {{ ad?.title }}
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'PENDING'"
+                        >
+                          <span class="adstatus adstatusexpired">pending</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'APPROVED'"
+                        >
+                          <span class="adstatus adstatusactive">active</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'DECLINED'"
+                        >
+                          <span class="adstatus adstatusinactive"
+                            >Declined</span
+                          >
+                        </td>
+                        <td data-title="Price">
+                          <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
+                        </td>
+                        <td data-title="Action">
+                          <div class="btns-actions">
+                            <a
+                              class="btn-action btn-view click"
+                              [routerLink]="[
+                                '/ad/view',
+                                ad?.slug,
+                                ad?.user?.slug
+                              ]"
+                              ><i class="fa fa-eye"></i
+                            ></a>
+                            <!-- <a
+                  class="btn-action btn-edit click"
+                  [routerLink]="['/ad/edit', ad?.slug]"
+                  ><i class="fa fa-pencil"></i
+                ></a> -->
+                            <!-- <a
+                  class="btn-action btn-delete click"
+                  (click)="deleteAd(ad?.slug)"
+                  ><i class="fa fa-trash"></i
+                ></a> -->
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <div class="has-text-centered d-flex justify-content-end">
+                      <pagination-controls
+                        (pageChange)="navigateMyAdPage($event - 1)"
+                        previousLabel="Prev"
+                        nextLabel="Next"
+                        responsive="true"
+                        id="closed"
+                        class="my-pagination"
+                      ></pagination-controls>
+                    </div>
+                  </div>
+                </div>
               </table>
-              <div
-                class="has-text-centered d-flex justify-content-end"
-                *ngIf="myAds.length != 0"
-              >
-                <pagination-controls
-                  (pageChange)="navigateMyAdPage($event)"
-                  previousLabel="Prev"
-                  nextLabel="Next"
-                  responsive="true"
-                  id="myAds"
-                  class="my-pagination"
-                ></pagination-controls>
-              </div>
             </div>
           </div>
           <!-- message -->
