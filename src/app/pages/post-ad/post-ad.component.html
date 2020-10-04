@@ -39,24 +39,12 @@
                   >
                 </div>
               </label>
-              <!-- <div>
-          <span class="fileRemove" (click) = "removeDoc()"></span>
-      </div> -->
-              <!-- <app-file-upload
-                formControlName="file"
-                [ngClass]="{
-                  'is-invalid':
-                    adForm.get('file').errors && adForm.get('file').touched
-                }"
-                [placeholder]="'Upload Image'"
-                [elementId]="'imageFile'"
-              ></app-file-upload> -->
             </div>
           </div>
           <div class="col-md-6 imageNames" *ngIf="images?.length > 0">
             <div class="items-list" *ngFor="let image of images">
-              <div class="item px-3 py-2 mb-2">
-                <span class="mr-4 text-white">
+              <div class="item px-3 py-2 mb-2 d-flex justify-content-between">
+                <span class="mr-4 text-white" style="max-width: 100px">
                   {{ image.name }}
                 </span>
                 <img
@@ -81,9 +69,7 @@
                 adForm.get('title').errors && adForm.get('title').touched
             }"
           />
-          <div class="invalid-feedback mt-0 p-0">
-            Please enter ad title
-          </div>
+          <div class="invalid-feedback mt-0 p-0">Please enter ad title</div>
         </div>
         <div class="mt-4 mb-2 col-12">
           <p class="font24 text-grey">Description</p>
@@ -110,12 +96,13 @@
               class="form-control"
               (change)="getAllSubCategories($event.target.value)"
             >
-              <option value="" disabled selected> --select category--</option>
+              <option value="" disabled selected>--select category--</option>
               <option
                 *ngFor="let category of categories"
                 value="{{ category?.slug }}"
-                >{{ category?.name }}</option
               >
+                {{ category?.name }}
+              </option>
             </select>
           </div>
           <div class="col-lg-6 col-sm-12">
@@ -131,15 +118,13 @@
                   adForm.get('subCategoryId').touched
               }"
             >
-              <option value="" disabled selected>
-                --select subcategory--</option
-              >
+              <option value="" disabled selected>--select subcategory--</option>
               <option
                 *ngFor="let subCategory of subCategories"
                 value="{{ subCategory?.id }}"
               >
-                {{ subCategory?.name }}</option
-              >
+                {{ subCategory?.name }}
+              </option>
             </select>
           </div>
         </div>
@@ -202,10 +187,10 @@
               class="form-control"
               (change)="getRegions($event.target.value)"
             >
-              <option value="" disabled selected> --select state--</option>
-              <option *ngFor="let state of states" value="{{ state?.code }}">{{
-                state?.name
-              }}</option>
+              <option value="" disabled selected>--select state--</option>
+              <option *ngFor="let state of states" value="{{ state?.code }}">
+                {{ state?.name }}
+              </option>
             </select>
           </div>
           <div class="col-lg-6 col-sm-12">
@@ -219,10 +204,10 @@
                   adForm.get('regionId').touched
               }"
             >
-              <option value="" disabled selected> --select region--</option>
+              <option value="" disabled selected>--select region--</option>
               <option *ngFor="let region of regions" value="{{ region?.id }}">
-                {{ region?.name }}</option
-              >
+                {{ region?.name }}
+              </option>
             </select>
           </div>
         </div>

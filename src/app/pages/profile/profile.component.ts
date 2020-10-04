@@ -25,11 +25,23 @@ export class ProfileComponent implements OnInit, OnDestroy {
   favoritAds: any[] = [];
   myProfile;
   myAds: any[] = [];
+  pending: any[] = [];
+  disabled: any[] = [];
+  approved: any[] = [];
+  declined: any[] = [];
+  expired: any[] = [];
+  closed: any[] = [];
   sentMessages: any[] = [];
   show: boolean = false;
   recievedMessages: any[] = [];
   favoritAdsPaginationInfo: PaginationInfo;
   myAdsPaginationInfo: PaginationInfo;
+  pendingPaginationInfo: PaginationInfo;
+  disabledPaginationInfo: PaginationInfo;
+  approvedPaginationInfo: PaginationInfo;
+  declinedPaginationInfo: PaginationInfo;
+  expiredPaginationInfo: PaginationInfo;
+  closedPaginationInfo: PaginationInfo;
   sentMessagesPaginationInfo: PaginationInfo;
   recievedMessagesPaginationInfo: PaginationInfo;
   IsHidden;
@@ -102,6 +114,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
       const myAdsResponse = res['resolvedData'].myAds['result'];
       this.myAds = myAdsResponse.ads;
       this.myAdsPaginationInfo = myAdsResponse.paginationInfo;
+      this.pending = res['resolvedData'].pending['result'].ads;
+      this.pendingPaginationInfo =
+        res['resolvedData'].pending['result'].paginationInfo;
+      this.approved = res['resolvedData'].approved['result'].ads;
+      this.approvedPaginationInfo =
+        res['resolvedData'].approved['result'].paginationInfo;
+      this.declined = res['resolvedData'].declined['result'].ads;
+      this.declinedPaginationInfo =
+        res['resolvedData'].declined['result'].paginationInfo;
+      this.disabled = res['resolvedData'].disabled['result'].ads;
+      this.disabledPaginationInfo =
+        res['resolvedData'].disabled['result'].paginationInfo;
+      this.expired = res['resolvedData'].expired['result'].ads;
+      this.expiredPaginationInfo =
+        res['resolvedData'].expired['result'].paginationInfo;
+      this.closed = res['resolvedData'].closed['result'].ads;
+      this.closedPaginationInfo =
+        res['resolvedData'].closed['result'].paginationInfo;
       const sentMessagesResponse = res['resolvedData'].sentMessages['result'];
       this.sentMessages = sentMessagesResponse.messages;
       this.sentMessagesPaginationInfo = sentMessagesResponse.paginationInfo;

@@ -20,10 +20,23 @@ export class AdminProfileComponent implements OnInit, OnDestroy {
   profileForm: FormGroup;
   adminForm: FormGroup;
   updatePasswordForm: FormGroup;
-  paginationInfo: PaginationInfo;
+  allPaginationInfo: PaginationInfo;
+  pendingPaginationInfo: PaginationInfo;
+  disabledPaginationInfo: PaginationInfo;
+  approvedPaginationInfo: PaginationInfo;
+  declinedPaginationInfo: PaginationInfo;
+  expiredPaginationInfo: PaginationInfo;
+  closedPaginationInfo: PaginationInfo;
+
   avatarUrl;
   myProfile;
   allAds: any[] = [];
+  pending: any[] = [];
+  disabled: any[] = [];
+  approved: any[] = [];
+  declined: any[] = [];
+  expired: any[] = [];
+  closed: any[] = [];
   show: boolean = false;
   IsHidden;
 
@@ -91,7 +104,25 @@ export class AdminProfileComponent implements OnInit, OnDestroy {
       this.myProfile = res['resolvedData'].profile['responseResult'];
       const adDetails = res['resolvedData'].allAds['result'];
       this.allAds = adDetails.ads;
-      this.paginationInfo = adDetails.paginationInfo;
+      this.allPaginationInfo = adDetails.paginationInfo;
+      this.pending = res['resolvedData'].pending['result'].ads;
+      this.pendingPaginationInfo =
+        res['resolvedData'].pending['result'].paginationInfo;
+      this.approved = res['resolvedData'].approved['result'].ads;
+      this.approvedPaginationInfo =
+        res['resolvedData'].approved['result'].paginationInfo;
+      this.declined = res['resolvedData'].declined['result'].ads;
+      this.declinedPaginationInfo =
+        res['resolvedData'].declined['result'].paginationInfo;
+      this.disabled = res['resolvedData'].disabled['result'].ads;
+      this.disabledPaginationInfo =
+        res['resolvedData'].disabled['result'].paginationInfo;
+      this.expired = res['resolvedData'].expired['result'].ads;
+      this.expiredPaginationInfo =
+        res['resolvedData'].expired['result'].paginationInfo;
+      this.closed = res['resolvedData'].closed['result'].ads;
+      this.closedPaginationInfo =
+        res['resolvedData'].closed['result'].paginationInfo;
     });
   }
   uploadAvatar(file) {
@@ -153,20 +184,95 @@ export class AdminProfileComponent implements OnInit, OnDestroy {
     this.auth.logout();
   }
   navigateMyAdPage(page) {
-    // console.log(page);
-    // this._global.showSpinner();
-    // this.sub.add(
-    //   this.ad
-    //     .myAds(page, this.myAdsPaginationInfo.totalElements - 1)
-    //     .subscribe({
-    //       next: (res: PagedResponse<any>) => {
-    //         this._global.hideSpinner();
-    //         this.myAds = res.result['ads'];
-    //         this.myAdsPaginationInfo = res.result['paginationInfo'];
-    //         console.log(res, this.myAdsPaginationInfo);
-    //       },
-    //     })
-    // );
+    console.log(page);
+    this._global.showSpinner();
+    this.sub.add(
+      this.ad.myAds(page, 10).subscribe({
+        next: (res: PagedResponse<any>) => {
+          this._global.hideSpinner();
+          this.allAds = res.result['ads'];
+          this.allPaginationInfo = res.result['paginationInfo'];
+        },
+      })
+    );
+  }
+  navigatePendingPage(page) {
+    console.log(page);
+    this._global.showSpinner();
+    this.sub.add(
+      this.ad.findAllPendingAds(page, 10).subscribe({
+        next: (res: PagedResponse<any>) => {
+          this._global.hideSpinner();
+          this.pending = res.result['ads'];
+          this.pendingPaginationInfo = res.result['paginationInfo'];
+        },
+      })
+    );
+  }
+  navigateApprovedPage(page) {
+    console.log(page);
+    this._global.showSpinner();
+    this.sub.add(
+      this.ad.findAllApprovedAds(page, 10).subscribe({
+        next: (res: PagedResponse<any>) => {
+          this._global.hideSpinner();
+          this.approved = res.result['ads'];
+          this.approvedPaginationInfo = res.result['paginationInfo'];
+        },
+      })
+    );
+  }
+  navigateDisabledPage(page) {
+    console.log(page);
+    this._global.showSpinner();
+    this.sub.add(
+      this.ad.findAllDisabledAds(page, 10).subscribe({
+        next: (res: PagedResponse<any>) => {
+          this._global.hideSpinner();
+          this.disabled = res.result['ads'];
+          this.disabledPaginationInfo = res.result['paginationInfo'];
+        },
+      })
+    );
+  }
+  navigateDeclinedPage(page) {
+    console.log(page);
+    this._global.showSpinner();
+    this.sub.add(
+      this.ad.findAllDeclinedAds(page, 10).subscribe({
+        next: (res: PagedResponse<any>) => {
+          this._global.hideSpinner();
+          this.declined = res.result['ads'];
+          this.declinedPaginationInfo = res.result['paginationInfo'];
+        },
+      })
+    );
+  }
+  navigateExpiredPage(page) {
+    console.log(page);
+    this._global.showSpinner();
+    this.sub.add(
+      this.ad.findAllExpiredAds(page, 10).subscribe({
+        next: (res: PagedResponse<any>) => {
+          this._global.hideSpinner();
+          this.expired = res.result['ads'];
+          this.expiredPaginationInfo = res.result['paginationInfo'];
+        },
+      })
+    );
+  }
+  navigateClosedPage(page) {
+    console.log(page);
+    this._global.showSpinner();
+    this.sub.add(
+      this.ad.findAllClosedAds(page, 10).subscribe({
+        next: (res: PagedResponse<any>) => {
+          this._global.hideSpinner();
+          this.closed = res.result['ads'];
+          this.closedPaginationInfo = res.result['paginationInfo'];
+        },
+      })
+    );
   }
   manageCat() {
     this.router.navigate(['create-category']);

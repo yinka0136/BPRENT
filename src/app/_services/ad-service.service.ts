@@ -85,10 +85,13 @@ export class AdServiceService {
     const pagedResponse: PagedResponse<any> = new PagedResponse<any>();
     const params = new HttpParams().set('page', page).set('size', size);
     return this.http
-      .get<ResponseStructure>(`${environment.API_URL}/${endpoints.myAds}`, {
-        params,
-        observe: 'response',
-      })
+      .get<ResponseStructure>(
+        `${environment.API_URL}/${endpoints.findAllAds}`,
+        {
+          params,
+          observe: 'response',
+        }
+      )
       .pipe(
         map((res) => {
           pagedResponse.result = res.body.responseResult;
@@ -141,12 +144,93 @@ export class AdServiceService {
         })
       );
   }
-  findAllActiveAds(page, size) {
+
+  findAllDisabledAds(page, size) {
     const pagedResponse: PagedResponse<any> = new PagedResponse<any>();
     const params = new HttpParams().set('page', page).set('size', size);
     return this.http
       .get<ResponseStructure>(
-        `${environment.API_URL}/${endpoints.findAllActiveAds}`,
+        `${environment.API_URL}/${endpoints.findAllDisabledAds}`,
+        { params, observe: 'response' }
+      )
+      .pipe(
+        map((res) => {
+          pagedResponse.result = res.body.responseResult;
+          if (res.headers.get('pagination') != null) {
+            pagedResponse.paginationInfo = JSON.parse(
+              res.headers.get('pagination')
+            );
+          }
+          return pagedResponse;
+        })
+      );
+  }
+  findAllDeclinedAds(page, size) {
+    const pagedResponse: PagedResponse<any> = new PagedResponse<any>();
+    const params = new HttpParams().set('page', page).set('size', size);
+    return this.http
+      .get<ResponseStructure>(
+        `${environment.API_URL}/${endpoints.findAllDeclinedAds}`,
+        { params, observe: 'response' }
+      )
+      .pipe(
+        map((res) => {
+          pagedResponse.result = res.body.responseResult;
+          if (res.headers.get('pagination') != null) {
+            pagedResponse.paginationInfo = JSON.parse(
+              res.headers.get('pagination')
+            );
+          }
+          return pagedResponse;
+        })
+      );
+  }
+  findAllApprovedAds(page, size) {
+    const pagedResponse: PagedResponse<any> = new PagedResponse<any>();
+    const params = new HttpParams().set('page', page).set('size', size);
+    return this.http
+      .get<ResponseStructure>(
+        `${environment.API_URL}/${endpoints.findAllApprovedAds}`,
+        { params, observe: 'response' }
+      )
+      .pipe(
+        map((res) => {
+          pagedResponse.result = res.body.responseResult;
+          if (res.headers.get('pagination') != null) {
+            pagedResponse.paginationInfo = JSON.parse(
+              res.headers.get('pagination')
+            );
+          }
+          return pagedResponse;
+        })
+      );
+  }
+  findAllClosedAds(page, size) {
+    const pagedResponse: PagedResponse<any> = new PagedResponse<any>();
+    const params = new HttpParams().set('page', page).set('size', size);
+    return this.http
+      .get<ResponseStructure>(
+        `${environment.API_URL}/${endpoints.findAllClosedAds}`,
+        { params, observe: 'response' }
+      )
+      .pipe(
+        map((res) => {
+          pagedResponse.result = res.body.responseResult;
+          if (res.headers.get('pagination') != null) {
+            pagedResponse.paginationInfo = JSON.parse(
+              res.headers.get('pagination')
+            );
+          }
+          return pagedResponse;
+        })
+      );
+  }
+  findAllExpiredAds(page, size) {
+    const pagedResponse: PagedResponse<any> = new PagedResponse<any>();
+    const params = new HttpParams().set('page', page).set('size', size);
+    return this.http
+      .get<ResponseStructure>(
+        `${environment.API_URL}/${endpoints.findAllExpiredAds}`,
         { params, observe: 'response' }
       )
       .pipe(
