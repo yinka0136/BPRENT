@@ -57,12 +57,12 @@
                     <span>My Ads</span>
                   </a>
                 </li>
-                <!-- <li>
+                <li>
                   <a href="#v-pills-messages" data-toggle="pill">
                     <i class="fa fa-envelope"></i>
                     <span>Messages</span>
                   </a>
-                </li> -->
+                </li>
 
                 <li>
                   <a href="#v-pills-favorites" data-toggle="pill">
@@ -101,18 +101,16 @@
             <div class="dashboard-wrapper">
               <div class="dashboard-sections">
                 <div class="row">
-                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3">
                     <div class="dashboardbox">
-                      <div class="icon">
-                        <i class="fa fa-file-archive-o"></i>
-                      </div>
+                      <div class="icon"><i class="fa fa-file-o"></i></div>
                       <div class="contentbox">
-                        <h2>Total Ad Posted</h2>
-                        <h3>{{ myAds.length }} Add Posted</h3>
+                        <h2>All Ads</h2>
+                        <h3>{{ myAds.length }} Ads</h3>
                       </div>
                     </div>
                   </div>
-                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3">
                     <div class="dashboardbox">
                       <div class="icon"><i class="fa fa-file-o"></i></div>
                       <div class="contentbox">
@@ -121,12 +119,21 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3">
                     <div class="dashboardbox">
                       <div class="icon"><i class="fa fa-commenting-o"></i></div>
                       <div class="contentbox">
-                        <h2>Messages</h2>
+                        <h2>Message(s)</h2>
                         <h3>{{ recievedMessages.length }} Messages</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                    <div class="dashboardbox">
+                      <div class="icon"><i class="fa fa-money"></i></div>
+                      <div class="contentbox">
+                        <h2>Coins</h2>
+                        <h3>{{ myProfile.coins }} Coins</h3>
                       </div>
                     </div>
                   </div>
@@ -1012,232 +1019,212 @@
                 <ul class="nav nav-pills">
                   <li class="nav-item">
                     <a class="nav-link active" href="#sent" data-toggle="pill"
-                      >Sent (88)</a
+                      >Sent ({{ sentMessages?.length }})</a
                     >
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#recieved" data-toggle="pill"
-                      >Recieved (12)</a
+                      >Recieved ({{ recievedMessages?.length }})</a
                     >
                   </li>
                 </ul>
               </nav>
-              <div class="tab-pane fade show active" id="sent" role="tabpanel">
-                <form class="row offers-messages">
-                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
-                    <div class="offers-box">
-                      <div class="dashboardboxtitle">
-                        <h2>User</h2>
+              <div class="tab-content">
+                <div
+                  class="tab-pane fade show active"
+                  id="sent"
+                  role="tabpanel"
+                >
+                  <form class="row offers-messages">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+                      <div class="offers-box">
+                        <div class="">
+                          <h5>User</h5>
+                        </div>
+                        <ul
+                          class="offers-user-online"
+                          (click)="setI(i)"
+                          *ngFor="let message of sentMessages; index as i"
+                        >
+                          <li class="offerer">
+                            <div class="user-name">
+                              <h3>
+                                {{ message?.from?.lastName }}
+                                {{ message?.from?.firstName }}
+                              </h3>
+                              <!-- <h4><a href="#">Offline</a></h4> -->
+                            </div>
+                          </li>
+                        </ul>
                       </div>
-                      <ul class="offers-user-online">
-                        <li class="offerer">
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+                      <div class="chat-message-box">
+                        <div class="dashboardboxtitle">
+                          <h2>Chat Messages</h2>
+                        </div>
+                        <div class="offerermessage">
                           <figure>
-                            <img src="assets/img/author/img1.jpg" alt="" />
+                            <img
+                              src=" {{
+                                sentMessages[messageIndex]?.from?.avatarUrl
+                              }}"
+                              alt=""
+                            />
                           </figure>
-                          <div class="user-name">
-                            <h3>Sarah Higgle</h3>
-                            <h4><a href="#">Offline</a></h4>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
-                    <div class="chat-message-box">
-                      <div class="dashboardboxtitle">
-                        <h2>Chat Messages</h2>
-                      </div>
-                      <div class="offerermessage">
-                        <figure>
-                          <img src="assets/img/author/img1.jpg" alt="" />
-                        </figure>
-                        <div class="description">
-                          <div class="info">
-                            <h3>Meagan Miller</h3>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting industry
-                            </p>
-                          </div>
-                          <time class="date">June 21, 2018</time>
-                        </div>
-                      </div>
-                      <div class="memessage readmessage">
-                        <figure>
-                          <img src="assets/img/author/img1.jpg" alt="" />
-                        </figure>
-                        <div class="description">
-                          <div class="info">
-                            <h3>You</h3>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting industry
-                            </p>
-                          </div>
-                          <div class="text-right">
-                            <p>It that ok?</p>
-                            <time class="date">Jun 28, 2017 09:30</time>
+                          <div class="description">
+                            <div class="info">
+                              <h3>
+                                {{ sentMessages[messageIndex]?.from?.lastName }}
+                                {{
+                                  sentMessages[messageIndex]?.from?.firstName
+                                }}
+                              </h3>
+                              <p>
+                                {{ sentMessages[messageIndex]?.message }}
+                              </p>
+                            </div>
+                            <time class="date">{{
+                              sentMessages[messageIndex]?.from?.dateCreated
+                                | date: "medium"
+                            }}</time>
                           </div>
                         </div>
-                      </div>
-                      <div class="offerermessage">
-                        <figure>
-                          <img src="assets/img/author/img1.jpg" alt="" />
-                        </figure>
-                        <div class="description">
-                          <div class="info">
-                            <h3>Meagan Miller</h3>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting industry
-                            </p>
-                          </div>
-                          <time class="date">June 21, 2018</time>
-                        </div>
-                      </div>
-                      <div class="memessage readmessage">
-                        <figure>
-                          <img src="assets/img/author/img1.jpg" alt="" />
-                        </figure>
-                        <div class="description">
-                          <div class="info">
-                            <h3>You</h3>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting industry
-                            </p>
-                          </div>
-                          <div class="text-right">
-                            <p>It that ok?</p>
-                            <time class="date">Jun 28, 2017 09:30</time>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="replay-box">
-                      <textarea
-                        class="form-control"
-                        name="reply"
-                        placeholder="Type Here & Press Enter"
-                      ></textarea>
-                      <div class="icon-box">
-                        <i class="fa fa-thumbs-up"></i>
-                        <i class="fa fa-thumbs-down"></i>
-                        <i class="fa fa-emoji-smile"></i>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="tab-pane fade" id="recieved" role="tabpanel">
-                <form class="row offers-messages">
-                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
-                    <div class="offers-box">
-                      <div class="dashboardboxtitle">
-                        <h2>User</h2>
-                      </div>
-                      <ul class="offers-user-online">
-                        <li class="offerer">
+                        <div class="memessage readmessage">
                           <figure>
-                            <img src="assets/img/author/img1.jpg" alt="" />
+                            <img
+                              src="{{
+                                sentMessages[messageIndex]?.from?.avatarUrl
+                              }}"
+                              alt=""
+                            />
                           </figure>
-                          <div class="user-name">
-                            <h3>Sarah Higgle</h3>
-                            <h4><a href="#">Offline</a></h4>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
-                    <div class="chat-message-box">
-                      <div class="dashboardboxtitle">
-                        <h2>Chat Messages</h2>
-                      </div>
-                      <div
-                        class="offerermessage"
-                        *ngFor="let message of recievedMessages"
-                      >
-                        <figure>
-                          <img src="assets/img/author/img1.jpg" alt="" />
-                        </figure>
-                        <div class="description">
-                          <div class="info">
-                            <h3>Meagan Miller</h3>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting industry
-                            </p>
-                          </div>
-                          <time class="date">June 21, 2018</time>
-                        </div>
-                      </div>
-                      <div class="memessage readmessage">
-                        <figure>
-                          <img src="assets/img/author/img1.jpg" alt="" />
-                        </figure>
-                        <div class="description">
-                          <div class="info">
-                            <h3>You</h3>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting industry
-                            </p>
-                          </div>
-                          <div class="text-right">
-                            <p>It that ok?</p>
-                            <time class="date">Jun 28, 2017 09:30</time>
+                          <div class="description">
+                            <div class="info">
+                              <h3>You</h3>
+                              <p>
+                                Lorem Ipsum is simply dummy text of the printing
+                                and typesetting industry
+                              </p>
+                            </div>
+                            <div class="text-right">
+                              <p>It that ok?</p>
+                              <time class="date">Jun 28, 2017 09:30</time>
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <div class="offerermessage">
-                        <figure>
-                          <img src="assets/img/author/img1.jpg" alt="" />
-                        </figure>
-                        <div class="description">
-                          <div class="info">
-                            <h3>Meagan Miller</h3>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting industry
-                            </p>
-                          </div>
-                          <time class="date">June 21, 2018</time>
-                        </div>
+                      <div class="replay-box">
+                        <textarea
+                          class="form-control"
+                          name="reply"
+                          placeholder="Type Here & Press Enter"
+                        ></textarea>
                       </div>
-                      <div class="memessage readmessage">
-                        <figure>
-                          <img src="assets/img/author/img1.jpg" alt="" />
-                        </figure>
-                        <div class="description">
-                          <div class="info">
-                            <h3>You</h3>
-                            <p>
-                              Lorem Ipsum is simply dummy text of the printing
-                              and typesetting industry
-                            </p>
-                          </div>
-                          <div class="text-right">
-                            <p>It that ok?</p>
-                            <time class="date">Jun 28, 2017 09:30</time>
-                          </div>
-                        </div>
+                      <div class="icon-box mt-2" >
+                        <button class="btn btn-primary"  
+                        (click) = "sendSent()">Send</button>
                       </div>
                     </div>
-                    <div class="replay-box">
-                      <textarea
-                        class="form-control"
-                        name="reply"
-                        placeholder="Type Here & Press Enter"
-                      ></textarea>
-                      <div class="icon-box">
-                        <i class="fa fa-thumbs-up"></i>
-                        <i class="fa fa-thumbs-down"></i>
-                        <i class="fa fa-emoji-smile"></i>
+                  </form>
+                </div>
+                <div class="tab-pane fade" id="recieved" role="tabpanel">
+                  <form class="row offers-messages">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+                      <div class="offers-box">
+                        <div class="">
+                          <h5>User</h5>
+                        </div>
+                        <ul
+                          class="offers-user-online"
+                          (click)="setI(i)"
+                          *ngFor="let message of recievedMessages; index as i"
+                        >
+                          <li class="offerer">
+                            <div class="user-name">
+                              <h3>
+                                {{ message?.from?.lastName }}
+                                {{ message?.from?.firstName }}
+                              </h3>
+                              <!-- <h4><a href="#">Offline</a></h4> -->
+                            </div>
+                          </li>
+                        </ul>
                       </div>
                     </div>
-                  </div>
-                </form>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+                      <div class="chat-message-box">
+                        <div class="dashboardboxtitle">
+                          <h2>Chat Messages</h2>
+                        </div>
+                        <div class="offerermessage">
+                          <figure>
+                            <img
+                              src="{{
+                                recievedMessages[messageIndex]?.from?.avatarUrl
+                              }}"
+                              alt=""
+                            />
+                          </figure>
+                          <div class="description">
+                            <div class="info">
+                              <h3>
+                                {{
+                                  recievedMessages[messageIndex]?.from?.lastName
+                                }}
+                                {{
+                                  recievedMessages[messageIndex]?.from
+                                    ?.firstName
+                                }}
+                              </h3>
+                              <p>
+                                {{ recievedMessages[messageIndex]?.message }}
+                              </p>
+                            </div>
+                            <time class="date">{{
+                              recievedMessages[messageIndex]?.from?.dateCreated
+                                | date: "medium"
+                            }}</time>
+                          </div>
+                        </div>
+                        <div class="memessage readmessage">
+                          <figure>
+                            <img
+                              src="{{
+                                recievedMessages[messageIndex]?.to?.avatarUrl
+                              }}"
+                              alt=""
+                            />
+                          </figure>
+                          <div class="description">
+                            <div class="info">
+                              <h3>You</h3>
+                              <p>
+                                Lorem Ipsum is simply dummy text of the printing
+                                and typesetting industry
+                              </p>
+                            </div>
+                            <div class="text-right">
+                              <p>It that ok?</p>
+                              <time class="date">Jun 28, 2017 09:30</time>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="replay-box">
+                        <textarea
+                          class="form-control"
+                          name="reply"
+                          placeholder="Type Here & Press Enter"
+                        ></textarea>
+                        <div class="icon-box mt-2" >
+                          <button class="btn btn-primary"  
+                          (click) = "sendRecieved()">Send</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

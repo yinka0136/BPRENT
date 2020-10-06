@@ -209,7 +209,11 @@
           <div class="my-4 d-flex justify-content-center">
             <span class="icon icon-lg rounded-circle">
               <i class="fa fa-user white"></i>
-              <img src="" alt="" />
+              <img
+                *ngIf="!ad?.user?.avatarUrl"
+                src="{{ ad?.user?.avatarUrl }}"
+                alt=""
+              />
             </span>
           </div>
           <h4 class="mt-3 text-center">
@@ -418,7 +422,7 @@
       <div class="row">
         <div
           (click)="goToRoute(relatedAd)"
-          class="col-xl-3 col-lg-3 col-md-4 col-6"
+          class="col-xl-3 col-lg-3 col-md-4 col-12 mb-3 click"
           *ngFor="let relatedAd of relatedAds"
         >
           <div class="product-item">

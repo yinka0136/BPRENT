@@ -1,4 +1,5 @@
-import { ResponseStructure } from './../../_models/respose';
+import { ResponseStructure } from 'src/app/_models/respose';
+import { MessageService } from 'src/app/_services/message.service';
 import { PagedResponse } from 'src/app/_models/pagination';
 import { PaginationInfo } from './../../_models/pagination';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
@@ -20,6 +21,7 @@ import { GlobalService } from 'src/app/_services/global.service';
 export class ProfileComponent implements OnInit, OnDestroy {
   profileForm: FormGroup;
   adminForm: FormGroup;
+  message: string;
   updatePasswordForm: FormGroup;
   avatarUrl;
   favoritAds: any[] = [];
@@ -29,6 +31,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   disabled: any[] = [];
   approved: any[] = [];
   declined: any[] = [];
+  messageIndex: any = 0;
   expired: any[] = [];
   closed: any[] = [];
   sentMessages: any[] = [];
@@ -54,7 +57,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private ad: AdServiceService,
     private _global: GlobalService,
     private fb: FormBuilder,
-    private _user: UsersService
+    private _user: UsersService,
+    private _message: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -260,7 +264,34 @@ export class ProfileComponent implements OnInit, OnDestroy {
       })
     );
   }
+  setI(i) {
+    this.messageIndex = i;
+  }
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  sendSent() {
+    this._global.showSpinner();
+    const payload = { message: this.message };
+    this._message
+      .createMessage(payload, this.sentMessages[this.messageIndex].from.slug)
+      .subscribe({
+        next: (res: ResponseStructure) => {
+          console.log(res);
+        },
+      });
+  }
+
+  sendRecieved() {
+    this._global.showSpinner();
+    const payload = { message: this.message };
+    this._message
+      .createMessage(payload, this.sentMessages[this.messageIndex].from.slug)
+      .subscribe({
+        next: (res: ResponseStructure) => {
+          console.log(res);
+        },
+      });
   }
 }
