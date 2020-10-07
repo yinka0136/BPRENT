@@ -10,6 +10,21 @@
           ></em
         >
       </p>
+      <p class="mt-1">
+        <em
+          ><b
+            >NB: Minimum of 1 image and maximum of 7 images only are allowed
+          </b></em
+        >
+      </p>
+      <p class="mt-1">
+        <em
+          ><b
+            >NB: All images must be for this particular Ad if not the post will
+            be null
+          </b></em
+        >
+      </p>
       <form action="" [formGroup]="adForm">
         <div class="row">
           <div class="col-md-4 form-group">
@@ -76,6 +91,18 @@
             </div>
           </div>
         </div>
+        <div
+          class="text-danger m-0 p-0"
+          *ngIf="images.length >= 0 && images.length < 2"
+        >
+          Images must be at least 2
+        </div>
+        <div
+          class="text-danger m-0 p-0"
+          *ngIf="images.length >= 0 && images.length > 7"
+        >
+          Images must not be greater than 7
+        </div>
 
         <div class="mt-2 mb-3 col-12">
           <p class="font24 text-grey">Added images</p>
@@ -126,9 +153,7 @@
                 adForm.get('title').errors && adForm.get('title').touched
             }"
           />
-          <div class="invalid-feedback mt-0 p-0">
-            Please enter ad title
-          </div>
+          <div class="invalid-feedback mt-0 p-0">Please enter ad title</div>
         </div>
         <div class="mt-4 mb-2 col-12">
           <p class="font24 text-grey">Description</p>
@@ -154,12 +179,13 @@
               class="form-control"
               (change)="getAllSubCategories($event.target.value)"
             >
-              <option value="" disabled selected> --select category--</option>
+              <option value="" disabled selected>--select category--</option>
               <option
                 *ngFor="let category of categories"
                 value="{{ category?.slug }}"
-                >{{ category?.name }}</option
               >
+                {{ category?.name }}
+              </option>
             </select>
           </div>
           <div class="col-lg-6 col-sm-12">
@@ -179,8 +205,8 @@
                 *ngFor="let subCategory of subCategories"
                 value="{{ subCategory?.id }}"
               >
-                {{ subCategory?.name }}</option
-              >
+                {{ subCategory?.name }}
+              </option>
             </select>
           </div>
         </div>
@@ -242,10 +268,10 @@
               class="form-control"
               (change)="getRegions($event.target.value)"
             >
-              <option value="" disabled selected> --select state-- </option>
-              <option *ngFor="let state of states" value="{{ state?.code }}">{{
-                state?.name
-              }}</option>
+              <option value="" disabled selected>--select state--</option>
+              <option *ngFor="let state of states" value="{{ state?.code }}">
+                {{ state?.name }}
+              </option>
             </select>
           </div>
           <div class="col-lg-6 col-sm-12">
@@ -260,8 +286,8 @@
               }"
             >
               <option *ngFor="let region of regions" value="{{ region?.id }}">
-                {{ region?.name }}</option
-              >
+                {{ region?.name }}
+              </option>
             </select>
           </div>
         </div>
