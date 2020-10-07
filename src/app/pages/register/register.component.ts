@@ -57,12 +57,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
         password: ['', [Validators.required, Validators.minLength(8)]],
         confirmPassword: ['', Validators.required],
         phoneNumber: [
-          '+234',
+          '',
           [
             Validators.required,
-            Validators.pattern(
-              '^[+]([0-9]{3})(((8)(0|1))|((7)(0))|((9)(0)))\\d{8}$'
-            ),
+            Validators.pattern('(0)(((8)(0|1))|((7)(0))|((9)(0)))\\d{8}$'),
           ],
         ],
       },
