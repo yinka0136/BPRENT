@@ -1,5 +1,5 @@
 .section-header {
-  background-color: #fff;
+  background-color: #42aeec;
 }
 
 /* ================== header main ==================  */
@@ -14,15 +14,15 @@
 
 .header-main {
   position: relative;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  border-bottom: 2px solid #42aeec !important;
+  z-index: 100;
 }
 
 .brand-wrap,
 .navbar-brand {
   .logo {
     margin-right: 7px;
-    max-height: 55px;
+    max-height: 52px;
     display: inline-block;
   }
 }

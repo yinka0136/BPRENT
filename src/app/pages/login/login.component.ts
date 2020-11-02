@@ -92,7 +92,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.user = res['user'];
         localStorage.setItem('token', this.token);
         localStorage.setItem('user', JSON.stringify(this.user));
-        this.router.navigate(['home']);
+        if(this.user.role == 'SUPER_ADMIN' || this.user.role == 'ADMIN'){
+          this.router.navigate(['a-profile']);
+        }
+        else{
+          this.router.navigate(['profile']);
+        }
+        
       },
       error: (e) => {
         this._global.hideSpinner();

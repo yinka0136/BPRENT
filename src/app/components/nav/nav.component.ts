@@ -64,6 +64,7 @@ export class NavComponent implements OnInit, OnDestroy {
     }
     this.getAllCategories();
     console.log(this.loggedIn());
+    window.addEventListener('scroll', this.myFunction, true);
   }
   paymentInit() {
     console.log('Payment initialized');
@@ -137,5 +138,17 @@ export class NavComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+    window.removeEventListener('scroll', this.myFunction, true);
   }
+
+
+myFunction() {
+  var navbar = document.getElementById("myStickyNav");
+  var sticky = navbar.offsetTop;
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
 }
