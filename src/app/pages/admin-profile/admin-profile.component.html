@@ -7,9 +7,9 @@
           <div class="sidebar-box">
             <div class="user">
               <figure>
-                <a *ngIf="avatarUrl"><img src="{{ avatarUrl }}" alt="" /></a>
+                <a *ngIf="avatarUrl"><img src="{{ avatarUrl }}" class="avatarUrl" alt="" /></a>
                 <a *ngIf="!avatarUrl"
-                  ><img src="{{ myProfile?.avatarUrl }}" width="45px" alt=""
+                  ><img src="{{ myProfile?.avatarUrl }}" class="avatarUrl" alt=""
                 /></a>
               </figure>
               <div class="usercontent">

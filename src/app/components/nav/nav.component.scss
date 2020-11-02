@@ -1,114 +1,3 @@
-// @import "../../styles/variables-custom";
-// .section-header {
-//   background-color: #fff;
-// }
-
-// /* ================== header main ==================  */
-// .header-top-light {
-//   .nav-link {
-//     color: $gray-500;
-//     &:hover {
-//       color: $dark;
-//     }
-//   }
-// }
-
-// .header-main {
-//   position: relative;
-//   padding-top: 1rem;
-//   padding-bottom: 1rem;
-// }
-
-// .brand-wrap,
-// .navbar-brand {
-//   .logo {
-//     margin-right: 7px;
-//     max-height: 34px;
-//     display: inline-block;
-//   }
-// }
-
-// .navbar-main {
-//   background-color: #fff;
-//   .nav-link {
-//     &:hover {
-//       color: $primary;
-//     }
-//   }
-// }
-
-// .search-header {
-//   border: 2px solid $primary;
-//   border-radius: $border-radius-lg;
-//   .form-control,
-//   .custom-select {
-//     border-color: transparent;
-//   }
-//   select {
-//     flex-basis: 150px !important;
-//     flex-grow: 0 !important;
-//   }
-// }
-
-// .widget-header {
-//   display: inline-block;
-//   vertical-align: middle;
-//   position: relative;
-
-//   .widget-view {
-//     padding: 5px 7px;
-//     display: inline-block;
-//     position: relative;
-//     text-align: center;
-//   }
-//   .icon-area {
-//     font-size: 24px;
-//     display: inline-block;
-//     width: 36px;
-//     height: 30px;
-//     color: $gray-500;
-//     .notify {
-//       position: absolute;
-//       top: 0px;
-//       right: 8%;
-//     }
-//   }
-//   .icon {
-//     color: $gray-500;
-//     .notify {
-//       position: absolute;
-//       top: 0;
-//       right: 0;
-//     }
-//   }
-//   .text {
-//     max-width: 80px;
-//     overflow: hidden;
-//     text-overflow: ellipsis;
-//     white-space: nowrap;
-//     display: block;
-//     line-height: 1.2;
-//   }
-
-//   a {
-//     color: $dark;
-//   }
-
-//   form {
-//     min-width: 280px;
-//   }
-
-//   &:hover {
-//     i {
-//       color: $dark;
-//     }
-//   }
-// }
-
-// /* desktop only */
-// @media all and (min-width: 768px) {
-// }
-// /* desktop only .end */
 btn-paystack {
   visibility: hidden;
 }
@@ -123,5 +12,61 @@ btn-paystack {
     top: -4px;
     left: 8px;
     border-radius: 50%;
+  }
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #42aeec;
+}
+.sticky + nav {
+  padding-top: 57px;
+}
+// .noPadding {
+//   margin: -15px !important;
+// }
+.myNav {
+  background: linear-gradient(160.29deg, #42aeec 0.67%, #2196f3 100.93%);
+}
+.search {
+  height: 56px;
+  width: 80%;
+}
+.search-button {
+  height: 56px;
+  width: 56px;
+}
+.search-wrapper {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+.searchImg {
+  height: 255px;
+}
+.btn-nav {
+  background-color: #fff !important;
+  border-color: #fff !important;
+  color: #c8046c !important;
+  &:hover {
+    background-color: #fff !important;
+  }
+}
+.nav-btn {
+  display: flex;
+  .btn {
+    white-space: nowrap;
+    @media (max-width: 992px) {
+      font-size: 12px;
+    }
+  }
+}
+
+.postAd-btn {
+  .btn {
+    white-space: nowrap;
+    @media (max-width: 992px) {
+      font-size: 12px;
+    }
   }
 }

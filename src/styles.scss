@@ -149,3 +149,19 @@
 .w-90 {
   width: 90% !important;
 }
+.avatarUrl {
+  height: 50px;
+  width: 50px;
+}
+.btn-primary {
+  background-color: #d32f5d !important;
+  border-color: #d32f5d !important;
+  color: #fff !important;
+  &:hover {
+    background-color: #c80450 !important;
+  }
+}
+.btn-outline-primary {
+  border-color: #c8046c !important;
+  color: #fff !important;
+}

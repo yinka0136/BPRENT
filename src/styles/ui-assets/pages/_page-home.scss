@@ -10,7 +10,7 @@
       border-bottom: 1px solid $border-color;
     }
     li:hover {
-      background-color: #2196f3;
+      background-color: #d32f5d;
       color: white;
       transition: all 0.3s;
     }
@@ -68,7 +68,6 @@
 .slider-home-banner {
   .carousel-item img {
     width: 100%;
-    height: 375px;
     object-fit: cover;
   }
 }
