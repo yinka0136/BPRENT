@@ -72,6 +72,7 @@ export class NavComponent implements OnInit, OnDestroy {
 
   paymentDone(ref: any) {
     console.log('Payment successfull', ref);
+    this.buyCoin();
     this.closeModal.nativeElement.click();
   }
 
@@ -99,8 +100,11 @@ export class NavComponent implements OnInit, OnDestroy {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
-  getInput(keyword) {
+  getInput(keyword, event) {
     this.keyword = keyword;
+    if (event.keyCode == 13) {
+      this.search();
+    }
   }
   search() {
     this._global.showSpinner();
@@ -141,14 +145,13 @@ export class NavComponent implements OnInit, OnDestroy {
     window.removeEventListener('scroll', this.myFunction, true);
   }
 
-
-myFunction() {
-  var navbar = document.getElementById("myStickyNav");
-  var sticky = navbar.offsetTop;
-  if (window.pageYOffset >= sticky) {
-    navbar.classList.add("sticky")
-  } else {
-    navbar.classList.remove("sticky");
+  myFunction() {
+    var navbar = document.getElementById('myStickyNav');
+    var sticky = navbar.offsetTop;
+    if (window.pageYOffset >= sticky) {
+      navbar.classList.add('sticky');
+    } else {
+      navbar.classList.remove('sticky');
+    }
   }
-}
 }

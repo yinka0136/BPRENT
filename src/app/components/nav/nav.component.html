@@ -96,7 +96,7 @@
                 type="search"
                 class="form-control search"
                 placeholder="Type your search here"
-                (keyup)="getInput(query.value)"
+                (keyup)="getInput(query.value, $event)"
               />
               <div class="input-group-append">
                 <button
