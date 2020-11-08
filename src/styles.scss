@@ -165,3 +165,34 @@
   border-color: #c8046c !important;
   color: #fff !important;
 }
+.mynews-info {
+  position: relative;
+  width: 100%;
+  height: 3vh;
+  display: flex;
+  overflow: hidden;
+  div {
+    position: relative;
+    margin-bottom: 0px;
+    width: 100%;
+    background: #c8046c;
+    overflow: hidden;
+    h2 {
+      padding-bottom: 0px;
+      margin-bottom: 0px;
+      font-size: 20px;
+      position: absolute;
+      white-space: nowrap;
+      color: #fff;
+      animation: animate 60s linear infinite;
+    }
+  }
+}
+@keyframes animate {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

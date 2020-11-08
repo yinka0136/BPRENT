@@ -24,6 +24,7 @@ import { AdEditResolver } from '../_resolvers/ad-edit.resolver';
 import { ProfileResolver } from '../_resolvers/profile.resolver';
 import { AdminProfileComponent } from '../pages/admin-profile/admin-profile.component';
 import { AdminProfileResolver } from '../_resolvers/admin-profile.resolver';
+import { AboutComponent } from '../pages/about/about.component';
 
 const routes: Routes = [
   {
@@ -89,6 +90,7 @@ const routes: Routes = [
   { path: 'products/grid', component: ProductGridComponent },
   { path: 'terms', component: TermsAndConditionsComponent },
   { path: 'privacy', component: PrivacyComponent },
+  { path: 'about', component: AboutComponent },
 ];
 
 @NgModule({
