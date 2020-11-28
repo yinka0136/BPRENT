@@ -38,9 +38,8 @@ export class NavComponent implements OnInit, OnDestroy {
   //   email: JSON.parse(localStorage.getItem('user')).email,
   //   ref: `${Math.ceil(Math.random() * 10e10)}`,
   // };
-  @ViewChild('paystack', { static: false }) paystack: ElementRef<
-    HTMLInputElement
-  >;
+  @ViewChild('paystack', { static: false })
+  paystack: ElementRef<HTMLInputElement>;
   // @Output() ads = new EventEmitter<{
   //   ads: [];
   //   paginationInfo: PaginationInfo;
