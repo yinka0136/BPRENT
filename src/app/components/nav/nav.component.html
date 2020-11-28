@@ -3,7 +3,7 @@
     <div class="container">
       <div class="d-flex justify-content-between align-items-center">
         <a (click)="routeHome()" class="brand-wrap click">
-          <img class="logo" src="../../../assets/images/isaac.png" />
+          <img class="logo" src="../../../assets/images/Logo2.png" />
         </a>
         <!-- col.// -->
         <div class="d-flex justify-content-end">
@@ -13,7 +13,7 @@
               Sign up
             </a>
           </div>
-          <div *ngIf="loggedIn()">
+          <div *ngIf="loggedIn()" class="py-2">
             <a
               class="widget-header mr-2 click"
               data-toggle="modal"
@@ -59,7 +59,7 @@
               <!--  dropdown-menu .// -->
             </div>
           </div>
-          <div class="mt-2 mr-2 py-2 postAd-btn" *ngIf="!loggedIn()">
+          <div class="mr-2 py-2 postAd-btn">
             <a (click)="postAdd()" style="color: white" class="btn btn-primary"
               ><i class="fa fa-plus"></i> Post Ad
             </a>
@@ -132,6 +132,20 @@
     <!-- container .// -->
   </nav>
 </header>
+<section class="mynews-info">
+  <!-- <div class="container"> -->
+  <div>
+    <h2>
+      ..........Stay safe and wear a mask😷 ..... With Bprents you can rent it
+      all😉..... Do not make online payments before having a Physical proof of
+      the property you want to rent!..... We do not own or deal directly with
+      the vendors on our market place, be careful not to fall a victim of fraud
+      we wouldn't be held accountable.!!..... Happy Renting🏘️🚗.....
+    </h2>
+  </div>
+
+  <!-- </div> -->
+</section>
 <button
   #paystack
   angular4-paystack

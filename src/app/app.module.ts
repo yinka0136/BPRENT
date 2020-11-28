@@ -41,6 +41,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AdminProfileComponent } from './pages/admin-profile/admin-profile.component';
 import { TermsAndConditionsComponent } from './pages/terms-and-conditions/terms-and-conditions.component';
 import { PrivacyComponent } from './pages/privacy/privacy.component';
+import { AboutComponent } from './pages/about/about.component';
 const jQuery = window['$'];
 // let config = new AuthServiceConfig([
 //   {
@@ -83,6 +84,7 @@ const jQuery = window['$'];
     AdminProfileComponent,
     TermsAndConditionsComponent,
     PrivacyComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
