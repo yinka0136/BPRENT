@@ -95,7 +95,7 @@ const jQuery = window['$'];
     BarRatingModule,
     AngularEditorModule,
     Angular4PaystackModule.forRoot(
-      'pk_test_e746e7f11bfcb5735e098b0ca21fca212afb77fc'
+      'pk_live_5f382df73ef29c3b37a7821eb1574f60fa435f37'
     ),
     JwtModule.forRoot({
       config: {},
