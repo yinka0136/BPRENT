@@ -69,6 +69,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.initPasswordUpdateForm();
   }
 
+  getProtocolAndHostname() {
+    return {
+      protocol: window.location.protocol,
+      hostname: window.location.hostname,
+    };
+  }
+
   initProfileForm() {
     this.profileForm = this.fb.group({
       email: [this.myProfile.email, [Validators.email]],
