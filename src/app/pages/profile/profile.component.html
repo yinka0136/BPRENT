@@ -7,9 +7,14 @@
           <div class="sidebar-box">
             <div class="user">
               <figure>
-                <a *ngIf="avatarUrl"><img src="{{ avatarUrl }}" alt=""  class="avatarUrl"/></a>
+                <a *ngIf="avatarUrl"
+                  ><img src="{{ avatarUrl }}" alt="" class="avatarUrl"
+                /></a>
                 <a *ngIf="!avatarUrl"
-                  ><img src="{{ myProfile?.avatarUrl }}" class="avatarUrl" alt=""
+                  ><img
+                    src="{{ myProfile?.avatarUrl }}"
+                    class="avatarUrl"
+                    alt=""
                 /></a>
               </figure>
               <div class="usercontent">
@@ -148,9 +153,9 @@
                       class="form-control"
                       type="text"
                       size="20"
-                      value="{{getProtocolAndHostname().protocol}}//{{getProtocolAndHostname().hostname}}/register;referrer={{
-                        myProfile.referralCode
-                      }}"
+                      value="{{ getProtocolAndHostname().protocol }}//{{
+                        getProtocolAndHostname().hostname
+                      }}/#/register;referrer={{ myProfile.referralCode }}"
                     />
                     <div
                       class="input-group-append click"
@@ -1121,9 +1126,10 @@
                           placeholder="Type Here & Press Enter"
                         ></textarea>
                       </div>
-                      <div class="icon-box mt-2" >
-                        <button class="btn btn-primary"  
-                        (click) = "sendSent()">Send</button>
+                      <div class="icon-box mt-2">
+                        <button class="btn btn-primary" (click)="sendSent()">
+                          Send
+                        </button>
                       </div>
                     </div>
                   </form>
@@ -1217,9 +1223,13 @@
                           name="reply"
                           placeholder="Type Here & Press Enter"
                         ></textarea>
-                        <div class="icon-box mt-2" >
-                          <button class="btn btn-primary"  
-                          (click) = "sendRecieved()">Send</button>
+                        <div class="icon-box mt-2">
+                          <button
+                            class="btn btn-primary"
+                            (click)="sendRecieved()"
+                          >
+                            Send
+                          </button>
                         </div>
                       </div>
                     </div>
