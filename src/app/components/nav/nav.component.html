@@ -59,7 +59,14 @@
               <!--  dropdown-menu .// -->
             </div>
           </div>
-          <div class="mr-2 py-2 postAd-btn">
+          <div
+            class="mr-2 py-2 postAd-btn"
+            *ngIf="
+              userRole === 'CUSTOMER' ||
+              userRole === null ||
+              userRole === undefined
+            "
+          >
             <a (click)="postAdd()" style="color: white" class="btn btn-primary"
               ><i class="fa fa-plus"></i> Post Ad
             </a>
