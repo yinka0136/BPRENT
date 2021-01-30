@@ -53,6 +53,11 @@ export class CatStatesService {
       `${environment.API_URL}/${endpoints.deleteCategory}/${slug}/delete`
     );
   }
+  deleteSubCategory(slug) {
+    return this.http.delete(
+      `${environment.API_URL}/${endpoints.deleteSubcategory}/${slug}/delete`
+    );
+  }
   createCategory(payload) {
     return this.http.post(
       `${environment.API_URL}/${endpoints.createCategory}`,
