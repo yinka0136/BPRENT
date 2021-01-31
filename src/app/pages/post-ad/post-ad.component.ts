@@ -94,7 +94,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
         }
       },
       text: 'this will cost you ' + this.subCategory.coins + ' coins per day',
-      icon: 'info',
+      icon: 'success',
       showCancelButton: true,
       confirmButtonColor: '#2196F3',
       cancelButtonColor: '#D32F2F',
@@ -178,6 +178,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
     );
   }
   getSubcategory(id) {
+    console.log(id)
     const subCategory = this.subCategories.find((s) => s.id == id);
     this.subCategory = subCategory;
   }

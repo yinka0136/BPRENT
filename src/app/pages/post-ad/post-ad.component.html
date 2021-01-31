@@ -135,10 +135,9 @@
           <div class="col-lg-6 col-sm-12">
             <p class="font24 text-grey">Subcategory</p>
             <select
-              #selected
               formControlName="subCategoryId"
               class="form-control"
-              (click)="getSubcategory(selected.value)"
+              (change)="getSubcategory($event.target.value)"
               [ngClass]="{
                 'is-invalid':
                   adForm.get('subCategoryId').errors &&
