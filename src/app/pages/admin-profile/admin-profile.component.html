@@ -7,14 +7,19 @@
           <div class="sidebar-box">
             <div class="user">
               <figure>
-                <a *ngIf="avatarUrl"><img src="{{ avatarUrl }}" class="avatarUrl" alt="" /></a>
+                <a *ngIf="avatarUrl"
+                  ><img src="{{ avatarUrl }}" class="avatarUrl" alt=""
+                /></a>
                 <a *ngIf="!avatarUrl"
-                  ><img src="{{ myProfile?.avatarUrl }}" class="avatarUrl" alt=""
+                  ><img
+                    src="{{ myProfile?.avatarUrl }}"
+                    class="avatarUrl"
+                    alt=""
                 /></a>
               </figure>
               <div class="usercontent">
                 <h3>User</h3>
-                <h4>{{myProfile?.role}}</h4>
+                <h4>{{ myProfile?.lastName }} {{ myProfile?.firstName }}</h4>
               </div>
               <div classs="d-flex justify-content-end">
                 <label
