@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   API_URL: 'https://bprents-api.herokuapp.com',
-  // API_URL: 'http://localhost:9000',
+  // API_URL: window.location.protocol+'//'+'api.bprents.ng',
 };
 
 /*
