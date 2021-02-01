@@ -137,7 +137,7 @@
           <figcaption class="info-wrap feature-content">
             <h4>{{ trending?.title }}</h4>
             <div class="rating-wrap d-flex">
-              <ul class="rating-stars">
+              <!-- <ul class="rating-stars">
                 <li style="width: 80%" class="stars-active">
                   <i class="fa fa-star"></i><i class="fa fa-star"></i
                   ><i class="fa fa-star"></i><i class="fa fa-star"></i
@@ -148,9 +148,12 @@
                   ><i class="fa fa-star"></i><i class="fa fa-star"></i
                   ><i class="fa fa-star"></i>
                 </li>
-              </ul>
+              </ul> -->
+              <i class="fa fa-eye"></i>
               <span class="label-rating text-muted">
-                {{ trending?.review?.recievedFeedbacks?.length }} reviews</span
+                {{ trending?.views }} view{{
+                  trending?.views > 1 ? "s" : ""
+                }}</span
               >
             </div>
             <div class="listing-bottom">
@@ -212,7 +215,7 @@
           <figcaption class="info-wrap feature-content">
             <h4>{{ newAd?.title }}</h4>
             <div class="rating-wrap d-flex">
-              <ul class="rating-stars">
+              <!-- <ul class="rating-stars">
                 <li style="width: 80%" class="stars-active">
                   <i class="fa fa-star"></i><i class="fa fa-star"></i
                   ><i class="fa fa-star"></i><i class="fa fa-star"></i
@@ -223,9 +226,10 @@
                   ><i class="fa fa-star"></i><i class="fa fa-star"></i
                   ><i class="fa fa-star"></i>
                 </li>
-              </ul>
+              </ul> -->
+              <i class="fa fa-eye"></i>
               <span class="label-rating text-muted">
-                {{ newAd?.review?.recievedFeedbacks?.length }} reviews</span
+                {{ newAd?.views }} view{{ newAd?.views > 1 ? "s" : "" }}</span
               >
             </div>
             <div class="listing-bottom">

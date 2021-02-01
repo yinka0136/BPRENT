@@ -468,7 +468,11 @@
                   <i class="fa fa-star"></i>
                   <i class="fa fa-star"></i>
                 </span>
-                <span class="count-review"> <span>1</span> Review(s)</span>
+                <span class="count-review">
+                  {{ relatedAd?.review?.recievedFeedbacks?.length }} review{{
+                    relatedAd?.review?.recievedFeedbacks?.length > 1 ? "" : "s"
+                  }}</span
+                >
               </div>
               <div class="card-text">
                 <div class="float-left">
