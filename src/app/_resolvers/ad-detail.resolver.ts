@@ -19,7 +19,7 @@ export class AdDetailResolver implements Resolve<any> {
     const userSlug = route.paramMap.get('userSlug');
     this._global.showSpinner();
     const ad = this._adService.getAd(slug);
-    const feedbacks = this._feedBack.findAllRecievedFeedbacks(0, 4);
+    const feedbacks = this._feedBack.findUserFeedback(0, 4, userSlug);
     return forkJoin([ad, feedbacks]).pipe(
       map((res) => {
         this._global.hideSpinner();
