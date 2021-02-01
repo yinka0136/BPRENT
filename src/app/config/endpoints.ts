@@ -81,7 +81,7 @@ export const endpoints = {
   updateFeedBack: 'feedbacks',
   getAllFeedBacks: 'feedbacks/all',
   getAllSentFeedBacks: 'feedbacks/sent',
-  getAllRecievedFeedBacks: 'feedbacks/recieved',
+  getAllRecievedFeedBacks: 'feedbacks/received',
   createFeedBack: 'feedbacks',
   getUserFeedBack: 'feedbacks',
   //Message

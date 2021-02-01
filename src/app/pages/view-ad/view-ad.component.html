@@ -72,7 +72,7 @@
                   role="tab"
                   aria-controls="pills-Reviews"
                   aria-selected="false"
-                  >Reviews</a
+                  >Feedbacks</a
                 >
               </li>
 
@@ -122,7 +122,9 @@
                   </p>
                   <p class="font14">
                     <i class="fa fa-star mr-3"></i>
-                    0 Rating(s)
+                    {{ feedbacks?.length }} Feedback{{
+                      feedbacks?.length > 1 ? "s" : ""
+                    }}
                   </p>
                 </div>
               </div>
@@ -187,6 +189,7 @@
                 </tbody>
               </table>
               <pagination-controls
+                *ngIf="feedbacks?.length > 0"
                 (pageChange)="navigateFeedbackPage($event - 1)"
                 id="review"
                 class="my-pagination"
