@@ -468,9 +468,10 @@
                   <i class="fa fa-star"></i>
                   <i class="fa fa-star"></i>
                 </span>
-                <span class="count-review">
-                  {{ relatedAd?.review?.recievedFeedbacks?.length }} review{{
-                    relatedAd?.review?.recievedFeedbacks?.length > 1 ? "" : "s"
+                <i class="fa fa-eye"></i>
+                <span class="label-rating text-muted">
+                  {{ relatedAd?.views }} view{{
+                    relatedAd?.views > 1 ? "s" : ""
                   }}</span
                 >
               </div>
