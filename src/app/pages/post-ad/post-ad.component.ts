@@ -21,6 +21,8 @@ export class PostAdComponent implements OnInit, OnDestroy {
   image: any;
   categories: any[] = [];
   subCategories: any[] = [];
+  subsLoading: boolean = false;
+  regionsLoading: boolean = false;
   states: any[] = [];
   subCategory;
   regions: any[] = [];
@@ -134,13 +136,23 @@ export class PostAdComponent implements OnInit, OnDestroy {
   postAd() {
     this._global.showSpinner();
     const payload = this.adForm.value;
-    const adJson = JSON.stringify(payload);
+    console.log(payload);
+    // const adJson = JSON.stringify(payload);
+    // payload.images = this.images;
     const formData = new FormData();
     this.images.forEach((i) => {
       formData.append('images', i);
     });
-    formData.append('adJson', adJson);
 
+    formData.append('boosted', payload.boosted);
+    formData.append('title', payload.title);
+    formData.append('description', payload.description);
+    formData.append('subCategoryId', payload.subCategoryId);
+    formData.append('regionId', payload.regionId);
+    formData.append('dailyPrice', payload.dailyPrice);
+    formData.append('weeklyPrice', payload.weeklyPrice);
+    formData.append('negotiable', payload.negotiable);
+    formData.append('numberOfDays', payload.numberOfDays);
     this.sub.add(
       this._adService.createAd(formData).subscribe({
         next: (res: ResponseStructure) => {
@@ -168,26 +180,37 @@ export class PostAdComponent implements OnInit, OnDestroy {
   }
 
   getAllSubCategories(slug) {
+    this.subsLoading = true;
     this.sub.add(
       this._catService.getAllSubCategories(slug).subscribe({
         next: (res: ResponseStructure) => {
+          this.subsLoading = false;
           console.log(res);
           this.subCategories = res.responseResult;
+        },
+        error: () => {
+          this.subsLoading = false;
         },
       })
     );
   }
   getSubcategory(id) {
-    console.log(id)
+    console.log(id);
     const subCategory = this.subCategories.find((s) => s.id == id);
     this.subCategory = subCategory;
   }
   getRegions(code) {
+    this.regionsLoading = true;
     this.sub.add(
       this._catService.fetchAllRegions(code).subscribe({
         next: (res: ResponseStructure) => {
+          this.regionsLoading = false;
+
           console.log(res);
           this.regions = res.responseResult;
+        },
+        error: () => {
+          this.regionsLoading = false;
         },
       })
     );
