@@ -2,7 +2,7 @@ import { PaginationInfo } from './../../_models/pagination';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResponseStructure } from 'src/app/_models/respose';
-import { Subscription } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { GlobalService } from 'src/app/_services/global.service';
 import { FeedbackService } from 'src/app/_services/feedback.service';
@@ -10,6 +10,7 @@ import { ReportService } from 'src/app/_services/report.service';
 import { MessageService } from 'src/app/_services/message.service';
 import { PagedResponse } from 'src/app/_models/pagination';
 import { AdServiceService } from 'src/app/_services/ad-service.service';
+import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -45,7 +46,8 @@ export class ViewAdComponent implements OnInit, OnDestroy {
     private _feedback: FeedbackService,
     private _report: ReportService,
     private _message: MessageService,
-    private _ad: AdServiceService
+    private _ad: AdServiceService,
+    private location: Location
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -67,7 +69,9 @@ export class ViewAdComponent implements OnInit, OnDestroy {
     }
     console.log(this.userRole);
   }
-
+  back() {
+    this.location.back();
+  }
   getResolvedData() {
     this.sub.add(
       this.route.data.subscribe((res) => {
