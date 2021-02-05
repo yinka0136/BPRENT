@@ -129,8 +129,6 @@ export class PostAdComponent implements OnInit, OnDestroy {
   addFile(images: Array<File>) {
     for (var i = 0; i < images.length; i++) {
       this.images.includes(images[i]) ? null : this.images.push(images[i]);
-
-      console.log(this.images);
     }
   }
   removeImage(image) {
