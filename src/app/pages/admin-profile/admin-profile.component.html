@@ -167,7 +167,7 @@
                               : {
                                   id: 'myAds',
                                   itemsPerPage: allPaginationInfo.size,
-                                  currentPage: allPaginationInfo.currentPage,
+                                  currentPage: allPaginationInfo.number,
                                   totalItems: allPaginationInfo.totalElements
                                 }
                         "
@@ -191,7 +191,7 @@
                           data-title="Ad Status"
                           *ngIf="ad?.status === 'PENDING'"
                         >
-                          <span class="adstatus adstatusexpired">pending</span>
+                          <span class="adstatus adstatuspending">pending</span>
                         </td>
                         <td
                           data-title="Ad Status"
@@ -206,6 +206,27 @@
                           <span class="adstatus adstatusinactive"
                             >Declined</span
                           >
+                        </td>
+
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'EXPIRED'"
+                        >
+                          <span class="adstatus adstatusexpired">expired</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'DISABLED'"
+                        >
+                          <span class="adstatus adstatusdisabled"
+                            >disabled</span
+                          >
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'CLOSED'"
+                        >
+                          <span class="adstatus adstatusclosed">closed</span>
                         </td>
                         <td data-title="Price">
                           <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
@@ -245,7 +266,6 @@
                         nextLabel="Next"
                         responsive="true"
                         id="myAds"
-                        class="my-pagination"
                       ></pagination-controls>
                     </div>
                   </div>
@@ -268,8 +288,7 @@
                               : {
                                   id: 'approved',
                                   itemsPerPage: approvedPaginationInfo.size,
-                                  currentPage:
-                                    approvedPaginationInfo.currentPage,
+                                  currentPage: approvedPaginationInfo.number,
                                   totalItems:
                                     approvedPaginationInfo.totalElements
                                 }
@@ -371,8 +390,7 @@
                               : {
                                   id: 'pending',
                                   itemsPerPage: pendingPaginationInfo.size,
-                                  currentPage:
-                                    pendingPaginationInfo.currentPage,
+                                  currentPage: pendingPaginationInfo.number,
                                   totalItems:
                                     pendingPaginationInfo.totalElements
                                 }
@@ -474,8 +492,7 @@
                               : {
                                   id: 'declined',
                                   itemsPerPage: declinedPaginationInfo.size,
-                                  currentPage:
-                                    declinedPaginationInfo.currentPage,
+                                  currentPage: declinedPaginationInfo.number,
                                   totalItems:
                                     declinedPaginationInfo.totalElements
                                 }
@@ -496,18 +513,7 @@
                         <td data-title="Category">
                           {{ ad?.title }}
                         </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'PENDING'"
-                        >
-                          <span class="adstatus adstatusexpired">pending</span>
-                        </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'APPROVED'"
-                        >
-                          <span class="adstatus adstatusactive">active</span>
-                        </td>
+
                         <td
                           data-title="Ad Status"
                           *ngIf="ad?.status === 'DECLINED'"
@@ -577,8 +583,7 @@
                               : {
                                   id: 'expired',
                                   itemsPerPage: expiredPaginationInfo.size,
-                                  currentPage:
-                                    expiredPaginationInfo.currentPage,
+                                  currentPage: expiredPaginationInfo.number,
                                   totalItems:
                                     expiredPaginationInfo.totalElements
                                 }
@@ -601,24 +606,11 @@
                         </td>
                         <td
                           data-title="Ad Status"
-                          *ngIf="ad?.status === 'PENDING'"
+                          *ngIf="ad?.status === 'Expired'"
                         >
-                          <span class="adstatus adstatusexpired">pending</span>
+                          <span class="adstatus adstatusexpired">expired</span>
                         </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'APPROVED'"
-                        >
-                          <span class="adstatus adstatusactive">active</span>
-                        </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'DECLINED'"
-                        >
-                          <span class="adstatus adstatusinactive"
-                            >Declined</span
-                          >
-                        </td>
+
                         <td data-title="Price">
                           <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
                         </td>
@@ -676,8 +668,7 @@
                               : {
                                   id: 'disabled',
                                   itemsPerPage: disabledPaginationInfo.size,
-                                  currentPage:
-                                    disabledPaginationInfo.currentPage,
+                                  currentPage: disabledPaginationInfo.number,
                                   totalItems:
                                     disabledPaginationInfo.totalElements
                                 }
@@ -698,24 +689,13 @@
                         <td data-title="Category">
                           {{ ad?.title }}
                         </td>
+
                         <td
                           data-title="Ad Status"
-                          *ngIf="ad?.status === 'PENDING'"
+                          *ngIf="ad?.status === 'DISABLED'"
                         >
-                          <span class="adstatus adstatusexpired">pending</span>
-                        </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'APPROVED'"
-                        >
-                          <span class="adstatus adstatusactive">active</span>
-                        </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'DECLINED'"
-                        >
-                          <span class="adstatus adstatusinactive"
-                            >Declined</span
+                          <span class="adstatus adstatusdisabled"
+                            >DISABLED</span
                           >
                         </td>
                         <td data-title="Price">
@@ -777,7 +757,7 @@
                               : {
                                   id: 'closed',
                                   itemsPerPage: closedPaginationInfo.size,
-                                  currentPage: closedPaginationInfo.currentPage,
+                                  currentPage: closedPaginationInfo.number,
                                   totalItems: closedPaginationInfo.totalElements
                                 }
                         "
@@ -799,24 +779,11 @@
                         </td>
                         <td
                           data-title="Ad Status"
-                          *ngIf="ad?.status === 'PENDING'"
+                          *ngIf="ad?.status === 'CLOSED'"
                         >
-                          <span class="adstatus adstatusexpired">pending</span>
+                          <span class="adstatus adstatusclosed">closed</span>
                         </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'APPROVED'"
-                        >
-                          <span class="adstatus adstatusactive">active</span>
-                        </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'DECLINED'"
-                        >
-                          <span class="adstatus adstatusinactive"
-                            >Declined</span
-                          >
-                        </td>
+
                         <td data-title="Price">
                           <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
                         </td>

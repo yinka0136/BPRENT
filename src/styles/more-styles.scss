@@ -2532,19 +2532,26 @@ label {
 }
 .adstatusinactive {
   color: #f7f7f7;
-  background: #363b4d;
+  background: black;
 }
 .adstatusactive {
-  background: #2196f3;
+  background: #00cc67;
 }
-.adstatusexpired {
+.adstatuspending {
   background: #fc9209;
 }
+.adstatusexpired {
+  background: #f32172;
+}
+
 .adstatusdeleted {
   background: #f91942;
 }
-.adstatussold {
+.adstatusclosed {
   background: #363b4d;
+}
+.adstatusdisabled {
+  background: #f91942;
 }
 .btns-actions {
   min-width: 150px;

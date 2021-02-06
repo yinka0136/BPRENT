@@ -105,6 +105,7 @@ export class AdminProfileComponent implements OnInit, OnDestroy {
       const adDetails = res['resolvedData'].allAds['result'];
       this.allAds = adDetails.ads;
       this.allPaginationInfo = adDetails.paginationInfo;
+      console.log(this.allPaginationInfo.number);
       this.pending = res['resolvedData'].pending['result'].ads;
       this.pendingPaginationInfo =
         res['resolvedData'].pending['result'].paginationInfo;

@@ -51,7 +51,7 @@ export const endpoints = {
   myAds: 'ads/my_ads',
   savedAds: 'ads/saved',
   findOneAd: 'ads',
-  // findAllActiveAds: 'ads/all_active',
+  findAllActiveAds: 'ads/all_active',
   findAllPendingAds: 'ads/all_pending',
   findAllExpiredAds: 'ads/all_expired',
   findAllDisabledAds: 'ads/all_disabled',
