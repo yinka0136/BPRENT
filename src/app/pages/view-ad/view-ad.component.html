@@ -323,7 +323,7 @@
             class="btn-margin mt-2"
             [routerLink]="['/ad/edit', ad.slug]"
             routerLinkActive="router-link-active"
-            *ngIf="userSlug == ad?.user?.slug && ad?.status != 'PENDING'"
+            *ngIf="userSlug == ad?.user?.slug && ad?.status == 'PENDING'"
           >
             <button class="btn btn-feedback">
               <span> <i class="fa fa-pencil"></i></span> Edit Ad

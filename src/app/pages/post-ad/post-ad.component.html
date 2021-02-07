@@ -13,7 +13,7 @@
       <p class="mt-1">
         <em
           ><b
-            >NB: Minimum of 1 images and maximum of 7 images only are allowed.
+            >NB: Minimum of 1 images and maximum of 10 images only are allowed.
           </b></em
         >
       </p>
@@ -91,9 +91,12 @@
         </div>
         <div
           class="text-danger m-0 p-0"
-          *ngIf="images.length >= 0 && images.length > 7"
+          *ngIf="images.length >= 0 && images.length > 10"
         >
           Images must not be greater than 7
+        </div>
+        <div class="text-danger m-0 p-0" *ngIf="images.length == 10">
+          You have selected the maximum number of images
         </div>
         <div class="mt-5 mb-3 col-12">
           <p class="font24 text-grey">Title</p>

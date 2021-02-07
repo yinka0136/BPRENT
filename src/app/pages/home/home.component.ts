@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AdServiceService } from 'src/app/_services/ad-service.service';
 import { GlobalService } from 'src/app/_services/global.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -36,6 +37,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.sub.add(
       this.adService.toggleSaveAd(slug).subscribe({
         next: (res) => {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+            },
+          });
+          Toast.fire({
+            icon: 'success',
+            title: res['responseMessage'],
+          });
           console.log(res);
           this.trendingAds[index].bookmarked = !this.trendingAds[index]
             .bookmarked;
@@ -49,6 +65,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.sub.add(
       this.adService.toggleSaveAd(slug).subscribe({
         next: (res) => {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+            },
+          });
+          Toast.fire({
+            icon: 'success',
+            title: res['responseMessage'],
+          });
           console.log(res);
           this.newAds[index].bookmarked = !this.newAds[index].bookmarked;
         },

@@ -283,48 +283,49 @@
             </div>
             <div class="dashboard-wrapper">
               <nav class="nav-table">
-                <ul>
-                  <li class="active">
-                    <a href="#v-pills-all-ads" data-toggle="pill"
+                <ul class="nav nav-pills">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link active"
+                      href="#v-pills-all-ads"
+                      data-toggle="pill"
                       >All Ads ({{ myAds?.length }})</a
                     >
                   </li>
-                  <li>
+                  <li class="nav-item">
                     <a href="#v-pills-approved" data-toggle="pill"
                       >Approved ({{ approved?.length }})</a
                     >
                   </li>
-                  <li>
+                  <li class="nav-item">
                     <a href="#v-pills-pending" data-toggle="pill">
                       Pending ({{ pending?.length }})</a
                     >
                   </li>
-                  <li>
+                  <li class="nav-item">
                     <a href="#v-pills-disabled" data-toggle="pill"
                       >Disabled ({{ disabled?.length }})</a
                     >
                   </li>
-                  <li>
+                  <li class="nav-item">
                     <a href="#v-pills-declined" data-toggle="pill"
                       >Declined ({{ declined?.length }})</a
                     >
                   </li>
 
-                  <li>
+                  <li class="nav-item">
                     <a href="#v-pills-expired" data-toggle="pill"
                       >Expired ({{ expired?.length }})</a
                     >
                   </li>
-                  <li>
+                  <li class="nav-item">
                     <a href="#v-pills-closed" data-toggle="pill"
                       >Closed ({{ closed?.length }})</a
                     >
                   </li>
                 </ul>
               </nav>
-              <p *ngIf="myAds.length != 0" class="text-info">
-                You do not have any ads yet. Try posting an ad to view it here
-              </p>
+
               <table
                 class="table table-responsive dashboardtable tablemyads"
                 *ngIf="myAds.length != 0"
@@ -347,6 +348,10 @@
                     aria-labelledby="v-pills-all-ads-tab"
                   >
                     <tbody>
+                      <p *ngIf="myAds.length == 0" class="text-info">
+                        You do not have any ads yet. Try posting an ad to view
+                        it here
+                      </p>
                       <tr
                         data-category="sold"
                         *ngFor="
@@ -461,6 +466,10 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-approved-tab"
                   >
+                    <p class="text-info p-2" *ngIf="approved.length == 0">
+                      <i class="fa fa-info-circle"></i> Approved Ads will appear
+                      here
+                    </p>
                     <tbody>
                       <tr
                         data-category="sold"
@@ -556,6 +565,10 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-pending-tab"
                   >
+                    <p class="text-info p-2" *ngIf="pending.length == 0">
+                      <i class="fa fa-info-circle"></i> Pending Ads will appear
+                      here
+                    </p>
                     <tbody>
                       <tr
                         data-category="sold"
@@ -638,6 +651,10 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-declined-tab"
                   >
+                    <p class="text-info p-2" *ngIf="declined.length == 0">
+                      <i class="fa fa-info-circle"></i> Declined Ads will appear
+                      here
+                    </p>
                     <tbody>
                       <tr
                         data-category="sold"
@@ -722,6 +739,10 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-expired-tab"
                   >
+                    <p class="text-info p-2" *ngIf="expired.length == 0">
+                      <i class="fa fa-info-circle"></i> Expired Ads will appear
+                      here
+                    </p>
                     <tbody>
                       <tr
                         data-category="sold"
@@ -804,6 +825,10 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-disabled-tab"
                   >
+                    <p class="text-info p-2" *ngIf="disabled.length == 0">
+                      <i class="fa fa-info-circle"></i> Disabled Ads will appear
+                      here
+                    </p>
                     <tbody>
                       <tr
                         data-category="sold"
@@ -888,6 +913,10 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-closed-tab"
                   >
+                    <p class="text-info p-2" *ngIf="closed.length == 0">
+                      <i class="fa fa-info-circle"></i> Closed Ads will appear
+                      here
+                    </p>
                     <tbody>
                       <tr
                         data-category="sold"

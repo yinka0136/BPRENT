@@ -1,7 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { Subscription } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { GlobalService } from 'src/app/_services/global.service';
 import { AdServiceService } from 'src/app/_services/ad-service.service';
@@ -128,6 +128,9 @@ export class PostAdComponent implements OnInit, OnDestroy {
 
   addFile(images: Array<File>) {
     for (var i = 0; i < images.length; i++) {
+      if (this.images.length == 10) {
+        return of(null);
+      }
       this.images.includes(images[i]) ? null : this.images.push(images[i]);
     }
   }

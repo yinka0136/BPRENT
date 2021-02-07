@@ -212,7 +212,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.auth.logout();
   }
   navigateMyAdPage(page) {
-    console.log(page);
     this._global.showSpinner();
     this.sub.add(
       this.ad.myAds(page, 5).subscribe({
@@ -221,6 +220,84 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.myAds = res.result['ads'];
           this.myAdsPaginationInfo = res.result['paginationInfo'];
           console.log(res, this.myAdsPaginationInfo);
+        },
+      })
+    );
+  }
+  navigatePendingPage(page) {
+    console.log(page);
+    this._global.showSpinner();
+    this.sub.add(
+      this.ad.findAllPendingAds(page, 10).subscribe({
+        next: (res: PagedResponse<any>) => {
+          this._global.hideSpinner();
+          this.pending = res.result['ads'];
+          this.pendingPaginationInfo = res.result['paginationInfo'];
+        },
+      })
+    );
+  }
+  navigateApprovedPage(page) {
+    console.log(page);
+    this._global.showSpinner();
+    this.sub.add(
+      this.ad.findAllApprovedAds(page, 10).subscribe({
+        next: (res: PagedResponse<any>) => {
+          this._global.hideSpinner();
+          this.approved = res.result['ads'];
+          this.approvedPaginationInfo = res.result['paginationInfo'];
+        },
+      })
+    );
+  }
+  navigateDisabledPage(page) {
+    console.log(page);
+    this._global.showSpinner();
+    this.sub.add(
+      this.ad.findAllDisabledAds(page, 10).subscribe({
+        next: (res: PagedResponse<any>) => {
+          this._global.hideSpinner();
+          this.disabled = res.result['ads'];
+          this.disabledPaginationInfo = res.result['paginationInfo'];
+        },
+      })
+    );
+  }
+  navigateDeclinedPage(page) {
+    console.log(page);
+    this._global.showSpinner();
+    this.sub.add(
+      this.ad.findAllDeclinedAds(page, 10).subscribe({
+        next: (res: PagedResponse<any>) => {
+          this._global.hideSpinner();
+          this.declined = res.result['ads'];
+          this.declinedPaginationInfo = res.result['paginationInfo'];
+        },
+      })
+    );
+  }
+  navigateExpiredPage(page) {
+    console.log(page);
+    this._global.showSpinner();
+    this.sub.add(
+      this.ad.findAllExpiredAds(page, 10).subscribe({
+        next: (res: PagedResponse<any>) => {
+          this._global.hideSpinner();
+          this.expired = res.result['ads'];
+          this.expiredPaginationInfo = res.result['paginationInfo'];
+        },
+      })
+    );
+  }
+  navigateClosedPage(page) {
+    console.log(page);
+    this._global.showSpinner();
+    this.sub.add(
+      this.ad.findAllClosedAds(page, 10).subscribe({
+        next: (res: PagedResponse<any>) => {
+          this._global.hideSpinner();
+          this.closed = res.result['ads'];
+          this.closedPaginationInfo = res.result['paginationInfo'];
         },
       })
     );
