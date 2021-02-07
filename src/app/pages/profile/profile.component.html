@@ -180,7 +180,7 @@
               <h2 class="dashbord-title">My Favourites</h2>
             </div>
             <div class="dashboard-wrapper">
-              <p>
+              <p *ngIf="favoritAds.length === 0" class="text-info">
                 You do not have any saved ads yet. Try liking an ad to save it
                 here
               </p>
@@ -322,7 +322,7 @@
                   </li>
                 </ul>
               </nav>
-              <p>
+              <p *ngIf="myAds.length != 0" class="text-info">
                 You do not have any ads yet. Try posting an ad to view it here
               </p>
               <table
@@ -446,7 +446,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event - 1)"
+                        (pageChange)="navigateMyAdPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -470,8 +470,7 @@
                               : {
                                   id: 'approved',
                                   itemsPerPage: approvedPaginationInfo.size,
-                                  currentPage:
-                                    approvedPaginationInfo.number,
+                                  currentPage: approvedPaginationInfo.number,
                                   totalItems:
                                     approvedPaginationInfo.totalElements
                                 }
@@ -542,7 +541,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event - 1)"
+                        (pageChange)="navigateMyAdPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -566,8 +565,7 @@
                               : {
                                   id: 'pending',
                                   itemsPerPage: pendingPaginationInfo.size,
-                                  currentPage:
-                                    pendingPaginationInfo.number,
+                                  currentPage: pendingPaginationInfo.number,
                                   totalItems:
                                     pendingPaginationInfo.totalElements
                                 }
@@ -625,7 +623,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event - 1)"
+                        (pageChange)="navigateMyAdPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -649,8 +647,7 @@
                               : {
                                   id: 'declined',
                                   itemsPerPage: declinedPaginationInfo.size,
-                                  currentPage:
-                                    declinedPaginationInfo.number,
+                                  currentPage: declinedPaginationInfo.number,
                                   totalItems:
                                     declinedPaginationInfo.totalElements
                                 }
@@ -710,7 +707,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event - 1)"
+                        (pageChange)="navigateMyAdPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -734,8 +731,7 @@
                               : {
                                   id: 'expired',
                                   itemsPerPage: expiredPaginationInfo.size,
-                                  currentPage:
-                                    expiredPaginationInfo.number,
+                                  currentPage: expiredPaginationInfo.number,
                                   totalItems:
                                     expiredPaginationInfo.totalElements
                                 }
@@ -793,7 +789,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event - 1)"
+                        (pageChange)="navigateMyAdPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -817,8 +813,7 @@
                               : {
                                   id: 'disabled',
                                   itemsPerPage: disabledPaginationInfo.size,
-                                  currentPage:
-                                    disabledPaginationInfo.number,
+                                  currentPage: disabledPaginationInfo.number,
                                   totalItems:
                                     disabledPaginationInfo.totalElements
                                 }
@@ -878,7 +873,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event - 1)"
+                        (pageChange)="navigateMyAdPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -959,7 +954,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event - 1)"
+                        (pageChange)="navigateMyAdPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
