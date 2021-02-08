@@ -17,13 +17,13 @@ export class AdminProfileResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
     this._global.showSpinner();
     const profile = this._user.userProfile();
-    const allAds = this._adService.fetchAllAds(0, 10);
-    const pending = this._adService.findAllPendingAds(0, 10);
-    const disabled = this._adService.findAllDisabledAds(0, 10);
-    const approved = this._adService.findAllApprovedAds(0, 10);
-    const declined = this._adService.findAllDeclinedAds(0, 10);
-    const expired = this._adService.findAllExpiredAds(0, 10);
-    const closed = this._adService.findAllClosedAds(0, 10);
+    const allAds = this._adService.fetchAllAds(1, 10);
+    const pending = this._adService.findAllPendingAds(1, 10);
+    const disabled = this._adService.findAllDisabledAds(1, 10);
+    const approved = this._adService.findAllApprovedAds(1, 10);
+    const declined = this._adService.findAllDeclinedAds(1, 10);
+    const expired = this._adService.findAllExpiredAds(1, 10);
+    const closed = this._adService.findAllClosedAds(1, 10);
     return forkJoin([
       profile,
       allAds,

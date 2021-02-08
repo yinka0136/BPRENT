@@ -203,6 +203,7 @@ export class AdminProfileComponent implements OnInit, OnDestroy {
     this.sub.add(
       this.ad.findAllPendingAds(page, 10).subscribe({
         next: (res: PagedResponse<any>) => {
+          console.log(res);
           this._global.hideSpinner();
           this.pending = res.result['ads'];
           this.pendingPaginationInfo = res.result['paginationInfo'];
