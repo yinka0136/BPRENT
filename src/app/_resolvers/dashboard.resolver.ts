@@ -18,13 +18,15 @@ export class DashboardResolver implements Resolve<any> {
     const categories = this._category.getAllCategoriesWithSubCategories();
     const newAds = this._adService.fetchNewAds();
     const trendingAds = this._adService.fetchTrendingAds();
-    return forkJoin([categories, newAds, trendingAds]).pipe(
+    const boostedAds = this._adService.fetchBoostedAds();
+    return forkJoin([categories, newAds, trendingAds, boostedAds]).pipe(
       map((res) => {
         this._global.hideSpinner();
         return {
           categories: res[0],
           newAds: res[1],
           trendingAds: res[2],
+          boostedAds: res[2],
         };
       }),
       catchError((error) => {

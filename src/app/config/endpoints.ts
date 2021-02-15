@@ -69,6 +69,7 @@ export const endpoints = {
   deleteAd: 'ads',
   newAds: 'ads/new',
   trendingAds: 'ads/trending',
+  boostedAds: 'ads/boosted',
   deleteAdImage: 'ads/image',
   search: 'ads/search',
   searchBySubcategory: 'sub_category',

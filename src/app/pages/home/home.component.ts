@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { AdServiceService } from 'src/app/_services/ad-service.service';
 import { GlobalService } from 'src/app/_services/global.service';
 import Swal from 'sweetalert2';
+declare var $: any;
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ import Swal from 'sweetalert2';
 export class HomeComponent implements OnInit, OnDestroy {
   categories: any[] = [];
   newAds: any[] = [];
+  boostedAds: any[] = [];
   sub: Subscription = new Subscription();
   trendingAds: any[] = [];
   constructor(
@@ -29,6 +31,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.categories = result['categories'].responseResult;
       this.newAds = result['newAds'].responseResult;
       this.trendingAds = result['trendingAds'].responseResult;
+      this.boostedAds = result['boostedAds'].responseResult;
+    });
+    $('.carousel').carousel({
+      interval: 3000,
     });
   }
   toggleSaveTrending(slug, index, e) {

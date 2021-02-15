@@ -78,6 +78,10 @@ export class AdServiceService {
   fetchTrendingAds() {
     return this.http.get(`${environment.API_URL}/${endpoints.trendingAds}`);
   }
+  fetchBoostedAds() {
+    return this.http.get(`${environment.API_URL}/${endpoints.boostedAds}`);
+  }
+
   fetchNewAds() {
     return this.http.get(`${environment.API_URL}/${endpoints.newAds}`);
   }

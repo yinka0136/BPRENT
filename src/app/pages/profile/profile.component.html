@@ -12,7 +12,11 @@
                 /></a>
                 <a *ngIf="!avatarUrl"
                   ><img
-                    src="{{ myProfile?.avatarUrl }}"
+                    src="{{
+                      myProfile?.avatarUrl
+                        ? myProfile?.avatarUrl
+                        : '../../assets/images/avatars/avatar.jpg'
+                    }}"
                     class="avatarUrl"
                     alt=""
                 /></a>
@@ -550,7 +554,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event)"
+                        (pageChange)="navigateApprovedPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -636,7 +640,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event)"
+                        (pageChange)="navigatePendingPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -724,7 +728,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event)"
+                        (pageChange)="navigateDeclinedPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -810,7 +814,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event)"
+                        (pageChange)="navigateExpiredPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -898,7 +902,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event)"
+                        (pageChange)="navigateDisabledPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -983,7 +987,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event)"
+                        (pageChange)="navigateClosedPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"

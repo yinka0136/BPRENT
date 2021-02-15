@@ -32,9 +32,8 @@
 
             <div
               id="carousel1_indicator"
-              class="slider-home-banner carousel slide"
+              class="slider-home-banner carousel slide auto"
               data-ride="carousel"
-              data-interval="3000"
             >
               <ul class="carousel-indicators">
                 <li
@@ -102,6 +101,7 @@
                 <span class="sr-only">Next</span>
               </a>
             </div>
+
             <!-- ==================  COMPONENT SLIDER BOOTSTRAP end.// ==================  .// -->
           </div>
           <!-- col.// -->
@@ -132,7 +132,7 @@
       <h4 class="title-section text-uppercase">Trending Ads</h4>
     </header>
 
-    <div class="row row-sm">
+    <div class="row">
       <div
         class="col-xl-3 col-lg-3 col-md-4 col-12 click"
         [routerLink]="['/ad/view', trending?.slug, trending?.user?.slug]"
@@ -143,7 +143,10 @@
             <img src="{{ (trending?.adImages)[0]?.imageUrl }}" />
           </a>
 
-          <figcaption class="info-wrap feature-content">
+          <figcaption
+            class="info-wrap feature-content"
+            [ngClass]="{ boosted: trending?.boosted }"
+          >
             <h4>{{ trending?.title }}</h4>
             <div class="rating-wrap d-flex">
               <!-- <ul class="rating-stars">
@@ -158,20 +161,20 @@
                   ><i class="fa fa-star"></i>
                 </li>
               </ul> -->
-              <i class="fa fa-eye"></i>
+              <!-- <i class="fa fa-eye"></i>
               <span class="label-rating text-muted">
                 {{ trending?.views }} view{{
                   trending?.views > 1 ? "s" : ""
                 }}</span
-              >
+              > -->
             </div>
             <div class="listing-bottom">
               <h3 class="price">
                 {{ trending?.dailyPrice | currency: "₦" }}
               </h3>
-              <a class="btn-verified" *ngIf="trending?.boosted"
+              <!-- <a class="btn-verified" *ngIf="trending?.boosted"
                 ><i class="fa fa-check-square-o"></i> Boosted Ad</a
-              >
+              > -->
               <div class="float-right click">
                 <div
                   class="heart click"
@@ -191,9 +194,7 @@
       </div>
     </div>
   </section>
-  <section class="mynews-info">
-    <!-- <div class="container"> -->
-    <!-- <div class="container"> -->
+  <!-- <section class="mynews-info">
     <div>
       <h2>
         ..........Stay safe and wear a mask😷 ..... With Bprents you can rent it
@@ -203,15 +204,14 @@
         fraud we wouldn't be held accountable.!!..... Happy Renting🏘️🚗.....
       </h2>
     </div>
-    <!-- </div> -->
-  </section>
+  </section> -->
   <!-- =============== SECTION ITEMS .//END =============== -->
   <section class="padding-bottom-sm featured">
     <header class="section-heading heading-line">
       <h4 class="title-section text-uppercase">New Ads</h4>
     </header>
 
-    <div class="row row-sm">
+    <div class="row">
       <div
         class="col-xl-3 col-lg-3 col-md-4 col-12 click"
         [routerLink]="['/ad/view', newAd?.slug, newAd?.user?.slug]"
@@ -221,10 +221,13 @@
           <a class="img-wrap">
             <img src="{{ (newAd?.adImages)[0]?.imageUrl }}" />
           </a>
-          <figcaption class="info-wrap feature-content">
-            <h4>{{ newAd?.title }}</h4>
-            <div class="rating-wrap d-flex">
-              <!-- <ul class="rating-stars">
+          <figcaption
+            class="info-wrap feature-content"
+            [ngClass]="{ boosted: newAd?.boosted }"
+          >
+            <h4 class="titlee">{{ newAd?.title }}</h4>
+            <!-- <div class="rating-wrap d-flex"> -->
+            <!-- <ul class="rating-stars">
                 <li style="width: 80%" class="stars-active">
                   <i class="fa fa-star"></i><i class="fa fa-star"></i
                   ><i class="fa fa-star"></i><i class="fa fa-star"></i
@@ -236,11 +239,11 @@
                   ><i class="fa fa-star"></i>
                 </li>
               </ul> -->
-              <i class="fa fa-eye"></i>
+            <!-- <i class="fa fa-eye"></i>
               <span class="label-rating text-muted">
                 {{ newAd?.views }} view{{ newAd?.views > 1 ? "s" : "" }}</span
-              >
-            </div>
+              > -->
+            <!-- </div> -->
             <div class="listing-bottom">
               <h3 class="price">
                 {{ newAd?.dailyPrice | currency: "₦" }}
@@ -258,9 +261,74 @@
                   ></i>
                 </div>
               </div>
-              <a class="btn-verified" *ngIf="newAd?.boosted"
+              <!-- <a class="btn-verified" *ngIf="newAd?.boosted"
                 ><i class="fa fa-check-square-o"></i> Boosted Ad</a
-              >
+              > -->
+            </div>
+          </figcaption>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="padding-bottom-sm featured">
+    <header class="section-heading heading-line">
+      <h4 class="title-section text-uppercase">Boosted Ads</h4>
+    </header>
+
+    <div class="row">
+      <div
+        class="col-xl-3 col-lg-3 col-md-4 col-12 click"
+        [routerLink]="['/ad/view', boosted?.slug, boosted?.user?.slug]"
+        *ngFor="let boosted of boostedAds; index as i"
+      >
+        <div class="card card-sm card-product-grid focus featured-box">
+          <a class="img-wrap">
+            <img src="{{ (boosted?.adImages)[0]?.imageUrl }}" />
+          </a>
+          <figcaption
+            class="info-wrap feature-content"
+            [ngClass]="{ boosted: boosted?.boosted }"
+          >
+            <h4 class="titlee">{{ boosted?.title }}</h4>
+            <!-- <div class="rating-wrap d-flex"> -->
+            <!-- <ul class="rating-stars">
+                <li style="width: 80%" class="stars-active">
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i
+                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
+                  ><i class="fa fa-star"></i>
+                </li>
+                <li>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i
+                  ><i class="fa fa-star"></i><i class="fa fa-star"></i
+                  ><i class="fa fa-star"></i>
+                </li>
+              </ul> -->
+            <!-- <i class="fa fa-eye"></i>
+              <span class="label-rating text-muted">
+                {{ newAd?.views }} view{{ newAd?.views > 1 ? "s" : "" }}</span
+              > -->
+            <!-- </div> -->
+            <div class="listing-bottom">
+              <h3 class="price">
+                {{ boosted?.dailyPrice | currency: "₦" }}
+              </h3>
+              <div class="float-right click">
+                <div
+                  class="heart click"
+                  (click)="toggleSaveNew(boosted?.slug, i, $event)"
+                >
+                  <i
+                    class="fa fa-heart"
+                    [ngClass]="{
+                      red: newAds[i].bookmarked
+                    }"
+                  ></i>
+                </div>
+              </div>
+              <!-- <a class="btn-verified" *ngIf="newAd?.boosted"
+                ><i class="fa fa-check-square-o"></i> Boosted Ad</a
+              > -->
             </div>
           </figcaption>
         </div>

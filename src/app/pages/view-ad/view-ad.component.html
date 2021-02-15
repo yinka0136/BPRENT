@@ -31,26 +31,66 @@
         </div>
         <div class="card">
           <article class="gallery-wrap">
-            <div class="img-big-wrap">
-              <div>
-                <a><img [src]="imageToView" /></a>
+            <div class="row">
+              <div class="col-md-12">
+                <div
+                  id="custCarousel"
+                  class="carousel slide"
+                  data-ride="carousel"
+                  align="center"
+                >
+                  <!-- slides -->
+                  <div class="carousel-inner">
+                    <div
+                      class="carousel-item"
+                      [class.active]="i == 0"
+                      *ngFor="let adImage of ad?.adImages; index as i"
+                    >
+                      <img
+                        src="{{ adImage?.imageUrl }}"
+                        alt="{{ adImage?.id }}"
+                      />
+                    </div>
+                  </div>
+                  <!-- Left right -->
+                  <a
+                    class="carousel-control-prev"
+                    href="#custCarousel"
+                    data-slide="prev"
+                  >
+                    <span class="carousel-control-prev-icon"></span>
+                  </a>
+                  <a
+                    class="carousel-control-next"
+                    href="#custCarousel"
+                    data-slide="next"
+                  >
+                    <span class="carousel-control-next-icon"></span>
+                  </a>
+                  <!-- Thumbnails -->
+                  <ol class="carousel-indicators list-inline">
+                    <li
+                      class="list-inline-item"
+                      [class.active]="i == 0"
+                      [class.selected]="i == 0"
+                      *ngFor="let adImage of ad?.adImages; index as i"
+                    >
+                      <a
+                        id="carousel-selector-{{ i }}"
+                        class="selected"
+                        attr.data-slide-to="{{ i }}"
+                        data-target="#custCarousel"
+                      >
+                        <img src="{{ adImage?.imageUrl }}" class="img-fluid" />
+                      </a>
+                    </li>
+                  </ol>
+                </div>
               </div>
             </div>
-            <!-- slider-product.// -->
-            <div class="thumbs-wrap click">
-              <a
-                (click)="setImageToView(adImage?.imageUrl)"
-                class="item-thumb"
-                *ngFor="let adImage of ad.adImages"
-              >
-                <img src="{{ adImage?.imageUrl }}"
-              /></a>
-            </div>
-            <!-- slider-nav.// -->
           </article>
-          <!-- gallery-wrap .end// -->
         </div>
-        <div class="card">
+        <div class="card marg">
           <div class="d-flex justify-content-between px-">
             <ul class="nav nav-pills" id="pills-tab" role="tablist">
               <li class="nav-item">
@@ -92,9 +132,9 @@
               </li>
             </ul>
 
-            <span class="font14 pt-2 mr-2">
+            <!-- <span class="font14 pt-2 mr-2">
               <i class="fa fa-eye mr-2"></i>{{ ad?.views }} views
-            </span>
+            </span> -->
           </div>
         </div>
 
@@ -323,7 +363,10 @@
             class="btn-margin mt-2"
             [routerLink]="['/ad/edit', ad.slug]"
             routerLinkActive="router-link-active"
-            *ngIf="userSlug == ad?.user?.slug && ad?.status == 'PENDING'"
+            *ngIf="
+              (userSlug == ad?.user?.slug && ad?.status == 'PENDING') ||
+              (userSlug == ad?.user?.slug && ad?.status == 'APPROVED')
+            "
           >
             <button class="btn btn-feedback">
               <span> <i class="fa fa-pencil"></i></span> Edit Ad
@@ -439,7 +482,7 @@
         <div
           (click)="goToRoute(relatedAd)"
           class="col-xl-3 col-lg-3 col-md-4 col-12 mb-3 click"
-          *ngFor="let relatedAd of relatedAds"
+          *ngFor="let relatedAd of relatedAds; index as i"
         >
           <div class="product-item">
             <div class="carousel-thumb">
@@ -456,21 +499,24 @@
                 <a>New</a>
               </div>
             </div>
-            <div class="product-content">
+            <div
+              class="product-content"
+              [ngClass]="{ boosted: relatedAd?.boosted }"
+            >
               <h3 class="product-title">
                 <a href="ads-details.html">{{ relatedAd?.title }}</a>
               </h3>
               <span class="price">{{
                 relatedAd?.dailyPrice | currency: "₦"
               }}</span>
-              <div class="meta">
+              <!-- <div class="meta">
                 <i class="fa fa-eye"></i>
                 <span class="label-rating text-muted">
                   {{ relatedAd?.views }} view{{
                     relatedAd?.views > 1 ? "s" : ""
                   }}</span
                 >
-              </div>
+              </div> -->
               <div class="card-text">
                 <div class="float-left">
                   <a
@@ -478,10 +524,17 @@
                     {{ relatedAd?.region?.name }}</a
                   >
                 </div>
-                <div class="float-right click" (click)="save()">
-                  <div class="icon">
-                    <i class="fa fa-heart"></i>
-                  </div>
+
+                <div
+                  class="float-right click heart"
+                  (click)="toggleSaveRelated(relatedAd?.slug, i, $event)"
+                >
+                  <i
+                    class="fa fa-heart"
+                    [ngClass]="{
+                      like: relatedAd?.bookmarked
+                    }"
+                  ></i>
                 </div>
               </div>
             </div>

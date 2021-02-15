@@ -67,6 +67,8 @@ export class ViewAdComponent implements OnInit, OnDestroy {
     if (this.ad.status == 'APPROVED') {
       this.isEnabled = true;
     }
+    window.scroll(0, 444);
+
     console.log(this.userRole);
   }
   back() {
@@ -189,7 +191,34 @@ export class ViewAdComponent implements OnInit, OnDestroy {
   postAd() {
     this.router.navigate(['ad/post']);
   }
-  save() {}
+  toggleSaveRelated(slug, index, e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.sub.add(
+      this._ad.toggleSaveAd(slug).subscribe({
+        next: (res) => {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+            },
+          });
+          Toast.fire({
+            icon: 'success',
+            title: res['responseMessage'],
+          });
+          console.log(res);
+          this.relatedAds[index].bookmarked = !this.relatedAds[index]
+            .bookmarked;
+        },
+      })
+    );
+  }
   goToRoute(ad) {
     this.router.navigate(['/ad/view', ad.slug, ad.user.slug]);
   }

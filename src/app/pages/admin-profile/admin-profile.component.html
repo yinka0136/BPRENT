@@ -8,7 +8,14 @@
             <div class="user">
               <figure>
                 <a *ngIf="avatarUrl"
-                  ><img src="{{ avatarUrl }}" class="avatarUrl" alt=""
+                  ><img
+                    src="{{
+                      avatarUrl
+                        ? avatarUrl
+                        : '../../assets/images/avatars/avatar.jpg'
+                    }}"
+                    class="avatarUrl"
+                    alt=""
                 /></a>
                 <a *ngIf="!avatarUrl"
                   ><img
@@ -415,7 +422,7 @@
                           data-title="Ad Status"
                           *ngIf="ad?.status === 'PENDING'"
                         >
-                          <span class="adstatus adstatusexpired">pending</span>
+                          <span class="adstatus adstatuspending">pending</span>
                         </td>
                         <td
                           data-title="Ad Status"
