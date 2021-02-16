@@ -219,9 +219,6 @@ export class ViewAdComponent implements OnInit, OnDestroy {
       })
     );
   }
-  goToRoute(ad) {
-    this.router.navigate(['/ad/view', ad.slug, ad.user.slug]);
-  }
 
   approve(slug) {
     this._global.showSpinner();

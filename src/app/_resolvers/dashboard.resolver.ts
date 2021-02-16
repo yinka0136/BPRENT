@@ -26,7 +26,7 @@ export class DashboardResolver implements Resolve<any> {
           categories: res[0],
           newAds: res[1],
           trendingAds: res[2],
-          boostedAds: res[2],
+          boostedAds: res[3],
         };
       }),
       catchError((error) => {

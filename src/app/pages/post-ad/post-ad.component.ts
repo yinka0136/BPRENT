@@ -22,6 +22,8 @@ export class PostAdComponent implements OnInit, OnDestroy {
   categories: any[] = [];
   subCategories: any[] = [];
   subsLoading: boolean = false;
+  imageUploadLoading: boolean = false;
+  imageDeleteLoading: boolean = false;
   regionsLoading: boolean = false;
   states: any[] = [];
   subCategory;
@@ -64,11 +66,11 @@ export class PostAdComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initAdForm();
-    console.log(this.adForm.value);
+    // console.log(this.adForm.value);
     this.route.data.subscribe((res) => {
       this.categories = res['resolvedData'].categories['responseResult'];
       this.states = res['resolvedData'].states['responseResult'];
-      console.log(res);
+      // console.log(res);
     });
   }
   initAdForm() {
@@ -126,39 +128,87 @@ export class PostAdComponent implements OnInit, OnDestroy {
     });
   }
 
-  addFile(images: Array<File>) {
-    for (var i = 0; i < images.length; i++) {
-      if (this.images.length == 10) {
-        return of(null);
-      }
-      this.images.includes(images[i]) ? null : this.images.push(images[i]);
+  async addFile(image: File) {
+    var mimeType = image.type;
+    if (mimeType.match(/image\/*/) == null) {
+      this._global.hideSpinnerWithError('Only images are supported.');
+      return;
     }
+    this.imageUploadLoading = true;
+    // console.log(image);
+    const formData = new FormData();
+    formData.append('image', image);
+    (await this._adService.uploadImage(formData)).subscribe(
+      (res) => {
+        this.imageUploadLoading = false;
+        // console.log(res);
+        this.images.includes(res['responseResult'])
+          ? null
+          : this.images.push(res['responseResult']);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          },
+        });
+        Toast.fire({
+          icon: 'success',
+          title: 'Image uploaded successfully',
+        });
+        // console.log(this.images);
+      },
+      (e) => {
+        this.imageUploadLoading = false;
+      }
+    );
   }
-  removeImage(image) {
-    this.images = this.images.filter((i) => i != image);
+  async removeImage(id: number) {
+    // console.log(id);
+    this.imageDeleteLoading = true;
+
+    (await this._adService.deleteImage(id)).subscribe(
+      (res) => {
+        this.imageDeleteLoading = false;
+        // console.log(res);
+        this.images = this.images.filter((image) => {
+          image.id != id;
+        });
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          },
+        });
+        this.adForm.reset();
+        Toast.fire({
+          icon: 'success',
+          title: 'Image removed successfully',
+        });
+        // console.log(this.images);
+      },
+      (e) => {
+        this.imageDeleteLoading = false;
+      }
+    );
   }
+
   postAd() {
     this._global.showSpinner();
     const payload = this.adForm.value;
-    console.log(payload);
-    // const adJson = JSON.stringify(payload);
-    // payload.images = this.images;
-    const formData = new FormData();
-    this.images.forEach((i) => {
-      formData.append('images', i);
-    });
-
-    formData.append('boosted', payload.boosted);
-    formData.append('title', payload.title);
-    formData.append('description', payload.description);
-    formData.append('subCategoryId', payload.subCategoryId);
-    formData.append('regionId', payload.regionId);
-    formData.append('dailyPrice', payload.dailyPrice);
-    formData.append('weeklyPrice', payload.weeklyPrice);
-    formData.append('negotiable', payload.negotiable);
-    formData.append('numberOfDays', payload.numberOfDays);
+    // console.log(payload);
+    payload.images = this.images;
     this.sub.add(
-      this._adService.createAd(formData).subscribe({
+      this._adService.createAd(payload).subscribe({
         next: (res: ResponseStructure) => {
           this.adForm.reset();
           this._global.hideSpinner();
@@ -189,7 +239,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
       this._catService.getAllSubCategories(slug).subscribe({
         next: (res: ResponseStructure) => {
           this.subsLoading = false;
-          console.log(res);
+          // console.log(res);
           this.subCategories = res.responseResult;
         },
         error: () => {
@@ -199,7 +249,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
     );
   }
   getSubcategory(id) {
-    console.log(id);
+    // console.log(id);
     const subCategory = this.subCategories.find((s) => s.id == id);
     this.subCategory = subCategory;
   }
@@ -210,7 +260,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
         next: (res: ResponseStructure) => {
           this.regionsLoading = false;
 
-          console.log(res);
+          // console.log(res);
           this.regions = res.responseResult;
         },
         error: () => {

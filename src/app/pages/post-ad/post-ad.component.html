@@ -45,29 +45,39 @@
             <div class="upload-document-wrapper mb-3 d-flex align-items-center">
               <input
                 type="file"
-                (change)="addFile($event.target.files)"
+                (change)="addFile($event.target.files[0])"
                 id="file"
-                multiple
                 class="inputfile"
                 data-preview-file-type="text"
                 accept="image/*"
               />
               <label for="file">
-                <div class="file-upload-holder d-flex align-items-center">
+                <div
+                  class="file-upload-holder d-flex align-items-center"
+                  *ngIf="!imageUploadLoading"
+                >
                   <img
-                    src="../../../assets/images/cloud-upload.svg"
+                    src="{{ '../../../assets/images/cloud-upload.svg' }}"
                     alt="Upload"
                   />
+
                   <span>
                     {{
                       images?.length > 0 ? "Add more images" : "Choose image"
                     }}</span
                   >
                 </div>
+                <div
+                  class="file-upload-holder d-flex align-items-center"
+                  *ngIf="imageUploadLoading"
+                >
+                  <span> Uploading</span>
+                  <i class="fa fa-spinner fa-spin"></i>
+                </div>
               </label>
             </div>
           </div>
-          <div class="col-md-6 imageNames" *ngIf="images?.length > 0">
+          <!-- <div class="col-md-6 imageNames" *ngIf="images?.length > 0">
             <div class="items-list" *ngFor="let image of images">
               <div class="item px-3 py-2 mb-2 d-flex justify-content-between">
                 <span class="mr-4 text-white" style="max-width: 100px">
@@ -81,13 +91,28 @@
                 />
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
         <div
-          class="text-danger m-0 p-0"
+          class="text-danger mb-1 p-0"
           *ngIf="images.length >= 0 && images.length < 1"
         >
           Images must be at least 1
+        </div>
+        <div class="row px-3">
+          <div class="upImg" *ngFor="let image of images; index as i">
+            <img
+              src="{{
+                imageDeleteLoading
+                  ? 'https://media.tenor.com/images/f864cbf3ea7916572605edd3b3fe637f/tenor.gif'
+                  : image?.imageUrl
+              }}"
+              alt="Hills"
+            />
+            <span class="delIcon" *ngIf="!imageDeleteLoading"
+              ><i class="fa fa-trash" (click)="removeImage(image?.id)"></i
+            ></span>
+          </div>
         </div>
         <div
           class="text-danger m-0 p-0"

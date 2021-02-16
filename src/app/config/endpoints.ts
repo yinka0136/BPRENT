@@ -73,6 +73,8 @@ export const endpoints = {
   deleteAdImage: 'ads/image',
   search: 'ads/search',
   searchBySubcategory: 'sub_category',
+  uploadImage: 'ads/upload_image',
+  deleteImage: 'ads/delete_image',
   //Coins
   buyCoins: 'coins/buy',
   allTransactios: 'coins/transactions',

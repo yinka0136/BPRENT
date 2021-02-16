@@ -197,8 +197,9 @@ a {
 }
 
 #custCarousel .carousel-indicators {
-  position: absolute;
-  margin-top: 20px;
+  position: initial;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #custCarousel .carousel-indicators > li {
@@ -237,4 +238,20 @@ a {
 
 .carousel-indicators {
   bottom: -30px;
+}
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.imgView {
+  position: relative;
+  height: 541px;
+  width: 723px;
+  cursor: pointer;
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+  }
 }

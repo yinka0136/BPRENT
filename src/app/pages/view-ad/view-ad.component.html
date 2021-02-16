@@ -29,7 +29,7 @@
             >
           </h3>
         </div>
-        <div class="card">
+        <div class="">
           <article class="gallery-wrap">
             <div class="row">
               <div class="col-md-12">
@@ -46,10 +46,13 @@
                       [class.active]="i == 0"
                       *ngFor="let adImage of ad?.adImages; index as i"
                     >
-                      <img
-                        src="{{ adImage?.imageUrl }}"
-                        alt="{{ adImage?.id }}"
-                      />
+                      <div class="imgView">
+                        <img
+                          class="img-responsive"
+                          src="{{ adImage?.imageUrl }}"
+                          alt="{{ adImage?.id }}"
+                        />
+                      </div>
                     </div>
                   </div>
                   <!-- Left right -->
@@ -81,7 +84,12 @@
                         attr.data-slide-to="{{ i }}"
                         data-target="#custCarousel"
                       >
-                        <img src="{{ adImage?.imageUrl }}" class="img-fluid" />
+                        <div style="height: 100px; width: 100px">
+                          <img
+                            src="{{ adImage?.imageUrl }}"
+                            class="img-fluid"
+                          />
+                        </div>
                       </a>
                     </li>
                   </ol>
@@ -251,9 +259,9 @@
           </div>
           <div class="my-4 d-flex justify-content-center">
             <span class="icon icon-lg rounded-circle">
-              <i class="fa fa-user white"></i>
+              <i class="fa fa-user white" *ngIf="!ad?.user?.avatarUrl"></i>
               <img
-                *ngIf="!ad?.user?.avatarUrl"
+                *ngIf="ad?.user?.avatarUrl"
                 src="{{ ad?.user?.avatarUrl }}"
                 alt=""
               />
@@ -479,13 +487,16 @@
     <div class="container">
       <h3 class="section-title">Recommended Ads</h3>
       <div class="row">
-        <div
-          (click)="goToRoute(relatedAd)"
+        <a
+          [routerLink]="['/ad/view', ad.slug, ad.user.slug]"
           class="col-xl-3 col-lg-3 col-md-4 col-12 mb-3 click"
           *ngFor="let relatedAd of relatedAds; index as i"
         >
           <div class="product-item">
-            <div class="carousel-thumb">
+            <div
+              class="carousel-thumb"
+              style="border-radius: 5px, 5px, 0px, 0px"
+            >
               <img
                 class="img-fluid"
                 src="{{ (relatedAd?.adImages)[0]?.imageUrl }}"
@@ -539,7 +550,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </section>

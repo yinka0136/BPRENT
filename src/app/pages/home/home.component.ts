@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.newAds = result['newAds'].responseResult;
       this.trendingAds = result['trendingAds'].responseResult;
       this.boostedAds = result['boostedAds'].responseResult;
+      console.log(this.boostedAds);
     });
     $('.carousel').carousel({
       interval: 3000,

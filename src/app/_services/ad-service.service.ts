@@ -53,6 +53,17 @@ export class AdServiceService {
       formData
     );
   }
+  async uploadImage(formData) {
+    return await this.http.post(
+      `${environment.API_URL}/${endpoints.uploadImage}`,
+      formData
+    );
+  }
+  async deleteImage(id) {
+    return await this.http.delete(
+      `${environment.API_URL}/${endpoints.deleteImage}/${id}`
+    );
+  }
 
   fetchAllAds(page, size) {
     const pagedResponse: PagedResponse<any> = new PagedResponse<any>();
