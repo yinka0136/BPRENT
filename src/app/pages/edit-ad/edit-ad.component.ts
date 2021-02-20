@@ -22,8 +22,9 @@ export class EditAdComponent implements OnInit, OnDestroy {
   ad;
   subCategory;
   image: any;
-  addedImagesToView: any[] = [];
-  addedImagesToSend: any[] = [];
+
+  imageUploadLoading: boolean = false;
+  imageDeleteLoading: boolean = false;
   categories: any[] = [];
   subCategories: any[] = [];
   states: any[] = [];
@@ -68,6 +69,8 @@ export class EditAdComponent implements OnInit, OnDestroy {
       this.categories = res['resolvedData'].categories['responseResult'];
       this.states = res['resolvedData'].states['responseResult'];
       this.ad = res['resolvedData'].ad['responseResult'].ad;
+      this.subCategories.push(this.ad.subCategory);
+      this.regions.push(this.ad.region);
       this.addImagesToArray();
     });
     this.initAdForm();
@@ -132,44 +135,91 @@ export class EditAdComponent implements OnInit, OnDestroy {
     });
   }
 
-  addFile(images) {
-    this.addedImagesToSend.push(images[0]);
-    var reader = new FileReader();
-    reader.readAsDataURL(images[0]);
-    reader.onloadend = () => {
-      this.addedImagesToView.push({ imageUrl: reader.result });
-    };
-  }
-
-  removeImage(id) {
-    this.sub.add(
-      this._adService.deleteAdImage(id).subscribe({
-        next: (res) => {
-          this.images = this.images.filter((i) => i.id != id);
-          console.log(res);
-        },
-      })
+  // addFile(images) {
+  //   this.addedImagesToSend.push(images[0]);
+  //   var reader = new FileReader();
+  //   reader.readAsDataURL(images[0]);
+  //   reader.onloadend = () => {
+  //     this.addedImagesToView.push({ imageUrl: reader.result });
+  //   };
+  // }
+  async addFile(images: File[]) {
+    this.imageUploadLoading = true;
+    const formData = new FormData();
+    for (var i = 0; i < images.length; i++) {
+      formData.append('images', images[i]);
+    }
+    (await this._adService.uploadImage(formData)).subscribe(
+      (res) => {
+        this.imageUploadLoading = false;
+        const uploadedImages = res['responseResult'];
+        uploadedImages.forEach((uploadedImage) => {
+          this.images.includes(uploadedImage)
+            ? null
+            : this.images.push(uploadedImage);
+        });
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          },
+        });
+        Toast.fire({
+          icon: 'success',
+          title: `Image${images.length > 1 ? 's' : ''} uploaded successfully`,
+        });
+        console.log(this.images);
+      },
+      (e) => {
+        this.imageUploadLoading = false;
+      }
     );
   }
-  removeaddedImage(image) {
-    this.addedImagesToView = this.addedImagesToView.filter((i) => i != image);
-    this.addedImagesToSend = this.addedImagesToSend.pop();
+  async removeImage(id: number) {
+    console.log(id);
+    this.imageDeleteLoading = true;
+
+    (await this._adService.deleteImage(id)).subscribe(
+      (res) => {
+        this.imageDeleteLoading = false;
+        this.images = this.images.filter((image) => {
+          return image.id !== id;
+        });
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          },
+        });
+        this.adForm.reset();
+        Toast.fire({
+          icon: 'success',
+          title: 'Image removed successfully',
+        });
+        console.log(this.images);
+      },
+      (e) => {
+        this.imageDeleteLoading = false;
+      }
+    );
   }
   editAd() {
-    console.log(this.addedImagesToSend);
     this._global.showSpinner();
 
     const payload = this.adForm.value;
-    const adJson = JSON.stringify(payload);
-    console.log(payload, adJson);
-    const formData = new FormData();
-    this.addedImagesToSend.forEach((i) => {
-      formData.append('images', i);
-    });
-    formData.append('adJson', adJson);
-
+    payload.images = this.images;
     this.sub.add(
-      this._adService.updateAd(formData, this.ad.slug).subscribe({
+      this._adService.updateAd(payload, this.ad.slug).subscribe({
         next: (res: ResponseStructure) => {
           this.adForm.reset();
           this._global.hideSpinner();
@@ -184,7 +234,6 @@ export class EditAdComponent implements OnInit, OnDestroy {
               toast.addEventListener('mouseleave', Swal.resumeTimer);
             },
           });
-          this.adForm.reset();
           Toast.fire({
             icon: 'success',
             title: 'Ad updated successfully',

@@ -22,7 +22,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   authToken: any;
   registrationForm: FormGroup;
   referrer;
+  showResend: boolean = false;
   emailExists: any;
+  checked: boolean;
   sub: Subscription = new Subscription();
 
   constructor(
@@ -73,6 +75,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       ? null
       : { passwordmismatch: true };
   }
+  toggleChecked(checked) {
+    console.log(checked);
+    this.checked = checked;
+  }
 
   register() {
     let payload = this.registrationForm.value;
@@ -89,13 +95,34 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this._global.hideSpinner();
           this.toastr.success('An email has been sent to you', 'Success');
           console.log(res);
+          this.showResend = true;
         },
+
         error: (e) => {
           this._global.hideSpinnerWithErrorMessage(e.error);
           console.log(e);
+          this.showResend = true;
         },
       })
     );
+  }
+
+  resend() {
+    this._global.showSpinner();
+    const payload = this.registrationForm.get('email').value;
+    this.auth.resendEmailConfirmation(payload).subscribe({
+      next: (res: ResponseStructure) => {
+        this._global.hideSpinner();
+        this.toastr.success('An email has been sent to you', 'Success');
+        this.showResend = true;
+        console.log(res);
+      },
+      error: (e: ResponseStructure) => {
+        this._global.hideSpinnerWithErrorMessage(e);
+        this.showResend = true;
+        console.log(e);
+      },
+    });
   }
 
   // signInWithGoogle(): void {

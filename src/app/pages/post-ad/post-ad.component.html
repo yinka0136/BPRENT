@@ -5,26 +5,37 @@
       <p>
         <em
           ><b
-            >NB: Unboosted Ads expire after 40 days while boosted Ads stay as
-            long as you specify</b
+            >NB: Unboosted Ad expires after 40 days while boosted Ad stays as
+            long as you specify.</b
           ></em
         >
       </p>
       <p class="mt-1">
         <em
           ><b
-            >NB: Minimum of 1 images and maximum of 7 images only are allowed
+            >NB: Minimum of 1 images and maximum of 10 images only are allowed.
           </b></em
         >
       </p>
       <p class="mt-1">
         <em
           ><b
-            >NB: All images on this post must be of the same property possibly
-            different angles, otherwise ad would be declined
+            >NB: All images on this Ad must be of the same property and possibly
+            with different angles, otherwise Ad would be declined.
           </b></em
         >
       </p>
+      <p class="mt-1">
+        <em
+          ><b
+            >NB: All Ads are reviewed by Bprents admin to ensure it meets the
+            standard of our market place, before it's approved and pushed live,
+            if any errors are found in ad that ad would be declined for
+            correction.
+          </b></em
+        >
+      </p>
+
       <form action="" [formGroup]="adForm">
         <div class="row">
           <div class="col-md-4 form-group">
@@ -35,28 +46,39 @@
               <input
                 type="file"
                 (change)="addFile($event.target.files)"
-                name="file"
                 id="file"
+                multiple
                 class="inputfile"
                 data-preview-file-type="text"
-                accept="application/img"
+                accept="image/*"
               />
               <label for="file">
-                <div class="file-upload-holder d-flex align-items-center">
+                <div
+                  class="file-upload-holder d-flex align-items-center"
+                  *ngIf="!imageUploadLoading"
+                >
                   <img
-                    src="../../../assets/images/cloud-upload.svg"
+                    src="{{ '../../../assets/images/cloud-upload.svg' }}"
                     alt="Upload"
                   />
+
                   <span>
                     {{
                       images?.length > 0 ? "Add more images" : "Choose image"
                     }}</span
                   >
                 </div>
+                <div
+                  class="file-upload-holder d-flex align-items-center"
+                  *ngIf="imageUploadLoading"
+                >
+                  <span> Uploading</span>
+                  <i class="fa fa-spinner fa-spin"></i>
+                </div>
               </label>
             </div>
           </div>
-          <div class="col-md-6 imageNames" *ngIf="images?.length > 0">
+          <!-- <div class="col-md-6 imageNames" *ngIf="images?.length > 0">
             <div class="items-list" *ngFor="let image of images">
               <div class="item px-3 py-2 mb-2 d-flex justify-content-between">
                 <span class="mr-4 text-white" style="max-width: 100px">
@@ -70,19 +92,37 @@
                 />
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
         <div
-          class="text-danger m-0 p-0"
+          class="text-danger mb-1 p-0"
           *ngIf="images.length >= 0 && images.length < 1"
         >
           Images must be at least 1
         </div>
+        <div class="row px-3">
+          <div class="upImg" *ngFor="let image of images; index as i">
+            <img
+              src="{{
+                imageDeleteLoading
+                  ? 'https://media.tenor.com/images/f864cbf3ea7916572605edd3b3fe637f/tenor.gif'
+                  : image?.imageUrl
+              }}"
+              alt="Hills"
+            />
+            <span class="delIcon" *ngIf="!imageDeleteLoading"
+              ><i class="fa fa-trash" (click)="removeImage(image?.id)"></i
+            ></span>
+          </div>
+        </div>
         <div
           class="text-danger m-0 p-0"
-          *ngIf="images.length >= 0 && images.length > 7"
+          *ngIf="images.length >= 0 && images.length > 10"
         >
           Images must not be greater than 7
+        </div>
+        <div class="text-danger m-0 p-0" *ngIf="images.length == 10">
+          You have selected the maximum number of images
         </div>
         <div class="mt-5 mb-3 col-12">
           <p class="font24 text-grey">Title</p>
@@ -133,12 +173,15 @@
             </select>
           </div>
           <div class="col-lg-6 col-sm-12">
-            <p class="font24 text-grey">Subcategory</p>
+            <div class="d-flex justify-content-between">
+              <p class="font24 text-grey">Subcategory</p>
+              <div><i class="fa fa-spinner spin" *ngIf="subsLoading"></i></div>
+            </div>
+
             <select
-              #selected
               formControlName="subCategoryId"
               class="form-control"
-              (click)="getSubcategory(selected.value)"
+              (change)="getSubcategory($event.target.value)"
               [ngClass]="{
                 'is-invalid':
                   adForm.get('subCategoryId').errors &&
@@ -221,7 +264,12 @@
             </select>
           </div>
           <div class="col-lg-6 col-sm-12">
-            <p class="font24 text-grey">Region</p>
+            <div class="d-flex justify-content-between">
+              <p class="font24 text-grey">Region</p>
+              <div>
+                <i class="fa fa-spinner spin" *ngIf="regionsLoading"></i>
+              </div>
+            </div>
             <select
               formControlName="regionId"
               class="form-control"

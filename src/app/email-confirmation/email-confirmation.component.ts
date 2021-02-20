@@ -74,9 +74,15 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    localStorage.setItem('token', this.accessToken);
-    this.router.navigate(['home']);
     this._global.hideSpinner();
+    localStorage.setItem('token', this.accessToken);
+    localStorage.setItem('user', JSON.stringify(this.user));
+    if (this.user.role == 'SUPER_ADMIN' || this.user.role == 'ADMIN') {
+      this.router.navigate(['a-profile']);
+    } else {
+      this.router.navigate(['profile']);
+    }
+
     console.log('logged in successfully');
   }
 

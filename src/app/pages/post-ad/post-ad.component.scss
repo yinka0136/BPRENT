@@ -86,3 +86,34 @@ div.items-list {
     width: 150px;
   }
 }
+
+.upImg {
+  position: relative;
+  height: 100px;
+  cursor: pointer;
+  width: 100px;
+  margin-right: 1px;
+  margin-bottom: 1px;
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  .delIcon {
+    position: absolute;
+    transition: 0.3s all ease;
+    right: 6px;
+
+    color: red;
+  }
+  &:hover {
+    .delIcon {
+      transform: scale(1.5);
+    }
+  }
+  .waiting {
+    position: absolute;
+
+    right: 6px;
+  }
+}

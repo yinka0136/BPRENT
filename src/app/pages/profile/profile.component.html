@@ -7,14 +7,23 @@
           <div class="sidebar-box">
             <div class="user">
               <figure>
-                <a *ngIf="avatarUrl"><img src="{{ avatarUrl }}" alt=""  class="avatarUrl"/></a>
+                <a *ngIf="avatarUrl"
+                  ><img src="{{ avatarUrl }}" alt="" class="avatarUrl"
+                /></a>
                 <a *ngIf="!avatarUrl"
-                  ><img src="{{ myProfile?.avatarUrl }}" class="avatarUrl" alt=""
+                  ><img
+                    src="{{
+                      myProfile?.avatarUrl
+                        ? myProfile?.avatarUrl
+                        : '../../assets/images/avatars/avatar.jpg'
+                    }}"
+                    class="avatarUrl"
+                    alt=""
                 /></a>
               </figure>
               <div class="usercontent">
                 <h3>User</h3>
-                <h4>Administrator</h4>
+                <h4>{{ myProfile?.lastName }} {{ myProfile?.firstName }}</h4>
               </div>
               <div class="d-flex justify-content-end">
                 <label
@@ -95,8 +104,18 @@
             role="tabpanel"
             aria-labelledby="v-pills-dashboard-tab"
           >
-            <div class="dashboard-box">
-              <h2 class="dashbord-title">Dashboard</h2>
+            <div class="dashboard-box d-flex justify-content-between">
+              <div>
+                <h2 class="dashbord-title">Dashboard</h2>
+              </div>
+              <div class="click" routerLink="/home">
+                <h2 class="dashbord-title">
+                  Go to marketplace<i
+                    class="fa fa-shopping-cart"
+                    aria-hidden="true"
+                  ></i>
+                </h2>
+              </div>
             </div>
             <div class="dashboard-wrapper">
               <div class="dashboard-sections">
@@ -148,9 +167,9 @@
                       class="form-control"
                       type="text"
                       size="20"
-                      value="http://localhost:5000/register;referrer={{
-                        myProfile.referralCode
-                      }}"
+                      value="{{ getProtocolAndHostname().protocol }}//{{
+                        getProtocolAndHostname().hostname
+                      }}/#/register;referrer={{ myProfile.referralCode }}"
                     />
                     <div
                       class="input-group-append click"
@@ -175,7 +194,7 @@
               <h2 class="dashbord-title">My Favourites</h2>
             </div>
             <div class="dashboard-wrapper">
-              <p>
+              <p *ngIf="favoritAds.length === 0" class="text-info">
                 You do not have any saved ads yet. Try liking an ad to save it
                 here
               </p>
@@ -278,48 +297,49 @@
             </div>
             <div class="dashboard-wrapper">
               <nav class="nav-table">
-                <ul>
-                  <li class="active">
-                    <a href="#v-pills-all-ads" data-toggle="pill"
-                      >All Ads ({{ myAds?.length }})</a
+                <ul class="nav nav-pills">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link active"
+                      href="#v-pills-all-ads"
+                      data-toggle="pill"
+                      >All Ads ({{ myAdsPaginationInfo?.totalElements }})</a
                     >
                   </li>
-                  <li>
+                  <li class="nav-item">
                     <a href="#v-pills-approved" data-toggle="pill"
-                      >Approved ({{ approved?.length }})</a
+                      >Approved ({{ approvedPaginationInfo?.totalElements }})</a
                     >
                   </li>
-                  <li>
+                  <li class="nav-item">
                     <a href="#v-pills-pending" data-toggle="pill">
-                      Pending ({{ pending?.length }})</a
+                      Pending ({{ pendingPaginationInfo?.totalElements }})</a
                     >
                   </li>
-                  <li>
+                  <li class="nav-item">
                     <a href="#v-pills-disabled" data-toggle="pill"
-                      >Disabled ({{ disabled?.length }})</a
+                      >Disabled ({{ disabledPaginationInfo?.totalElements }})</a
                     >
                   </li>
-                  <li>
+                  <li class="nav-item">
                     <a href="#v-pills-declined" data-toggle="pill"
-                      >Declined ({{ declined?.length }})</a
+                      >Declined ({{ declinedPaginationInfo?.totalElements }})</a
                     >
                   </li>
 
-                  <li>
+                  <li class="nav-item">
                     <a href="#v-pills-expired" data-toggle="pill"
-                      >Expired ({{ expired?.length }})</a
+                      >Expired ({{ expiredPaginationInfo?.totalElements }})</a
                     >
                   </li>
-                  <li>
+                  <li class="nav-item">
                     <a href="#v-pills-closed" data-toggle="pill"
-                      >Closed ({{ closed?.length }})</a
+                      >Closed ({{ closedPaginationInfo?.totalElements }})</a
                     >
                   </li>
                 </ul>
               </nav>
-              <p>
-                You do not have any ads yet. Try posting an ad to view it here
-              </p>
+
               <table
                 class="table table-responsive dashboardtable tablemyads"
                 *ngIf="myAds.length != 0"
@@ -342,6 +362,10 @@
                     aria-labelledby="v-pills-all-ads-tab"
                   >
                     <tbody>
+                      <p *ngIf="myAds.length == 0" class="text-info">
+                        You do not have any ads yet. Try posting an ad to view
+                        it here
+                      </p>
                       <tr
                         data-category="sold"
                         *ngFor="
@@ -350,7 +374,7 @@
                               : {
                                   id: 'myAds',
                                   itemsPerPage: myAdsPaginationInfo.size,
-                                  currentPage: myAdsPaginationInfo.currentPage,
+                                  currentPage: myAdsPaginationInfo.number,
                                   totalItems: myAdsPaginationInfo.totalElements
                                 }
                         "
@@ -359,7 +383,11 @@
                           <img
                             class="img-fluid"
                             alt=""
-                            src="{{ (ad?.adImages)[0].imageUrl }}"
+                            src="{{
+                              ad?.adImages.length > 0
+                                ? (ad?.adImages)[0].imageUrl
+                                : ''
+                            }}"
                           />
                         </td>
                         <td data-title="Title">
@@ -374,7 +402,7 @@
                           data-title="Ad Status"
                           *ngIf="ad?.status === 'PENDING'"
                         >
-                          <span class="adstatus adstatusexpired">pending</span>
+                          <span class="adstatus adstatuspending">pending</span>
                         </td>
                         <td
                           data-title="Ad Status"
@@ -389,6 +417,27 @@
                           <span class="adstatus adstatusinactive"
                             >Declined</span
                           >
+                        </td>
+
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'EXPIRED'"
+                        >
+                          <span class="adstatus adstatusexpired">expired</span>
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'DISABLED'"
+                        >
+                          <span class="adstatus adstatusdisabled"
+                            >disabled</span
+                          >
+                        </td>
+                        <td
+                          data-title="Ad Status"
+                          *ngIf="ad?.status === 'CLOSED'"
+                        >
+                          <span class="adstatus adstatusclosed">closed</span>
                         </td>
                         <td data-title="Price">
                           <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
@@ -420,7 +469,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event - 1)"
+                        (pageChange)="navigateMyAdPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -435,6 +484,10 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-approved-tab"
                   >
+                    <p class="text-info p-2" *ngIf="approved.length == 0">
+                      <i class="fa fa-info-circle"></i> Approved Ads will appear
+                      here
+                    </p>
                     <tbody>
                       <tr
                         data-category="sold"
@@ -444,8 +497,7 @@
                               : {
                                   id: 'approved',
                                   itemsPerPage: approvedPaginationInfo.size,
-                                  currentPage:
-                                    approvedPaginationInfo.currentPage,
+                                  currentPage: approvedPaginationInfo.number,
                                   totalItems:
                                     approvedPaginationInfo.totalElements
                                 }
@@ -455,7 +507,11 @@
                           <img
                             class="img-fluid"
                             alt=""
-                            src="{{ (ad?.adImages)[0].imageUrl }}"
+                            src="{{
+                              ad?.adImages.length > 0
+                                ? (ad?.adImages)[0].imageUrl
+                                : ''
+                            }}"
                           />
                         </td>
                         <td data-title="Title">
@@ -516,7 +572,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event - 1)"
+                        (pageChange)="navigateApprovedPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -531,6 +587,10 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-pending-tab"
                   >
+                    <p class="text-info p-2" *ngIf="pending.length == 0">
+                      <i class="fa fa-info-circle"></i> Pending Ads will appear
+                      here
+                    </p>
                     <tbody>
                       <tr
                         data-category="sold"
@@ -540,8 +600,7 @@
                               : {
                                   id: 'pending',
                                   itemsPerPage: pendingPaginationInfo.size,
-                                  currentPage:
-                                    pendingPaginationInfo.currentPage,
+                                  currentPage: pendingPaginationInfo.number,
                                   totalItems:
                                     pendingPaginationInfo.totalElements
                                 }
@@ -551,7 +610,11 @@
                           <img
                             class="img-fluid"
                             alt=""
-                            src="{{ (ad?.adImages)[0].imageUrl }}"
+                            src="{{
+                              ad?.adImages.length > 0
+                                ? (ad?.adImages)[0].imageUrl
+                                : ''
+                            }}"
                           />
                         </td>
                         <td data-title="Title">
@@ -566,22 +629,9 @@
                           data-title="Ad Status"
                           *ngIf="ad?.status === 'PENDING'"
                         >
-                          <span class="adstatus adstatusexpired">pending</span>
+                          <span class="adstatus adstatuspending">pending</span>
                         </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'APPROVED'"
-                        >
-                          <span class="adstatus adstatusactive">active</span>
-                        </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'DECLINED'"
-                        >
-                          <span class="adstatus adstatusinactive"
-                            >Declined</span
-                          >
-                        </td>
+
                         <td data-title="Price">
                           <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
                         </td>
@@ -612,7 +662,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event - 1)"
+                        (pageChange)="navigatePendingPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -627,6 +677,10 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-declined-tab"
                   >
+                    <p class="text-info p-2" *ngIf="declined.length == 0">
+                      <i class="fa fa-info-circle"></i> Declined Ads will appear
+                      here
+                    </p>
                     <tbody>
                       <tr
                         data-category="sold"
@@ -636,8 +690,7 @@
                               : {
                                   id: 'declined',
                                   itemsPerPage: declinedPaginationInfo.size,
-                                  currentPage:
-                                    declinedPaginationInfo.currentPage,
+                                  currentPage: declinedPaginationInfo.number,
                                   totalItems:
                                     declinedPaginationInfo.totalElements
                                 }
@@ -647,7 +700,11 @@
                           <img
                             class="img-fluid"
                             alt=""
-                            src="{{ (ad?.adImages)[0].imageUrl }}"
+                            src="{{
+                              ad?.adImages.length > 0
+                                ? (ad?.adImages)[0].imageUrl
+                                : ''
+                            }}"
                           />
                         </td>
                         <td data-title="Title">
@@ -658,18 +715,7 @@
                         <td data-title="Category">
                           {{ ad?.title }}
                         </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'PENDING'"
-                        >
-                          <span class="adstatus adstatusexpired">pending</span>
-                        </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'APPROVED'"
-                        >
-                          <span class="adstatus adstatusactive">active</span>
-                        </td>
+
                         <td
                           data-title="Ad Status"
                           *ngIf="ad?.status === 'DECLINED'"
@@ -708,7 +754,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event - 1)"
+                        (pageChange)="navigateDeclinedPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -723,6 +769,10 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-expired-tab"
                   >
+                    <p class="text-info p-2" *ngIf="expired.length == 0">
+                      <i class="fa fa-info-circle"></i> Expired Ads will appear
+                      here
+                    </p>
                     <tbody>
                       <tr
                         data-category="sold"
@@ -732,8 +782,7 @@
                               : {
                                   id: 'expired',
                                   itemsPerPage: expiredPaginationInfo.size,
-                                  currentPage:
-                                    expiredPaginationInfo.currentPage,
+                                  currentPage: expiredPaginationInfo.number,
                                   totalItems:
                                     expiredPaginationInfo.totalElements
                                 }
@@ -743,7 +792,11 @@
                           <img
                             class="img-fluid"
                             alt=""
-                            src="{{ (ad?.adImages)[0].imageUrl }}"
+                            src="{{
+                              ad?.adImages.length > 0
+                                ? (ad?.adImages)[0].imageUrl
+                                : ''
+                            }}"
                           />
                         </td>
                         <td data-title="Title">
@@ -754,25 +807,12 @@
                         <td data-title="Category">
                           {{ ad?.title }}
                         </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'PENDING'"
-                        >
-                          <span class="adstatus adstatusexpired">pending</span>
-                        </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'APPROVED'"
-                        >
-                          <span class="adstatus adstatusactive">active</span>
-                        </td>
+
                         <td
                           data-title="Ad Status"
                           *ngIf="ad?.status === 'DECLINED'"
                         >
-                          <span class="adstatus adstatusinactive"
-                            >Declined</span
-                          >
+                          <span class="adstatus adstatusexpired">Expired</span>
                         </td>
                         <td data-title="Price">
                           <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
@@ -804,7 +844,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event - 1)"
+                        (pageChange)="navigateExpiredPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -819,6 +859,10 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-disabled-tab"
                   >
+                    <p class="text-info p-2" *ngIf="disabled.length == 0">
+                      <i class="fa fa-info-circle"></i> Disabled Ads will appear
+                      here
+                    </p>
                     <tbody>
                       <tr
                         data-category="sold"
@@ -828,8 +872,7 @@
                               : {
                                   id: 'disabled',
                                   itemsPerPage: disabledPaginationInfo.size,
-                                  currentPage:
-                                    disabledPaginationInfo.currentPage,
+                                  currentPage: disabledPaginationInfo.number,
                                   totalItems:
                                     disabledPaginationInfo.totalElements
                                 }
@@ -839,7 +882,11 @@
                           <img
                             class="img-fluid"
                             alt=""
-                            src="{{ (ad?.adImages)[0].imageUrl }}"
+                            src="{{
+                              ad?.adImages.length > 0
+                                ? (ad?.adImages)[0].imageUrl
+                                : ''
+                            }}"
                           />
                         </td>
                         <td data-title="Title">
@@ -850,24 +897,13 @@
                         <td data-title="Category">
                           {{ ad?.title }}
                         </td>
+
                         <td
                           data-title="Ad Status"
-                          *ngIf="ad?.status === 'PENDING'"
+                          *ngIf="ad?.status === 'DISABLED'"
                         >
-                          <span class="adstatus adstatusexpired">pending</span>
-                        </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'APPROVED'"
-                        >
-                          <span class="adstatus adstatusactive">active</span>
-                        </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'DECLINED'"
-                        >
-                          <span class="adstatus adstatusinactive"
-                            >Declined</span
+                          <span class="adstatus adstatusdisabled"
+                            >Disabled</span
                           >
                         </td>
                         <td data-title="Price">
@@ -900,7 +936,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event - 1)"
+                        (pageChange)="navigateDisabledPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -915,6 +951,10 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-closed-tab"
                   >
+                    <p class="text-info p-2" *ngIf="closed.length == 0">
+                      <i class="fa fa-info-circle"></i> Closed Ads will appear
+                      here
+                    </p>
                     <tbody>
                       <tr
                         data-category="sold"
@@ -924,7 +964,7 @@
                               : {
                                   id: 'closed',
                                   itemsPerPage: closedPaginationInfo.size,
-                                  currentPage: closedPaginationInfo.currentPage,
+                                  currentPage: closedPaginationInfo.number,
                                   totalItems: closedPaginationInfo.totalElements
                                 }
                         "
@@ -933,7 +973,11 @@
                           <img
                             class="img-fluid"
                             alt=""
-                            src="{{ (ad?.adImages)[0].imageUrl }}"
+                            src="{{
+                              ad?.adImages.length > 0
+                                ? (ad?.adImages)[0].imageUrl
+                                : ''
+                            }}"
                           />
                         </td>
                         <td data-title="Title">
@@ -944,25 +988,12 @@
                         <td data-title="Category">
                           {{ ad?.title }}
                         </td>
+
                         <td
                           data-title="Ad Status"
-                          *ngIf="ad?.status === 'PENDING'"
+                          *ngIf="ad?.status === 'CLOSED'"
                         >
-                          <span class="adstatus adstatusexpired">pending</span>
-                        </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'APPROVED'"
-                        >
-                          <span class="adstatus adstatusactive">active</span>
-                        </td>
-                        <td
-                          data-title="Ad Status"
-                          *ngIf="ad?.status === 'DECLINED'"
-                        >
-                          <span class="adstatus adstatusinactive"
-                            >Declined</span
-                          >
+                          <span class="adstatus adstatusclosed">Closed</span>
                         </td>
                         <td data-title="Price">
                           <h3>{{ ad?.dailyPrice | currency: "₦" }}</h3>
@@ -994,7 +1025,7 @@
                     </tbody>
                     <div class="has-text-centered d-flex justify-content-end">
                       <pagination-controls
-                        (pageChange)="navigateMyAdPage($event - 1)"
+                        (pageChange)="navigateClosedPage($event)"
                         previousLabel="Prev"
                         nextLabel="Next"
                         responsive="true"
@@ -1121,9 +1152,10 @@
                           placeholder="Type Here & Press Enter"
                         ></textarea>
                       </div>
-                      <div class="icon-box mt-2" >
-                        <button class="btn btn-primary"  
-                        (click) = "sendSent()">Send</button>
+                      <div class="icon-box mt-2">
+                        <button class="btn btn-primary" (click)="sendSent()">
+                          Send
+                        </button>
                       </div>
                     </div>
                   </form>
@@ -1217,9 +1249,13 @@
                           name="reply"
                           placeholder="Type Here & Press Enter"
                         ></textarea>
-                        <div class="icon-box mt-2" >
-                          <button class="btn btn-primary"  
-                          (click) = "sendRecieved()">Send</button>
+                        <div class="icon-box mt-2">
+                          <button
+                            class="btn btn-primary"
+                            (click)="sendRecieved()"
+                          >
+                            Send
+                          </button>
                         </div>
                       </div>
                     </div>

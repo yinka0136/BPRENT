@@ -1,7 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { Subscription } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { GlobalService } from 'src/app/_services/global.service';
 import { AdServiceService } from 'src/app/_services/ad-service.service';
@@ -21,6 +21,10 @@ export class PostAdComponent implements OnInit, OnDestroy {
   image: any;
   categories: any[] = [];
   subCategories: any[] = [];
+  subsLoading: boolean = false;
+  imageUploadLoading: boolean = false;
+  imageDeleteLoading: boolean = false;
+  regionsLoading: boolean = false;
   states: any[] = [];
   subCategory;
   regions: any[] = [];
@@ -62,11 +66,11 @@ export class PostAdComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initAdForm();
-    console.log(this.adForm.value);
+    // console.log(this.adForm.value);
     this.route.data.subscribe((res) => {
       this.categories = res['resolvedData'].categories['responseResult'];
       this.states = res['resolvedData'].states['responseResult'];
-      console.log(res);
+      // console.log(res);
     });
   }
   initAdForm() {
@@ -94,7 +98,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
         }
       },
       text: 'this will cost you ' + this.subCategory.coins + ' coins per day',
-      icon: 'info',
+      icon: 'success',
       showCancelButton: true,
       confirmButtonColor: '#2196F3',
       cancelButtonColor: '#D32F2F',
@@ -124,25 +128,89 @@ export class PostAdComponent implements OnInit, OnDestroy {
     });
   }
 
-  addFile(images) {
-    console.log(images);
-    this.images.push(images[0]);
+  async addFile(images: Array<File>) {
+    this.imageUploadLoading = true;
+    // console.log(image);
+    const formData = new FormData();
+    for (var i = 0; i < images.length; i++) {
+      formData.append('images', images[i]);
+    }
+
+    (await this._adService.uploadImage(formData)).subscribe(
+      (res) => {
+        this.imageUploadLoading = false;
+        console.log(res);
+        const uploadedImages = res['responseResult'];
+        uploadedImages.forEach((uploadedImage) => {
+          this.images.includes(uploadedImage)
+            ? null
+            : this.images.push(uploadedImage);
+        });
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          },
+        });
+        Toast.fire({
+          icon: 'success',
+          title: `Image${images.length > 1 ? 's' : ''} uploaded successfully`,
+        });
+        // console.log(this.images);
+      },
+      (e) => {
+        this.imageUploadLoading = false;
+      }
+    );
   }
-  removeImage(image) {
-    this.images = this.images.filter((i) => i != image);
+  async removeImage(id: number) {
+    this.imageDeleteLoading = true;
+
+    (await this._adService.deleteImage(id)).subscribe(
+      (res) => {
+        this.imageDeleteLoading = false;
+
+        this.images = this.images.filter((image) => {
+          console.log(image, image.id);
+          return image.id !== id;
+        });
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          },
+        });
+        this.adForm.reset();
+        Toast.fire({
+          icon: 'success',
+          title: 'Image removed successfully',
+        });
+        // console.log(this.images);
+      },
+      (e) => {
+        this.imageDeleteLoading = false;
+      }
+    );
   }
+
   postAd() {
     this._global.showSpinner();
     const payload = this.adForm.value;
-    const adJson = JSON.stringify(payload);
-    const formData = new FormData();
-    this.images.forEach((i) => {
-      formData.append('images', i);
-    });
-    formData.append('adJson', adJson);
-
+    // console.log(payload);
+    payload.images = this.images;
     this.sub.add(
-      this._adService.createAd(formData).subscribe({
+      this._adService.createAd(payload).subscribe({
         next: (res: ResponseStructure) => {
           this.adForm.reset();
           this._global.hideSpinner();
@@ -168,25 +236,37 @@ export class PostAdComponent implements OnInit, OnDestroy {
   }
 
   getAllSubCategories(slug) {
+    this.subsLoading = true;
     this.sub.add(
       this._catService.getAllSubCategories(slug).subscribe({
         next: (res: ResponseStructure) => {
-          console.log(res);
+          this.subsLoading = false;
+          // console.log(res);
           this.subCategories = res.responseResult;
+        },
+        error: () => {
+          this.subsLoading = false;
         },
       })
     );
   }
   getSubcategory(id) {
+    // console.log(id);
     const subCategory = this.subCategories.find((s) => s.id == id);
     this.subCategory = subCategory;
   }
   getRegions(code) {
+    this.regionsLoading = true;
     this.sub.add(
       this._catService.fetchAllRegions(code).subscribe({
         next: (res: ResponseStructure) => {
-          console.log(res);
+          this.regionsLoading = false;
+
+          // console.log(res);
           this.regions = res.responseResult;
+        },
+        error: () => {
+          this.regionsLoading = false;
         },
       })
     );

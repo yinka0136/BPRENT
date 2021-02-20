@@ -1,3 +1,4 @@
+import { VendorGuideComponent } from './../pages/vendor-guide/vendor-guide.component';
 import { PrivacyComponent } from './../pages/privacy/privacy.component';
 import { TermsAndConditionsComponent } from './../pages/terms-and-conditions/terms-and-conditions.component';
 import { NgModule } from '@angular/core';
@@ -91,11 +92,12 @@ const routes: Routes = [
   { path: 'terms', component: TermsAndConditionsComponent },
   { path: 'privacy', component: PrivacyComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'vendor-guide', component: VendorGuideComponent },
 ];
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, RouterModule.forRoot(routes)],
+  imports: [CommonModule, RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
 export class RoutingModule {}

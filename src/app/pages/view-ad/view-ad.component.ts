@@ -2,7 +2,7 @@ import { PaginationInfo } from './../../_models/pagination';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResponseStructure } from 'src/app/_models/respose';
-import { Subscription } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { GlobalService } from 'src/app/_services/global.service';
 import { FeedbackService } from 'src/app/_services/feedback.service';
@@ -10,6 +10,7 @@ import { ReportService } from 'src/app/_services/report.service';
 import { MessageService } from 'src/app/_services/message.service';
 import { PagedResponse } from 'src/app/_models/pagination';
 import { AdServiceService } from 'src/app/_services/ad-service.service';
+import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -45,7 +46,8 @@ export class ViewAdComponent implements OnInit, OnDestroy {
     private _feedback: FeedbackService,
     private _report: ReportService,
     private _message: MessageService,
-    private _ad: AdServiceService
+    private _ad: AdServiceService,
+    private location: Location
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -53,6 +55,7 @@ export class ViewAdComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.initRatingForm();
     this.initReportForm();
     this.initMessageForm();
@@ -65,9 +68,15 @@ export class ViewAdComponent implements OnInit, OnDestroy {
     if (this.ad.status == 'APPROVED') {
       this.isEnabled = true;
     }
+
     console.log(this.userRole);
   }
-
+  back() {
+    this.location.back();
+  }
+  goToRoute(ad) {
+    this.router.navigate(['/ad/view', ad.slug, ad.user.slug]);
+  }
   getResolvedData() {
     this.sub.add(
       this.route.data.subscribe((res) => {
@@ -185,9 +194,33 @@ export class ViewAdComponent implements OnInit, OnDestroy {
   postAd() {
     this.router.navigate(['ad/post']);
   }
-  save() {}
-  goToRoute(ad) {
-    this.router.navigate(['/ad/view', ad.slug, ad.user.slug]);
+  toggleSaveRelated(slug, index, e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.sub.add(
+      this._ad.toggleSaveAd(slug).subscribe({
+        next: (res) => {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+            },
+          });
+          Toast.fire({
+            icon: 'success',
+            title: res['responseMessage'],
+          });
+          console.log(res);
+          this.relatedAds[index].bookmarked = !this.relatedAds[index]
+            .bookmarked;
+        },
+      })
+    );
   }
 
   approve(slug) {
@@ -263,7 +296,6 @@ export class ViewAdComponent implements OnInit, OnDestroy {
       this.boost(noOfDays);
     }
   }
-  setColor() {}
   boost(noOfDays) {
     console.log(noOfDays);
     this.sub.add(

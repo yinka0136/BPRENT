@@ -1035,11 +1035,11 @@ a.back-to-top:focus {
 }
 .featured-box {
   width: 100%;
-  height: 345px;
+  // height: 345px;
   background: #fff;
   box-shadow: 0 2px 18px 0 rgba(198, 198, 198, 0.3);
-  margin-bottom: 15px;
-  margin-top: 15px;
+  // margin-bottom: 15px;
+  // margin-top: 15px;
 }
 .featured-box figure {
   margin: 0;
@@ -1122,7 +1122,7 @@ a.back-to-top:focus {
   color: #2196f3;
 }
 .featured-box .feature-content .listing-bottom {
-  border-top: 1px solid #eee;
+  border-top: 1px solid;
   width: 100%;
 }
 .featured-box .feature-content .listing-bottom .price {
@@ -1163,7 +1163,6 @@ a.back-to-top:focus {
   display: block;
   position: relative;
   z-index: 99;
-  height: 117.25px;
   overflow: hidden;
   -webkit-transition: all 0.4s ease;
   -moz-transition: all 0.4s ease;
@@ -1210,10 +1209,9 @@ a.back-to-top:focus {
 .product-item .product-content {
   padding: 15px 15px 0;
   position: relative;
-  height: 189px;
 }
 .product-item .product-content a {
-  color: #999;
+  color: black;
   font-size: 14px;
   font-weight: 400;
   margin-right: 5px;
@@ -1253,9 +1251,8 @@ a.back-to-top:focus {
 .product-item .card-text {
   width: 100%;
   display: inline-block;
-  margin-top: 15px;
   padding: 15px 0;
-  border-top: 1px solid #f1f1f1;
+  border-top: 1px solid;
 }
 .product-item .card-text .icon {
   color: #d32f2f;
@@ -2532,19 +2529,26 @@ label {
 }
 .adstatusinactive {
   color: #f7f7f7;
-  background: #363b4d;
+  background: black;
 }
 .adstatusactive {
-  background: #2196f3;
+  background: #00cc67;
 }
-.adstatusexpired {
+.adstatuspending {
   background: #fc9209;
 }
+.adstatusexpired {
+  background: #f32172;
+}
+
 .adstatusdeleted {
   background: #f91942;
 }
-.adstatussold {
+.adstatusclosed {
   background: #363b4d;
+}
+.adstatusdisabled {
+  background: #f91942;
 }
 .btns-actions {
   min-width: 150px;
@@ -2798,7 +2802,7 @@ label {
 .card {
   background: #fafafa;
   // padding: 25px 30px 30px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 .card .table-total-checkout {
   width: 100%;
@@ -4095,4 +4099,15 @@ footer .menu li a:hover {
 }
 #file {
   display: none;
+}
+.boosted {
+  background: orange;
+}
+
+.heart {
+  color: gray;
+}
+
+.like {
+  color: #c53942;
 }

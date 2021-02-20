@@ -136,6 +136,17 @@ export class CategoryComponent implements OnInit, OnDestroy {
       })
     );
   }
+  deleteSubCategory(slug) {
+    this._global.showSpinner();
+    this.sub.add(
+      this._category.deleteSubCategory(slug).subscribe({
+        next: (res: ResponseStructure) => {
+          console.log(res);
+          this._global.globalSuccessHandler(res);
+        },
+      })
+    );
+  }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
