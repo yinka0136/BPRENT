@@ -128,23 +128,25 @@ export class PostAdComponent implements OnInit, OnDestroy {
     });
   }
 
-  async addFile(image: File) {
-    var mimeType = image.type;
-    if (mimeType.match(/image\/*/) == null) {
-      this._global.hideSpinnerWithError('Only images are supported.');
-      return;
-    }
+  async addFile(images: Array<File>) {
     this.imageUploadLoading = true;
     // console.log(image);
     const formData = new FormData();
-    formData.append('image', image);
+    for (var i = 0; i < images.length; i++) {
+      formData.append('images', images[i]);
+    }
+
     (await this._adService.uploadImage(formData)).subscribe(
       (res) => {
         this.imageUploadLoading = false;
-        // console.log(res);
-        this.images.includes(res['responseResult'])
-          ? null
-          : this.images.push(res['responseResult']);
+        console.log(res);
+        const uploadedImages = res['responseResult'];
+        uploadedImages.forEach((uploadedImage) => {
+          this.images.includes(uploadedImage)
+            ? null
+            : this.images.push(uploadedImage);
+        });
+
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -158,7 +160,7 @@ export class PostAdComponent implements OnInit, OnDestroy {
         });
         Toast.fire({
           icon: 'success',
-          title: 'Image uploaded successfully',
+          title: `Image${images.length > 1 ? 's' : ''} uploaded successfully`,
         });
         // console.log(this.images);
       },
@@ -168,15 +170,15 @@ export class PostAdComponent implements OnInit, OnDestroy {
     );
   }
   async removeImage(id: number) {
-    // console.log(id);
     this.imageDeleteLoading = true;
 
     (await this._adService.deleteImage(id)).subscribe(
       (res) => {
         this.imageDeleteLoading = false;
-        // console.log(res);
+
         this.images = this.images.filter((image) => {
-          image.id != id;
+          console.log(image, image.id);
+          return image.id !== id;
         });
         const Toast = Swal.mixin({
           toast: true,

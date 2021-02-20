@@ -29,74 +29,72 @@
             >
           </h3>
         </div>
-        <div class="">
-          <article class="gallery-wrap">
-            <div class="row">
-              <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <div
+              id="custCarousel"
+              class="carousel slide"
+              data-ride="carousel"
+              align="center"
+            >
+              <!-- slides -->
+              <div class="carousel-inner">
                 <div
-                  id="custCarousel"
-                  class="carousel slide"
-                  data-ride="carousel"
-                  align="center"
+                  class="carousel-item"
+                  [class.active]="i == 0"
+                  *ngFor="let adImage of ad?.adImages; index as i"
                 >
-                  <!-- slides -->
-                  <div class="carousel-inner">
-                    <div
-                      class="carousel-item"
-                      [class.active]="i == 0"
-                      *ngFor="let adImage of ad?.adImages; index as i"
-                    >
-                      <div class="imgView">
-                        <img
-                          class="img-responsive"
-                          src="{{ adImage?.imageUrl }}"
-                          alt="{{ adImage?.id }}"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Left right -->
-                  <a
-                    class="carousel-control-prev"
-                    href="#custCarousel"
-                    data-slide="prev"
-                  >
-                    <span class="carousel-control-prev-icon"></span>
-                  </a>
-                  <a
-                    class="carousel-control-next"
-                    href="#custCarousel"
-                    data-slide="next"
-                  >
-                    <span class="carousel-control-next-icon"></span>
-                  </a>
-                  <!-- Thumbnails -->
-                  <ol class="carousel-indicators list-inline">
-                    <li
-                      class="list-inline-item"
-                      [class.active]="i == 0"
-                      [class.selected]="i == 0"
-                      *ngFor="let adImage of ad?.adImages; index as i"
-                    >
-                      <a
-                        id="carousel-selector-{{ i }}"
-                        class="selected"
-                        attr.data-slide-to="{{ i }}"
-                        data-target="#custCarousel"
-                      >
-                        <div style="height: 100px; width: 100px">
-                          <img
-                            src="{{ adImage?.imageUrl }}"
-                            class="img-fluid"
-                          />
-                        </div>
-                      </a>
-                    </li>
-                  </ol>
+                  <img src="{{ adImage?.imageUrl }}" alt="Hills" />
                 </div>
               </div>
+              <!-- Left right -->
+              <a
+                class="carousel-control-prev"
+                href="#custCarousel"
+                data-slide="prev"
+              >
+                <span class="carousel-control-prev-icon"></span>
+              </a>
+              <a
+                class="carousel-control-next"
+                href="#custCarousel"
+                data-slide="next"
+              >
+                <span class="carousel-control-next-icon"></span>
+              </a>
+              <!-- Thumbnails -->
+              <ol class="carousel-indicators list-inline">
+                <li
+                  class="list-inline-item"
+                  [class.active]="i == 0"
+                  *ngFor="let adImage of ad?.adImages; index as i"
+                >
+                  <a
+                    id="carousel-selector-{{ i }}"
+                    [class.selected]="i == 0"
+                    attr.data-slide-to="{{ i }}"
+                    data-target="#custCarousel"
+                  >
+                    <img src="{{ adImage?.imageUrl }}" class="img-fluid" />
+                  </a>
+                </li>
+                <!-- <li
+                  class="list-inline-item"
+                  [class.active]="i == 0"
+                  *ngFor="let adImage of ad?.adImages; index as i"
+                >
+                  <a
+                    id="carousel-selector-{{ i }}"
+                    [class.selected]="i == 0"
+                    attr.data-slide-to="{{ i }}"
+                    data-target="#custCarousel"
+                  >
+                    <img src="{{ adImage?.imageUrl }}" class="img-fluid" />
+                  </a>
+                </li> -->
+              </ol>
             </div>
-          </article>
+          </div>
         </div>
         <div class="card marg">
           <div class="d-flex justify-content-between px-">
@@ -261,6 +259,7 @@
             <span class="icon icon-lg rounded-circle">
               <i class="fa fa-user white" *ngIf="!ad?.user?.avatarUrl"></i>
               <img
+                class="avatarUrl"
                 *ngIf="ad?.user?.avatarUrl"
                 src="{{ ad?.user?.avatarUrl }}"
                 alt=""
@@ -488,7 +487,7 @@
       <h3 class="section-title">Recommended Ads</h3>
       <div class="row">
         <a
-          [routerLink]="['/ad/view', ad.slug, ad.user.slug]"
+          (click)="goToRoute(relatedAd)"
           class="col-xl-3 col-lg-3 col-md-4 col-12 mb-3 click"
           *ngFor="let relatedAd of relatedAds; index as i"
         >

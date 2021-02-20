@@ -69,6 +69,8 @@ export class EditAdComponent implements OnInit, OnDestroy {
       this.categories = res['resolvedData'].categories['responseResult'];
       this.states = res['resolvedData'].states['responseResult'];
       this.ad = res['resolvedData'].ad['responseResult'].ad;
+      this.subCategories.push(this.ad.subCategory);
+      this.regions.push(this.ad.region);
       this.addImagesToArray();
     });
     this.initAdForm();
@@ -141,23 +143,21 @@ export class EditAdComponent implements OnInit, OnDestroy {
   //     this.addedImagesToView.push({ imageUrl: reader.result });
   //   };
   // }
-  async addFile(image: File) {
-    var mimeType = image.type;
-    if (mimeType.match(/image\/*/) == null) {
-      this._global.hideSpinnerWithError('Only images are supported.');
-      return;
-    }
+  async addFile(images: File[]) {
     this.imageUploadLoading = true;
-    console.log(image);
     const formData = new FormData();
-    formData.append('image', image);
+    for (var i = 0; i < images.length; i++) {
+      formData.append('images', images[i]);
+    }
     (await this._adService.uploadImage(formData)).subscribe(
       (res) => {
         this.imageUploadLoading = false;
-        console.log(res);
-        this.images.includes(res['responseResult'])
-          ? null
-          : this.images.push(res['responseResult']);
+        const uploadedImages = res['responseResult'];
+        uploadedImages.forEach((uploadedImage) => {
+          this.images.includes(uploadedImage)
+            ? null
+            : this.images.push(uploadedImage);
+        });
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -171,7 +171,7 @@ export class EditAdComponent implements OnInit, OnDestroy {
         });
         Toast.fire({
           icon: 'success',
-          title: 'Image uploaded successfully',
+          title: `Image${images.length > 1 ? 's' : ''} uploaded successfully`,
         });
         console.log(this.images);
       },
@@ -187,9 +187,8 @@ export class EditAdComponent implements OnInit, OnDestroy {
     (await this._adService.deleteImage(id)).subscribe(
       (res) => {
         this.imageDeleteLoading = false;
-        console.log(res);
         this.images = this.images.filter((image) => {
-          image.id != id;
+          return image.id !== id;
         });
         const Toast = Swal.mixin({
           toast: true,

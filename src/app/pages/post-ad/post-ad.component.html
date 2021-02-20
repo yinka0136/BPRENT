@@ -45,8 +45,9 @@
             <div class="upload-document-wrapper mb-3 d-flex align-items-center">
               <input
                 type="file"
-                (change)="addFile($event.target.files[0])"
+                (change)="addFile($event.target.files)"
                 id="file"
+                multiple
                 class="inputfile"
                 data-preview-file-type="text"
                 accept="image/*"

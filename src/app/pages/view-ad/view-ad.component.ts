@@ -55,6 +55,7 @@ export class ViewAdComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.initRatingForm();
     this.initReportForm();
     this.initMessageForm();
@@ -67,12 +68,14 @@ export class ViewAdComponent implements OnInit, OnDestroy {
     if (this.ad.status == 'APPROVED') {
       this.isEnabled = true;
     }
-    window.scroll(0, 444);
 
     console.log(this.userRole);
   }
   back() {
     this.location.back();
+  }
+  goToRoute(ad) {
+    this.router.navigate(['/ad/view', ad.slug, ad.user.slug]);
   }
   getResolvedData() {
     this.sub.add(
@@ -293,7 +296,6 @@ export class ViewAdComponent implements OnInit, OnDestroy {
       this.boost(noOfDays);
     }
   }
-  setColor() {}
   boost(noOfDays) {
     console.log(noOfDays);
     this.sub.add(
