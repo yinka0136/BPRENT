@@ -126,23 +126,29 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   deleteCategory(slug) {
+    console.log(slug);
     this._global.showSpinner();
     this.sub.add(
       this._category.deleteCategory(slug).subscribe({
         next: (res: ResponseStructure) => {
           console.log(res);
           this._global.globalSuccessHandler(res);
+          this.categories = this.categories.filter((c) => c.slug !== slug);
         },
       })
     );
   }
   deleteSubCategory(slug) {
+    console.log(slug);
     this._global.showSpinner();
     this.sub.add(
       this._category.deleteSubCategory(slug).subscribe({
         next: (res: ResponseStructure) => {
           console.log(res);
           this._global.globalSuccessHandler(res);
+          this.subCategories = this.subCategories.filter(
+            (s) => s.slug !== slug
+          );
         },
       })
     );

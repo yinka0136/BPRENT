@@ -62,14 +62,14 @@
           </div>
           <div class="card-body">
             <div
-              class="each-category d-flex justify-content-between ho"
+              class="each-category d-flex justify-content-between"
               *ngFor="let subCategory of subCategories"
             >
               <div class="flex-grow-1">
                 <span>{{ subCategory.name }}</span>
               </div>
               <img
-                class="icon-img"
+                class="icon-img del"
                 src="assets/images/close.png"
                 alt=""
                 (click)="deleteSubCategory(subCategory.slug)"
@@ -94,7 +94,6 @@
   headerTitle="Add Subcategory"
   centered="true"
   [styles]="{
-    modalBodyHeight: '220px',
     modalContentWidth: '421px'
   }"
 >
@@ -104,7 +103,7 @@
       <div class="form-row">
         <div
           *ngIf="catName"
-          class="d-flex justify-content-center mt-5 mb-3 form-group"
+          class="d-flex justify-content-center mt-2 mb-3 form-group"
         >
           <input type="text" class="asd" value="{{ catName }}" disabled />
           <span class="text-danger">*</span>

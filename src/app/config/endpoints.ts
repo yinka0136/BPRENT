@@ -57,6 +57,7 @@ export const endpoints = {
   findAllDisabledAds: 'ads/all_disabled',
   findAllDeclinedAds: 'ads/all_declined',
   findAllClosedAds: 'ads/all_closed',
+
   findAllApprovedAds: 'ads/all_approved',
   updateAd: 'ads',
   approveAd: 'ads',
@@ -100,4 +101,10 @@ export const endpoints = {
   getAllSentreports: 'reports/sent',
   createreport: 'reports',
   getreportByAd: 'reports',
+
+  //Carousel
+  getAllCarouselImages: 'carousel_image/all',
+  deleteOneCarouselImage: 'carousel_image/delete_image',
+  findOneCarouselImage: 'carousel_image​/find',
+  addCarouselImages: 'carousel_image/upload_images',
 };

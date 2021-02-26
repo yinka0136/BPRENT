@@ -14,6 +14,7 @@ declare var $: any;
 export class HomeComponent implements OnInit, OnDestroy {
   categories: any[] = [];
   newAds: any[] = [];
+  carouselImages: any[] = [];
   boostedAds: any[] = [];
   sub: Subscription = new Subscription();
   trendingAds: any[] = [];
@@ -32,6 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.newAds = result['newAds'].responseResult;
       this.trendingAds = result['trendingAds'].responseResult;
       this.boostedAds = result['boostedAds'].responseResult;
+      this.carouselImages = result['carouselImages'].responseResult;
       console.log(this.boostedAds);
     });
     $('.carousel').carousel({

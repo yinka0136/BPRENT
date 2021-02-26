@@ -382,7 +382,9 @@
           <!-- rating-wrap.// -->
           <div class="b-seller-online-info">
             <div class="b-seller-online-info-block">
-              <div class="b-seller-online-title">21 Feb 2020</div>
+              <div class="b-seller-online-title">
+                {{ ad?.dateCreated | date: "medium" }}
+              </div>
               <div class="b-seller-online-aside">Registered</div>
             </div>
             <div class="b-seller-online-info-block">
@@ -434,7 +436,6 @@
                 <li>Do not pay in advance even for the delivery</li>
                 <li>Try to meet at a safe, public location</li>
                 <li>Check the item BEFORE you rent it</li>
-                <li>Pay only after collecting the item</li>
               </ul>
               <div class="h-mt-10 click">
                 <a
