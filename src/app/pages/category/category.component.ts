@@ -17,7 +17,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
   subCategories: any[] = [];
   topics = [];
   subCategoryForm: FormGroup;
+  subCategoryEditForm: FormGroup;
   IsHidden = true;
+  selectedSubCategory: { slug: any; index: any };
   catName: any;
   catSlug: any;
   constructor(
@@ -29,6 +31,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getAllCategories();
     this.initAddSubcategory();
+    this.initEditSubcategory();
   }
 
   manage() {
@@ -47,6 +50,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.subCategoryForm = this.fb.group({
       name: ['', Validators.required],
       coins: ['', Validators.required],
+    });
+  }
+  initEditSubcategory() {
+    this.subCategoryEditForm = this.fb.group({
+      name: [''],
+      coins: [''],
     });
   }
 
@@ -72,6 +81,35 @@ export class CategoryComponent implements OnInit, OnDestroy {
             next: (res: ResponseStructure) => {
               console.log(res);
               this.categories.push(res.responseResult);
+              this._global.globalSuccessHandler(res);
+            },
+          })
+        );
+      }
+    })();
+  }
+  edit(slug, i) {
+    (async () => {
+      const { value: text } = await Swal.fire({
+        title: 'Edit category',
+        input: 'text',
+        inputPlaceholder: 'Enter Category Name',
+        showCloseButton: true,
+        confirmButtonText: 'Update',
+        allowOutsideClick: false,
+        inputValidator: (value: any) => {
+          if (value === '') {
+            return 'Oops.. Please enter a category name.';
+          }
+        },
+      });
+      if (text) {
+        const payload = { name: text };
+        this.sub.add(
+          this._category.updateCategory(payload, slug).subscribe({
+            next: (res: ResponseStructure) => {
+              console.log(res);
+              this.categories[i] = res['responseResult'];
               this._global.globalSuccessHandler(res);
             },
           })
@@ -122,6 +160,25 @@ export class CategoryComponent implements OnInit, OnDestroy {
           this._global.globalSuccessHandler(res);
         },
       })
+    );
+  }
+  setSubCategory(slug, index) {
+    this.selectedSubCategory = { slug: slug, index: index };
+  }
+  editSubCategory() {
+    const payload = this.subCategoryEditForm.value;
+    console.log(payload);
+    this.sub.add(
+      this._category
+        .updateSubCategory(payload, this.selectedSubCategory.slug)
+        .subscribe({
+          next: (res: ResponseStructure) => {
+            console.log(res);
+            this.subCategories[this.selectedSubCategory.index] =
+              res['responseResult'];
+            this._global.globalSuccessHandler(res);
+          },
+        })
     );
   }
 

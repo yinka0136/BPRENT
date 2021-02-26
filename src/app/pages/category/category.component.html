@@ -28,7 +28,7 @@
             <div
               [ngClass]="{ isActive: catSlug == category.slug }"
               class="each-category d-flex justify-content-between ho"
-              *ngFor="let category of categories"
+              *ngFor="let category of categories; index as i"
             >
               <div
                 class="flex-grow-1"
@@ -36,13 +36,23 @@
               >
                 <span>{{ category.name }}</span>
               </div>
-              <img
-                class="icon-img"
-                src="assets/images/close.png"
-                alt=""
-                (click)="deleteCategory(category.slug)"
-                [hidden]="IsHidden"
-              />
+              <div class="d-flex justify-content-between">
+                <img
+                  class="icon-img"
+                  src="assets/images/close.png"
+                  alt=""
+                  (click)="deleteCategory(category.slug)"
+                  [hidden]="IsHidden"
+                />
+                <p class="ml-1">
+                  <i
+                    class="fa fa-pencil"
+                    (click)="edit(category.slug, i)"
+                    [hidden]="IsHidden"
+                  >
+                  </i>
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -63,18 +73,29 @@
           <div class="card-body">
             <div
               class="each-category d-flex justify-content-between"
-              *ngFor="let subCategory of subCategories"
+              *ngFor="let subCategory of subCategories; index as i"
             >
               <div class="flex-grow-1">
                 <span>{{ subCategory.name }}</span>
               </div>
-              <img
-                class="icon-img del"
-                src="assets/images/close.png"
-                alt=""
-                (click)="deleteSubCategory(subCategory.slug)"
-                [hidden]="IsHidden"
-              />
+              <div class="d-flex justify-content-between">
+                <img
+                  class="icon-img del"
+                  src="assets/images/close.png"
+                  alt=""
+                  (click)="deleteSubCategory(subCategory.slug)"
+                  [hidden]="IsHidden"
+                />
+                <p class="ml-1">
+                  <i
+                    class="fa fa-pencil"
+                    (click)="setSubCategory(subCategory.slug, i)"
+                    modal-trigger="subEdit"
+                    [hidden]="IsHidden"
+                  >
+                  </i>
+                </p>
+              </div>
             </div>
             <div class="each-category" *ngIf="subCategories.length === 0">
               No subcategories yet
@@ -163,6 +184,73 @@
           [disabled]="subCategoryForm.invalid"
         >
           Add
+        </button>
+      </div>
+    </form>
+  </div>
+</app-modal>
+
+<app-modal
+  elementId="subEdit"
+  headerTitle="Edit Subcategory"
+  centered="true"
+  [styles]="{
+    modalContentWidth: '421px'
+  }"
+>
+  <div class="content">
+    <hr class="hline" />
+    <form action="" class="" [formGroup]="subCategoryEditForm">
+      <div class="form-row">
+        <div
+          *ngIf="catName"
+          class="d-flex justify-content-center mt-2 mb-3 form-group"
+        >
+          <input type="text" class="asd" value="{{ catName }}" disabled />
+          <span class="text-danger">*</span>
+        </div>
+        <div
+          *ngIf="!catName"
+          class="d-flex justify-content-center mt-5 mb-3 form-group"
+        >
+          <input
+            type="text"
+            class="asd"
+            value="Please select a category first"
+            disabled
+          />
+          <span class="text-danger">*</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="d-flex justify-content-center mb-4 form-group">
+          <input
+            type="text"
+            class="text-start form-control"
+            placeholder="Enter Subcategory Name"
+            formControlName="name"
+          />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="d-flex justify-content-center mb-4 form-group">
+          <input
+            type="text"
+            class="text-start form-control"
+            placeholder="Enter coin amount"
+            formControlName="coins"
+          />
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center mt-3">
+        <button
+          data-dismiss="modal"
+          (click)="editSubCategory()"
+          class="modalBtn btn-primary"
+          type="button"
+        >
+          Update
         </button>
       </div>
     </form>

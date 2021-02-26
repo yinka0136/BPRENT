@@ -47,6 +47,12 @@ export class CatStatesService {
       payload
     );
   }
+  updateSubCategory(payload, slug) {
+    return this.http.put(
+      `${environment.API_URL}/${endpoints.updateSubcategory}/${slug}/update`,
+      payload
+    );
+  }
 
   deleteCategory(slug) {
     return this.http.delete(
