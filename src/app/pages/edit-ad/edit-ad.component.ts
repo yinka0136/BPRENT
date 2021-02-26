@@ -201,7 +201,6 @@ export class EditAdComponent implements OnInit, OnDestroy {
             toast.addEventListener('mouseleave', Swal.resumeTimer);
           },
         });
-        this.adForm.reset();
         Toast.fire({
           icon: 'success',
           title: 'Image removed successfully',

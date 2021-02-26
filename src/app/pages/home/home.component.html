@@ -38,48 +38,18 @@
               <ul class="carousel-indicators">
                 <li
                   data-target="#carousel1_indicator"
-                  data-slide-to="0"
-                  class="active"
+                  attr.data-slide-to="{{ i }}"
+                  *ngFor="let carouselImage of carouselImages; index as i"
+                  [class.active]="i == 0"
                 ></li>
-                <li data-target="#carousel1_indicator" data-slide-to="1"></li>
-                <li data-target="#carousel1_indicator" data-slide-to="2"></li>
-                <li data-target="#carousel1_indicator" data-slide-to="3"></li>
-                <li data-target="#carousel1_indicator" data-slide-to="4"></li>
-                <li data-target="#carousel1_indicator" data-slide-to="5"></li>
               </ul>
               <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src="../../assets/images/ad1.jpg" alt="First slide" />
-                </div>
-                <div class="carousel-item">
-                  <img src="../../assets/images/ad2.jpg" alt="Second slide" />
-                </div>
-                <div class="carousel-item">
-                  <img src="../../assets/images/ad3.jpg" alt="Third slide" />
-                </div>
-                <div class="carousel-item">
-                  <img src="../../assets/images/ad4.jpg" alt="Fourth slide" />
-                </div>
-                <div class="carousel-item">
-                  <img src="../../assets/images/ad5.jpg" alt="Fifth slide" />
-                </div>
-                <div class="carousel-item">
-                  <img src="../../assets/images/ad6.jpg" alt="Sixth slide" />
-                </div>
-                <div class="carousel-item">
-                  <img src="../../assets/images/aad2.jpg" alt="7th slide" />
-                </div>
-                <!-- <div class="carousel-item">
-                  <img src="../../assets/images/aad3.jpg" alt="Sixth slide" />
-                </div> -->
-                <div class="carousel-item">
-                  <img src="../../assets/images/Aad.jpg" alt="8th slide" />
-                </div>
-                <div class="carousel-item">
-                  <img src="../../assets/images/new.jpeg" alt="9Th slide" />
-                </div>
-                <div class="carousel-item">
-                  <img src="../../assets/images/new2.jpeg" alt="10Th slide" />
+                <div
+                  class="carousel-item"
+                  [class.active]="i == 0"
+                  *ngFor="let carouselImage of carouselImages; index as i"
+                >
+                  <img src="{{ carouselImage?.imageUrl }}" alt="Hills" />
                 </div>
               </div>
               <a
@@ -128,7 +98,10 @@
         online payments before having a Physical proof of the property you want
         to rent!..... We do not own or deal directly with the vendors on our
         market place, be careful not to fall a victim of fraud we wouldn't be
-        held accountable.!!..... Happy Renting🏘️🚗.....
+        held accountable.!!. Becoming a Vendor on BPrents and putting up your
+        properties for rent is so easy, simple and free, Fear not, visit Vendors
+        Guide at the bottom of the site and see how to successfully rent on
+        BPrents..... Happy Renting🏘️🚗.....
       </h2>
     </div>
     <!-- </div> -->

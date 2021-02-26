@@ -1,3 +1,4 @@
+import { CarouselServiceService } from './../_services/carousel-service.service';
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, forkJoin, of } from 'rxjs';
@@ -11,7 +12,8 @@ export class DashboardResolver implements Resolve<any> {
   constructor(
     private _category: CatStatesService,
     private _global: GlobalService,
-    private _adService: AdServiceService
+    private _adService: AdServiceService,
+    private _carousel: CarouselServiceService
   ) {}
   resolve(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
     this._global.showSpinner();
@@ -19,7 +21,14 @@ export class DashboardResolver implements Resolve<any> {
     const newAds = this._adService.fetchNewAds();
     const trendingAds = this._adService.fetchTrendingAds();
     const boostedAds = this._adService.fetchBoostedAds();
-    return forkJoin([categories, newAds, trendingAds, boostedAds]).pipe(
+    const carouselImages = this._carousel.fetchAllCarouselImages();
+    return forkJoin([
+      categories,
+      newAds,
+      trendingAds,
+      boostedAds,
+      carouselImages,
+    ]).pipe(
       map((res) => {
         this._global.hideSpinner();
         return {
@@ -27,6 +36,7 @@ export class DashboardResolver implements Resolve<any> {
           newAds: res[1],
           trendingAds: res[2],
           boostedAds: res[3],
+          carouselImages: res[4],
         };
       }),
       catchError((error) => {
